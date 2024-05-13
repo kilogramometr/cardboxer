@@ -8,29 +8,33 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QJsonObject>
-
+#include <Game.h>
+#include <Menu.h>
 class Window : public QMainWindow
 {
     Q_OBJECT
 
     QSize resolution;
-    // int TILE_SIZE = 100;
-    // int MAP_SIZE = 7;
-    QGraphicsScene *menu;
+    /* QGraphicsScene */ Menu *menu;
+    QGraphicsScene *game;
     QGraphicsView  *view;
     QList<Card> library;
     QJsonObject config;
 
-    bool loadLibrary();
+    bool loadLibrary(QString path);
     void changeResolution(QSize resolution);
     void changeScene(QGraphicsScene *scene);
-    void newGame();
+    void createMenu();
 
 public:
     Window(QSize resolution = {800, 600});
 
 public slots:
     // void gameOver();
+    void newGame();
+    void backToMenu();
+    void exit();
+
 };
 
 #endif // WINDOW_H

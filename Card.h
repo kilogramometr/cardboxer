@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-class Card
+class Card : public QObject
 {
     Q_OBJECT
 public:
