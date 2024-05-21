@@ -1,8 +1,10 @@
-LINKS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-system
+LINKS := -lsfml-graphics -lsfml-window -lsfml-system
+BINS := ./main.cpp $(wildcard ./sources/*.cpp)
+OBJS := $(wildcard ./*.o)
 
 make:
-	g++ -c main.cpp
-	g++ -std=c++14 -o ./build/app ./main.cpp ${LINKS}
+	g++ -c ${BINS}
+	g++ -std=c++14 -o ./build/app ${OBJS} ${LINKS}
 
 run:
 	./build/app

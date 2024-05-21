@@ -1,4 +1,5 @@
-./*.user
-./*.pro
-./*.o
-./.vscode
+*.user
+*.pro
+*.o
+.vscode
+build/

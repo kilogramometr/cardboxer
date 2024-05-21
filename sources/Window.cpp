@@ -1,10 +1,16 @@
 #include "../headers/Window.hpp"
+#include <iostream>
 
 Window::Window(sf::Vector2f resolution, std::string title)
     : sf::RenderWindow(sf::VideoMode(resolution.x, resolution.y), title)
 {
     // set resolution
     this->resolution = resolution;
+
+    // set backGround
+    this->backGround = new sf::RectangleShape(resolution);
+    this->backGround->setFillColor(sf::Color::Black);
+    this->backGround->setPosition(0, 0);
     // create scene and view
     // this->createMenu();
     // this->view  = new QGraphicsView();
@@ -21,9 +27,15 @@ Window::Window(sf::Vector2f resolution, std::string title)
 
 void Window::loop()
 {
-
+    this->drawScene();
+    this->display();
 }
 
+void Window::drawScene()
+{
+    this->draw(*this->backGround);
+    /* draw scene (Node) here*/
+}
 /*
  * UTILITY
  */

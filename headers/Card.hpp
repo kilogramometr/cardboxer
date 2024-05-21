@@ -1,5 +1,5 @@
 #pragma once
-#include <headers/Node.hpp>
+#include "Node.hpp"
 
 class Card : public Node
 {

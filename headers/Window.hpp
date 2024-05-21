@@ -1,12 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <list>
-#include <headers/Node.hpp>
-#include <headers/Card.hpp>
+#include "Node.hpp"
+#include "Card.hpp"
 
 class Window : public sf::RenderWindow
 {
     sf::Vector2f resolution;
+    sf::RectangleShape *backGround;
     /* Scene */ Node *menu;
     /* Scene */ Node *game;
     /* Scene */ Node *Scene;
@@ -14,10 +15,10 @@ class Window : public sf::RenderWindow
     std::list<Card> library;
     // QJsonObject config;
 
-    bool loadLibrary(std::string path);
-    void changeResolution(sf::Vector2f resolution);
-    void changeScene(Node *scene);
-    void createMenu();
+    // bool loadLibrary(std::string path);
+    // void changeResolution(sf::Vector2f resolution);
+    // void changeScene(Node *scene);
+    // void createMenu();
     void drawScene();
 
 public:

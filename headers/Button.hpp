@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <headers/Node.hpp>
+#include "Node.hpp"
 
 class Button : public Node, public sf::Sprite
 {
