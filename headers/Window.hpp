@@ -3,12 +3,13 @@
 #include <list>
 #include "Node.hpp"
 #include "Card.hpp"
+#include "Menu.hpp"
 
 class Window : public sf::RenderWindow
 {
     sf::Vector2f resolution;
     sf::RectangleShape *backGround;
-    /* Scene */ Node *menu;
+    /* Scene */ Menu *menu;
     /* Scene */ Node *game;
     /* Scene */ Node *Scene;
     // QGraphicsView  *view;
@@ -20,6 +21,7 @@ class Window : public sf::RenderWindow
     // void changeScene(Node *scene);
     // void createMenu();
     void drawScene();
+    void setCurrentScene(Node *node);
 
 public:
     Window(sf::Vector2f resolution, std::string title);

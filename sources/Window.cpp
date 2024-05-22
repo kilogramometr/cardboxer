@@ -12,6 +12,8 @@ Window::Window(sf::Vector2f resolution, std::string title)
     this->backGround->setFillColor(sf::Color::Black);
     this->backGround->setPosition(0, 0);
     // create scene and view
+    this->menu = new Menu();
+    this->setCurrentScene(this->menu);
     // this->createMenu();
     // this->view  = new QGraphicsView();
     // // set view options
@@ -34,7 +36,14 @@ void Window::loop()
 void Window::drawScene()
 {
     this->draw(*this->backGround);
+    // this->menu->draw(*this);
+    this->Scene->draw(*this);
     /* draw scene (Node) here*/
+}
+
+void Window::setCurrentScene(Node *node)
+{
+    this->Scene = node;
 }
 /*
  * UTILITY
