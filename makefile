@@ -1,4 +1,4 @@
-LINKS := -lsfml-graphics -lsfml-window -lsfml-system
+LINKS := -lsfml-graphics -lsfml-window -lsfml-system -ljsoncpp
 BINS := ./main.cpp $(wildcard ./sources/*.cpp)
 OBJS := $(wildcard ./*.o)
 

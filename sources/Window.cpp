@@ -1,5 +1,7 @@
 #include "../headers/Window.hpp"
+#include <fstream>
 #include <iostream>
+#include <jsoncpp/json/json.h>
 
 Window::Window(sf::Vector2f resolution, std::string title)
     : sf::RenderWindow(sf::VideoMode(resolution.x, resolution.y), title)
@@ -7,13 +9,18 @@ Window::Window(sf::Vector2f resolution, std::string title)
     // set resolution
     this->resolution = resolution;
 
+    
     // set backGround
     this->backGround = new sf::RectangleShape(resolution);
     this->backGround->setFillColor(sf::Color::Black);
     this->backGround->setPosition(0, 0);
+    
+    this->loadLibrary();
+    
     // create scene and view
     this->menu = new Menu();
     this->setCurrentScene(this->menu);
+
     // this->createMenu();
     // this->view  = new QGraphicsView();
     // // set view options
@@ -66,18 +73,42 @@ void Window::setCurrentScene(Node *node)
  * INIT
  */
 
-// void Window::createMenu()
-// /* set up Menu scene to be shown */
-// {
-//     this->menu = new QGraphicsScene();
-// }
-
-// bool Window::loadLibrary(QString path)
-// /* load global library of cards for use during game */
-// {
-//     // TODO: Load cards from jsons as json objects into this->library (list of cards)
-//     return true;
-// }
+bool Window::loadLibrary()
+/* load global library of cards for use during game */
+{
+    std::ifstream file("./cards/load_list.json", std::ifstream::binary);
+    Json::Value list;
+    if(file.is_open())
+    {   
+        file >> list;
+        file.close();
+    }
+    else 
+    {
+        std::cerr<<"\nPanic! Couldn't open load list for cards! Can't procede\n!";
+        return false;
+    }
+    for (auto f : list)
+    {
+        std::string path = "./cards/"+f.asString();
+        // std::cerr<<path;
+        file.open(path, std::ifstream::binary);
+        Json::Value card;
+        if(file.is_open())
+        {
+            file >> card;
+            file.close();
+            this->library.emplace_back(new Card(card));
+        }
+        else 
+        {
+            std::cerr<<"Can't open card file: "<<path<<std::endl;
+        }
+    }
+    
+    // TODO: Load cards from jsons as json objects into this->library (list of cards)
+    return true;
+}
 
 // /*
 //  * SIGNALS

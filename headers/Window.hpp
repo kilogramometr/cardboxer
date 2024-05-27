@@ -20,6 +20,8 @@ class Window : public sf::RenderWindow
     // void changeResolution(sf::Vector2f resolution);
     // void changeScene(Node *scene);
     // void createMenu();
+    bool loadLibrary();
+
     void drawScene();
     void setCurrentScene(Node *node);
 
@@ -33,4 +35,3 @@ public:
     // void exit();
 
 };
-
