@@ -13,7 +13,7 @@ Button::Button(sf::Vector2f position, sf::Vector2f size, sf::Vector2f textOffset
 void Button::setFont()
 {
     this->font = new sf::Font();
-    this->font->loadFromFile("./res/fonts/Dosis-Light.ttf");
+    this->font->loadFromFile("./res/fonts/pixellettersfull.ttf");
 }
 
 void Button::setText(sf::Vector2f position, std::string buttonText, int textSize, sf::Vector2f textOffset)
