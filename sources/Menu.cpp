@@ -2,8 +2,8 @@
 
 Menu::Menu()
 {
-    this->gameButton = new Button(sf::Vector2f(300, 250), sf::Vector2f(200, 100), sf::Vector2f(40, 0), 65, sf::Color::Green, "Game", "Game Button Clicked!");
-    this->exitButton = new Button(sf::Vector2f(300, 400), sf::Vector2f(200, 100), sf::Vector2f(55, 0), 65, sf::Color::Red, "Exit", "Exit Button Clicked!");
+    this->gameButton = new Button(sf::Vector2f(300, 250), sf::Vector2f(200, 100), sf::Vector2f(40, 0), 65, sf::Color::Green, "Game", 1);
+    this->exitButton = new Button(sf::Vector2f(300, 400), sf::Vector2f(200, 100), sf::Vector2f(55, 0), 65, sf::Color::Red, "Exit", 2);
     // this->gameButton = new Button();
     this->appendChild(this->gameButton);
     this->appendChild(this->exitButton);

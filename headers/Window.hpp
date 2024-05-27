@@ -27,6 +27,8 @@ class Window : public sf::RenderWindow
     sf::Vector2f mousePosition;
     void updateMousePosition();
 
+    void checkClisks();
+
 public:
     Window(sf::Vector2f resolution, std::string title);
     void loop();

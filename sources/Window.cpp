@@ -25,12 +25,15 @@ Window::Window(sf::Vector2f resolution, std::string title)
     // this->view->setBackgroundBrush(Qt::black);
     // this->view->show();
     // this->setWindowTitle("");
+
+    //Set max framerate
+    this->setFramerateLimit(60);
+    this->setTitle("Cardboxer");
 }
 
 void Window::loop()
 {
-    this->updateMousePosition();
-    this->Scene->buttonClick(this->mousePosition);
+    this->checkClisks(); //Event pooling but for button codes
 
     this->drawScene();
     this->display();
@@ -54,6 +57,21 @@ void Window::updateMousePosition()
     sf::Vector2i mousePositionWindow = sf::Mouse::getPosition(*this);
     this->mousePosition = this->mapPixelToCoords(mousePositionWindow);
     //std::cout << this->mousePosition.x << " " << this->mousePosition.y << std::endl;
+}
+
+void Window::checkClisks()
+{
+    this->updateMousePosition();
+    //std::cout<< this->Scene->buttonClick(this->mousePosition)<<std::endl;
+    switch(this->Scene->buttonClick(this->mousePosition))
+    {
+        case 1:
+            std::cout<<"Switch to game scene"<<std::endl;
+            break;
+        case 2:
+            this->close();
+            break;
+    }
 }
 /*
  * UTILITY

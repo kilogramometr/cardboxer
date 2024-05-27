@@ -33,12 +33,20 @@ void Node::draw(sf::RenderTarget& target)
 }
 
 
-void Node::buttonClick(sf::Vector2f mousePosition)
+int Node::buttonClick(sf::Vector2f mousePosition)
 {
-    this->onButtonClick(mousePosition);
+    if(this->onButtonClick(mousePosition) != 0)
+        return this->onButtonClick(mousePosition);
 
-    for (auto it = this->children.begin(); it != this->children.end(); ++it)
-    {
-        (*it)->buttonClick(mousePosition);
+    else
+    {    
+        for (auto it = this->children.begin(); it != this->children.end(); ++it)
+        {
+            
+            if((*it)->buttonClick(mousePosition) != 0)
+                return (*it)->buttonClick(mousePosition);
+                
+        }
     }
+    return 0;
 }
