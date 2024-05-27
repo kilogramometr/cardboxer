@@ -9,7 +9,7 @@ private:
     sf::Transform transform;
     
     virtual void onDraw(sf::RenderTarget& target) {}
-
+    virtual void onButtonClick(sf::Vector2f mousePosition) {}
 
 public:
     std::list<Node*> children;
@@ -21,6 +21,7 @@ public:
     // void moveChild(int i);
     // void updateChildren();
     
+    
     void draw(sf::RenderTarget& target);
-
+    void buttonClick(sf::Vector2f mousePosition);
 };

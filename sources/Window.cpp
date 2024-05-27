@@ -29,6 +29,9 @@ Window::Window(sf::Vector2f resolution, std::string title)
 
 void Window::loop()
 {
+    this->updateMousePosition();
+    this->Scene->buttonClick(this->mousePosition);
+
     this->drawScene();
     this->display();
 }
@@ -44,6 +47,13 @@ void Window::drawScene()
 void Window::setCurrentScene(Node *node)
 {
     this->Scene = node;
+}
+
+void Window::updateMousePosition()
+{
+    sf::Vector2i mousePositionWindow = sf::Mouse::getPosition(*this);
+    this->mousePosition = this->mapPixelToCoords(mousePositionWindow);
+    //std::cout << this->mousePosition.x << " " << this->mousePosition.y << std::endl;
 }
 /*
  * UTILITY

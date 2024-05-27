@@ -31,3 +31,14 @@ void Node::draw(sf::RenderTarget& target)
         (*it)->draw(target);
     }
 }
+
+
+void Node::buttonClick(sf::Vector2f mousePosition)
+{
+    this->onButtonClick(mousePosition);
+
+    for (auto it = this->children.begin(); it != this->children.end(); ++it)
+    {
+        (*it)->buttonClick(mousePosition);
+    }
+}

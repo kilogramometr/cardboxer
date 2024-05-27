@@ -1,6 +1,6 @@
 #include "../headers/Button.hpp"
 
-Button::Button(sf::Vector2f position, sf::Vector2f size, sf::Vector2f textOffset, int textSize, sf::Color color, std::string buttonText) 
+Button::Button(sf::Vector2f position, sf::Vector2f size, sf::Vector2f textOffset, int textSize, sf::Color color, std::string buttonText, std::string message) 
 {
     this->setPosition(position);
     this->setSize(size);
@@ -8,6 +8,9 @@ Button::Button(sf::Vector2f position, sf::Vector2f size, sf::Vector2f textOffset
 
     this->setFont();
     this->setText(position, buttonText, textSize, textOffset);
+
+    this->clicked = false;
+    this->message = message;
 }
 
 void Button::setFont()
@@ -36,4 +39,20 @@ void Button::onDraw(sf::RenderTarget& target)
 {
     target.draw(*this);
     target.draw(*this->text);
+}
+
+void Button::onButtonClick(sf::Vector2f mousePosition)
+{
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        if(this->getGlobalBounds().contains(mousePosition)&&(this->clicked == false))
+        {
+            this->clicked = true;
+            std::cout<<message<<std::endl;
+        }
+    }
+    else
+    {
+        this->clicked = false;
+    }
 }
