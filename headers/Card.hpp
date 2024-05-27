@@ -1,9 +1,9 @@
 #pragma once
 #include "Node.hpp"
 
-class Game : public Node
+class Card : public Node
 {
 public:
-    Game();
-
+    Card();
 };
+

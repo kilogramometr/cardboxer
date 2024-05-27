@@ -1,50 +1,42 @@
-#include "Button.h"
+#include "../headers/Button.hpp"
 
-
-void Button::initFont()
+Button::Button(std::string text="Button", sf::Vector2f size={10,10}, int fontSize=18, std::string fontPath="./res/fonts/ARIAL.ttf") 
 {
-	if (!this->font.loadFromFile("Fonts/Dosis-Light.ttf"))
-	{
-		std::cout << "Failed to load font" << std::endl;
-	}
+    this->text = new sf::Text();
+    this->setFont(fontPath);
+    this->setText(text);
+    this->setFontSize(fontSize);
+    this->setSize(size);
+    this->setFillColor(sf::Color::Green);
 }
 
-void Button::initShape(sf::Vector2f position, sf::Vector2f size, sf::Color color)
+void Button::setFont(std::string fontPath)
+/* Load font from fontPath and set it as current font */
 {
-	this->shape.setPosition(position);
-	this->shape.setSize(size);
-	this->shape.setFillColor(color);
+    this->font = new sf::Font();
+    this->font->loadFromFile(fontPath);
+    this->text->setFont(*this->font);
 }
 
-void Button::initText(sf::Vector2f position, sf::Vector2f textOffset, int textSize, sf::String buttonText)
+void Button::setText(std::string text)
+/* Set new button text */
 {
-	this->text.setFont(this->font);
-	this->text.setCharacterSize(textSize);
-	this->text.setFillColor(sf::Color::White);
-	this->text.setString(buttonText);
-	this->text.setPosition(position);
-	this->text.move(textOffset);
+    this->text->setString(text);
 }
 
-Button::Button()
+void Button::resetText()
+/* reset button text to default */
 {
-
+    this->text->setString("Button");
 }
 
-void Button::initButton(sf::Vector2f position, sf::Vector2f size, sf::Vector2f textOffset, int textSize, sf::Color color, sf::String buttonText)
+void Button::setFontSize(int size)
 {
-	this->initShape(position, size, color);
-	this->initFont();
-	this->initText(position, textOffset, textSize, buttonText);
+    this->text->setCharacterSize(size);
 }
 
-void Button::render(sf::RenderTarget& target)
+void Button::onDraw(sf::RenderTarget& target)
 {
-	target.draw(this->shape);
-	target.draw(this->text);
-}
-
-sf::FloatRect Button::getGlobalBounds()
-{
-	return this->shape.getGlobalBounds();
+    target.draw(*this);
+    target.draw(*this->text);
 }
