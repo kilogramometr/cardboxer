@@ -1,2 +1,0 @@
-# cardboxer
-Simple university project

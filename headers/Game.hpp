@@ -1,9 +1,41 @@
 #pragma once
-#include "Node.hpp"
+#include <SFML/Graphics.hpp>
 
-class Game : public Node
+#include "Button.h"
+
+class Game
 {
-public:
-    Game();
+	//Variables
+	sf::RenderWindow* window;
+	sf::VideoMode videoMode;
+	sf::Event ev;
 
+	Button button;
+	Button button2;
+
+	sf::Vector2f mousePosition;
+
+	bool mouseHold;
+
+	//Private functions
+	void initVariables();
+	void initWindow();
+
+	void initButtons();
+
+	void updateMouse();
+	void updateButtonClicks();
+
+public:
+	//Constructor destructor
+	Game();
+	virtual ~Game();
+
+	//Getters
+	const bool running() const;
+
+	//Functions
+	void pollEvents();
+	void update();
+	void render();
 };
