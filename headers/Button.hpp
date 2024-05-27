@@ -1,22 +1,20 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <iostream>
+#include "Node.hpp"
 
-class Button
+class Button : public Node, public sf::RectangleShape
 {
-private:
-	sf::RectangleShape shape;
-	sf::Font font;
-	sf::Text text;
+    sf::Font *font;
+    sf::Text *text;
 
-	void initFont();
-	void initShape(sf::Vector2f position, sf::Vector2f size, sf::Color color);
-	void initText(sf::Vector2f position, sf::Vector2f textOffset, int textSize, sf::String buttonText);
+    void onDraw(sf::RenderTarget& target) override;
 
 public:
-	Button();
-	void initButton(sf::Vector2f position, sf::Vector2f size, sf::Vector2f textOffset, int textSize, sf::Color color, sf::String buttonText);
-	void render(sf::RenderTarget& target);
-	sf::FloatRect getGlobalBounds();
+    Button(std::string text, sf::Vector2f size, int fontSize, std::string fontPath);
+    void setText(std::string text);
+    void setFont(std::string fontPath);
+    void setFontSize(int size);
+    void resetText();
+
 };
+
