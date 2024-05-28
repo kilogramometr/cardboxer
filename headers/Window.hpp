@@ -25,6 +25,12 @@ class Window : public sf::RenderWindow
     void drawScene();
     void setCurrentScene(Node *node);
 
+    //Mouse position
+    sf::Vector2f mousePosition;
+    void updateMousePosition();
+
+    void checkClisks();
+
 public:
     Window(sf::Vector2f resolution, std::string title);
     void loop();

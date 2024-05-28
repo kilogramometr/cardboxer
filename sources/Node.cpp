@@ -31,3 +31,22 @@ void Node::draw(sf::RenderTarget& target)
         (*it)->draw(target);
     }
 }
+
+
+int Node::buttonClick(sf::Vector2f mousePosition)
+{
+    if(this->onButtonClick(mousePosition) != 0)
+        return this->onButtonClick(mousePosition);
+
+    else
+    {    
+        for (auto it = this->children.begin(); it != this->children.end(); ++it)
+        {
+            
+            if((*it)->buttonClick(mousePosition) != 0)
+                return (*it)->buttonClick(mousePosition);
+                
+        }
+    }
+    return 0;
+}

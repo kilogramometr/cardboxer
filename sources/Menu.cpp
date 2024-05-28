@@ -2,10 +2,12 @@
 
 Menu::Menu()
 {
-    this->exitButton = new Button("Buton", {200,100}, 18, "./res/fonts/ARIAL.ttf");
+    this->gameButton = new Button(sf::Vector2f(300, 250), sf::Vector2f(200, 100), sf::Vector2f(40, 0), 65, sf::Color::Green, "Game", 1);
+    this->exitButton = new Button(sf::Vector2f(300, 400), sf::Vector2f(200, 100), sf::Vector2f(55, 0), 65, sf::Color::Red, "Exit", 2);
     // this->gameButton = new Button();
+    this->appendChild(this->gameButton);
     this->appendChild(this->exitButton);
-    this->exitButton->setPosition({0, 0});
+    //this->exitButton->setPosition({0, 0});
     // this->appendChild(this->gameButton);
     
     // this->gameButton = new QPushButton();
