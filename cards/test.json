@@ -2,16 +2,24 @@
     "name": "test",
     "description": "description", 
     
+    "texture": {
+        "file": "t.png",
+        "x": 1,
+        "y": 1,
+        "w": 1,
+        "h": 1
+    },
+
     "defensive": {
-        "healthMod": 0,
-        "maxHealthMod": 0,
-        "guardMod": 0
+        "health": 0,
+        "maxHealth": 0,
+        "guard": 0
     },
     
     "offensive": {
-        "healthMod": 0,
-        "maxHealthMod": 0,
-        "guardMod": 0
+        "health": 0,
+        "maxHealth": 0,
+        "guard": 0
     } 
 
 }
