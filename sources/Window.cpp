@@ -99,6 +99,7 @@ bool Window::loadLibrary()
             file >> card;
             file.close();
             this->library.emplace_back(new Card(card));
+
         }
         else 
         {
