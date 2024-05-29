@@ -8,7 +8,7 @@ Game::Game()
     this->enemy = new Enemy;
     this->appendChild(this->enemy);
 
-    this->returnButton = new Button(sf::Vector2f(600, 0), sf::Vector2f(200, 100), sf::Vector2f(30, 0), 65, sf::Color::Red, "Return", 3);
+    this->returnButton = new Button(sf::Vector2f(300, 0), sf::Vector2f(200, 50), sf::Vector2f(55, 0), 40, sf::Color::Red, "Return", 3);
     this->appendChild(this->returnButton);
 }
 

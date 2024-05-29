@@ -5,6 +5,7 @@
 class Player : public Node
 {
 private:
+Healthbar *healthbar;
 
 public:
     Player();
