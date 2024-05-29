@@ -13,6 +13,7 @@ Window::Window(sf::Vector2f resolution, std::string title)
     this->backGround->setPosition(0, 0);
     // create scene and view
     this->menu = new Menu();
+    this->game = new Game();
     this->setCurrentScene(this->menu);
     // this->createMenu();
     // this->view  = new QGraphicsView();
@@ -67,6 +68,7 @@ void Window::checkClisks()
     {
         case 1:
             std::cout<<"Switch to game scene"<<std::endl;
+            this->setCurrentScene(this->game);
             break;
         case 2:
             this->close();

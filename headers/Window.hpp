@@ -4,6 +4,7 @@
 #include "Node.hpp"
 #include "Card.hpp"
 #include "Menu.hpp"
+#include "Game.hpp"
 
 class Window : public sf::RenderWindow
 {
