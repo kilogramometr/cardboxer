@@ -67,11 +67,13 @@ void Window::checkClisks()
     switch(this->Scene->buttonClick(this->mousePosition))
     {
         case 1:
-            std::cout<<"Switch to game scene"<<std::endl;
             this->setCurrentScene(this->game);
             break;
         case 2:
             this->close();
+            break;
+        case 3:
+            this->setCurrentScene(this->menu);
             break;
     }
 }
