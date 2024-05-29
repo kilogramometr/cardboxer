@@ -30,6 +30,9 @@ Window::Window(sf::Vector2f resolution, std::string title)
     //Set max framerate
     this->setFramerateLimit(60);
     this->setTitle("Cardboxer");
+
+    //Mouse hold
+    this->mouseHold = false;
 }
 
 void Window::loop()
@@ -64,18 +67,31 @@ void Window::checkClisks()
 {
     this->updateMousePosition();
     //std::cout<< this->Scene->buttonClick(this->mousePosition)<<std::endl;
-    switch(this->Scene->buttonClick(this->mousePosition))
+    if(this->mouseHold == false)
     {
-        case 1:
-            this->setCurrentScene(this->game);
-            break;
-        case 2:
-            this->close();
-            break;
-        case 3:
-            this->setCurrentScene(this->menu);
-            break;
+        switch(this->Scene->buttonClick(this->mousePosition))
+        {
+            case 1:
+                this->setCurrentScene(this->game);
+                break;
+            case 2:
+                this->close();
+                break;
+            case 3:
+                this->setCurrentScene(this->menu);
+                break;
+        }
     }
+
+    this->checkMouseHold();
+}
+
+void Window::checkMouseHold()
+{
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        this->mouseHold = true;
+    else
+        this->mouseHold = false;
 }
 /*
  * UTILITY

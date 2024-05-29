@@ -26,7 +26,9 @@ class Window : public sf::RenderWindow
 
     //Mouse position
     sf::Vector2f mousePosition;
+    bool mouseHold;
     void updateMousePosition();
+    void checkMouseHold();
 
     void checkClisks();
 
