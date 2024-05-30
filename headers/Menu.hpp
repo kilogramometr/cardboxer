@@ -6,6 +6,7 @@ class Menu : public Node
 {
 private:
     Button *gameButton;
+    Button *cardsLibraryButton;
     Button *exitButton;
     // QPushButton *gameButton;
     // QPushButton *exitButton;
