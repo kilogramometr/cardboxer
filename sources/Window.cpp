@@ -14,6 +14,7 @@ Window::Window(sf::Vector2f resolution, std::string title)
     // create scene and view
     this->menu = new Menu();
     this->game = new Game();
+    this->cardsLibrary = new CardsLibraryScene();
     this->setCurrentScene(this->menu);
     // this->createMenu();
     // this->view  = new QGraphicsView();
@@ -79,6 +80,9 @@ void Window::checkClisks()
                 break;
             case 3:
                 this->setCurrentScene(this->menu);
+                break;
+            case 4:
+                this->setCurrentScene(this->cardsLibrary);
                 break;
         }
     }

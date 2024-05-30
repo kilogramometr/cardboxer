@@ -5,6 +5,7 @@
 #include "Card.hpp"
 #include "Menu.hpp"
 #include "Game.hpp"
+#include "CarsdLibraryScene.hpp"
 
 class Window : public sf::RenderWindow
 {
@@ -12,6 +13,7 @@ class Window : public sf::RenderWindow
     sf::RectangleShape *backGround;
     /* Scene */ Menu *menu;
     /* Scene */ Node *game;
+    /* Scene */ Node *cardsLibrary;
     /* Scene */ Node *Scene;
     // QGraphicsView  *view;
     std::list<Card> library;
