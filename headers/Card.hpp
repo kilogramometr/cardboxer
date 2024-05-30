@@ -8,6 +8,7 @@ class Card : public Node, public sf::Sprite
     CardAction *defensiveAction;
     CardAction *offensiveAction;
     std::string desc;
+    std::string originalDesc;
     sf::Texture *texture;
     sf::Font *font;
     sf::Text *name;
@@ -16,8 +17,9 @@ class Card : public Node, public sf::Sprite
     // std::string name;
 
     void onDraw(sf::RenderTarget& target) override;
-
-    void setText(sf::Vector2f position, std::string buttonText, int textSize, sf::Vector2f textOffset);
+    void setName(std::string name, int size);
+    void setDesc(std::string descritpion, int size);
+    void updateDesc();
     void setFont();
     
 public:

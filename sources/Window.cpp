@@ -122,6 +122,9 @@ bool Window::loadLibrary()
         std::cerr<<"\nLibraryLoader: Panic! Unable to open load list for cards! Can't procede!\n";
         return false;
     }
+    
+    std::map<std::string, bool> loadedCards;
+    
     for (auto f : list)
     {
         std::string path = "./cards/"+f.asString();
@@ -131,9 +134,28 @@ bool Window::loadLibrary()
         {
             file >> card;
             file.close();
+
+            if (card["name"].isNull())
+            {
+                std::cerr<<"LibraryLoader: error #1; file "<<f.asString()<<" - attribute \"name\" is NULL (expected string).\n";
+                continue;
+            }
+            else
+            {
+                auto it = loadedCards.find(card["name"].asString());
+                if (it == loadedCards.end()) 
+                    loadedCards[card["name"].asString()] = true; 
+                else 
+                {
+                    std::cerr<<"LibraryLoader: error #2; Card \""<<card["name"].asString()<<"\" - card of this name has been already loaded. Skipping...\n";
+                    continue;
+                }
+            }
+
             try { this->library.emplace_back(new Card(card)); }
             catch (int e)
             {
+                std::cerr<<"\nError\n";
                 failures++;
                 switch(e)
                 {
@@ -168,9 +190,9 @@ bool Window::loadLibrary()
                 // if (e > 10) this->library.pop_back();
             }
         }
-        else { std::cerr<<"LibraryLoader: Can't open card file: \""<<f.asString()<<"\", skipping...\n"; failures++; }
+        else { std::cerr<<"LibraryLoader: Can't open card file: \""<<f.asString()<<"\". Skipping...\n"; failures++; }
     }
-    std::cerr<<"LibraryLoader: Loaded "<<this->library.size()<<" cards, failed to load "+ std::to_string(failures) +".\n";
+    std::cerr<<"LibraryLoader: Loaded "<<this->library.size()<<" cards, failed to load "<<failures<<".\n";
     // TODO: Load cards from jsons as json objects into this->library (list of cards)
     return true;
 }

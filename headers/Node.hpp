@@ -7,7 +7,11 @@ class Node
 {
 private:
     sf::Transform transform;
+    bool hidden = false;
     
+    void hide();
+    void reveal();
+
     virtual void onDraw(sf::RenderTarget& target) {}
     virtual int onButtonClick(sf::Vector2f mousePosition) {return 0;}
 

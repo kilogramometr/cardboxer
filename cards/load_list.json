@@ -1,3 +1,5 @@
 [
-    "test.json"
+    "test.json",
+    "test.json",
+    "idontexist.json"
 ]

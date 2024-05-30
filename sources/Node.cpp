@@ -19,6 +19,7 @@ void Node::removeChild(Node* child)
 }
 
 void Node::draw(sf::RenderTarget& target)
+/* draw self and children */
 {
     // combine the parent transform with the node's one
 
@@ -32,8 +33,8 @@ void Node::draw(sf::RenderTarget& target)
     }
 }
 
-
 int Node::buttonClick(sf::Vector2f mousePosition)
+/* check click for self and children*/
 {
     if(this->onButtonClick(mousePosition) != 0)
         return this->onButtonClick(mousePosition);
@@ -42,11 +43,12 @@ int Node::buttonClick(sf::Vector2f mousePosition)
     {    
         for (auto it = this->children.begin(); it != this->children.end(); ++it)
         {
-            
             if((*it)->buttonClick(mousePosition) != 0)
-                return (*it)->buttonClick(mousePosition);
-                
+                return (*it)->buttonClick(mousePosition);       
         }
     }
     return 0;
 }
+
+void Node::hide() { this->hidden = false; }
+void Node::reveal() { this->hidden = true; }

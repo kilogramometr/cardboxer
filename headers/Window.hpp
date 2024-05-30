@@ -13,7 +13,7 @@ class Window : public sf::RenderWindow
     /* Scene */ Node *game;
     /* Scene */ Node *Scene;
     // QGraphicsView  *view;
-    std::list<Card> library;
+    std::list<Card *> library;
     // QJsonObject config;
 
     // bool loadLibrary(std::string path);

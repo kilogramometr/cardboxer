@@ -1,6 +1,6 @@
 {
     "name": "test",
-    "description": "description", 
+    "description": "description $oh", 
     
     "texture": {
         "file": "t.png",

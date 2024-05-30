@@ -1,6 +1,7 @@
 {
     "name": "name (needs to be unique)",
-    "description": "description", 
+    "description":
+        "description. For variables (values affected by actions) use $[offensive|defensive][health|maxHealth|guard] like that: $oh $om $og $dh $dm $dh", 
     
     "defensive": {
         "health": 0,
