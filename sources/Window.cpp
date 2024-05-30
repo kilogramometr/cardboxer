@@ -20,7 +20,7 @@ Window::Window(sf::Vector2f resolution, std::string title)
     // create scene and view
     this->menu = new Menu();
     this->game = new Game();
-    this->cardsLibrary = new CardsLibraryScene();
+    this->cardLibrary = new CardLibrary();
     this->setCurrentScene(this->menu);
 
     // this->createMenu();
@@ -36,6 +36,7 @@ Window::Window(sf::Vector2f resolution, std::string title)
     // this->setWindowTitle("");
 
     //Set max framerate
+    this->setVerticalSyncEnabled(false);
     this->setFramerateLimit(60);
     this->setTitle("Cardboxer");
 
@@ -89,7 +90,7 @@ void Window::checkClisks()
                 this->setCurrentScene(this->menu);
                 break;
             case 4:
-                this->setCurrentScene(this->cardsLibrary);
+                this->setCurrentScene(this->cardLibrary);
                 break;
         }
     }

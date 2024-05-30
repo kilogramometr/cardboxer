@@ -21,7 +21,5 @@ rebuild:
 	make
 	make run
 
-
-
 clean:
 	rm -rvf *.o
