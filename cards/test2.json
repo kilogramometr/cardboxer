@@ -1,10 +1,10 @@
 {
-    "name": "test",
+    "name": "test2",
     "description": "description $oh", 
     
     "texture": {
         "file": "test_cards.png",
-        "x": 0,
+        "x": 250,
         "y": 0,
         "w": 250,
         "h": 350

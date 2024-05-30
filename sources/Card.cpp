@@ -1,11 +1,12 @@
 #include "../headers/Card.hpp"
 #include <fstream>
 #include <iostream>
+
+Card::Card() {}
+
 Card::Card(Json::Value card) 
 /* Card constuctor */
 {
-
-
     if (!card["defensive"].isNull())
     /* load defensive action if exists */
     {   
@@ -28,17 +29,17 @@ Card::Card(Json::Value card)
         };
     }
 
-    // if (card["texture"].isNull()) { throw 30; }
-    // /* load texture or throw error if not exists */
-    // else
-    // {
-    //     this->texture = new sf::Texture();
-    //     std::string path = "./res/textures/" + card["texture"]["file"].asString();
-    //     if(!this->texture->loadFromFile(path))
-    //         throw 31;
-    //     this->setTexture(*this->texture);
-    //     this->setTextureRect({card["texture"]["x"].asInt(), card["texture"]["y"].asInt(), card["texture"]["w"].asInt(), card["texture"]["h"].asInt()});
-    // }
+    if (card["texture"].isNull()) { throw 30; }
+    /* load texture or throw error if not exists */
+    else
+    {
+        this->texture = new sf::Texture();
+        std::string path = "./res/textures/" + card["texture"]["file"].asString();
+        if(!this->texture->loadFromFile(path))
+            throw 31;
+        this->setTexture(*this->texture);
+        this->setTextureRect({card["texture"]["x"].asInt(), card["texture"]["y"].asInt(), card["texture"]["w"].asInt(), card["texture"]["h"].asInt()});
+    }
     
     this->setFont();
     (card["name"].isNull()) ? throw 1 : this->setName(card["name"].asString(), 20);
@@ -47,7 +48,6 @@ Card::Card(Json::Value card)
     // std::cerr<<this->desc<<std::endl<<this->originalDesc<<std::endl;
 }
 
-void Card::onDraw(sf::RenderTarget& target) {}
 
 void Card::setFont()
 {
@@ -97,3 +97,10 @@ void Card::updateDesc()
     //     { this->desc.replace(index, 3, std::to_string(this->defensiveAction->getGuardMod())); }
     this->description->setString(this->desc);
 }
+
+void Card::onDraw(sf::RenderTarget& target) 
+{
+    target.draw(*this);
+}
+
+std::string Card::getName() { return this->name->getString(); }

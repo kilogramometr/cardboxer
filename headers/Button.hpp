@@ -12,7 +12,7 @@ class Button : public Node, public sf::RectangleShape
     int code;
 
     void onDraw(sf::RenderTarget& target) override;
-    int onButtonClick(sf::Vector2f mousePos);
+    int onButtonClick(sf::Vector2f mousePos) override;
 
     void setText(sf::Vector2f position, std::string buttonText, int textSize, sf::Vector2f textOffset);
     void setFont();

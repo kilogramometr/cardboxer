@@ -43,9 +43,11 @@ void Button::onDraw(sf::RenderTarget& target)
 
 int Button::onButtonClick(sf::Vector2f mousePosition)
 {
-    if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
-        if(this->getGlobalBounds().contains(mousePosition))
-            return this->code;
-
+    if(this->getGlobalBounds().contains(mousePosition))
+    {
+        std::cerr<<"I contain the mouse\n\n";
+        return this->code;
+    }
+    std::cerr<<"I do not contain the mouse\n\n";
     return 0;
 }

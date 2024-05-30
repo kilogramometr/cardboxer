@@ -20,7 +20,7 @@ Window::Window(sf::Vector2f resolution, std::string title)
     // create scene and view
     this->menu = new Menu();
     this->game = new Game();
-    this->cardLibrary = new CardLibrary();
+    this->cardLibrary = new CardLibrary(&this->library);
     this->setCurrentScene(this->menu);
 
     // this->createMenu();
@@ -36,7 +36,7 @@ Window::Window(sf::Vector2f resolution, std::string title)
     // this->setWindowTitle("");
 
     //Set max framerate
-    this->setVerticalSyncEnabled(false);
+    this->setVerticalSyncEnabled(true);
     this->setFramerateLimit(60);
     this->setTitle("Cardboxer");
 
@@ -46,8 +46,24 @@ Window::Window(sf::Vector2f resolution, std::string title)
 
 void Window::loop()
 {
-    this->checkClisks(); //Event pooling but for button codes
+    sf::Event event;
+    while(this->pollEvent(event))
+    {
+        switch(event.type)
+        {
+            case sf::Event::Closed:
+                this->close();
+                break;
+            case sf::Event::MouseButtonReleased:
+                std::cerr<<"a\n";
+                this->checkClicks();
+                break;
+            default:
+                break;
+        }
+    }
 
+    // this->checkClicks(); //Event pooling but for button codes
     this->drawScene();
     this->display();
 }
@@ -72,30 +88,32 @@ void Window::updateMousePosition()
     //std::cout << this->mousePosition.x << " " << this->mousePosition.y << std::endl;
 }
 
-void Window::checkClisks()
+void Window::checkClicks()
 {
     this->updateMousePosition();
     //std::cout<< this->Scene->buttonClick(this->mousePosition)<<std::endl;
-    if(this->mouseHold == false)
+    std::cerr<<"I am checking\n";
+    switch(this->Scene->buttonClick(this->mousePosition))
     {
-        switch(this->Scene->buttonClick(this->mousePosition))
-        {
-            case 1:
-                this->setCurrentScene(this->game);
-                break;
-            case 2:
-                this->close();
-                break;
-            case 3:
-                this->setCurrentScene(this->menu);
-                break;
-            case 4:
-                this->setCurrentScene(this->cardLibrary);
-                break;
-        }
+        case 1: // switch to game scene
+            this->setCurrentScene(this->game);
+            break;
+        case 2: // shutdown
+            this->close();
+            break;
+        case 3: // switch to menu scene
+            this->setCurrentScene(this->menu);
+            break;
+        case 4: // switch to card library scene
+            this->setCurrentScene(this->cardLibrary);
+            break;
+        case 100: // click handled by internal scene function
+        default:
+            break;
     }
+    
 
-    this->checkMouseHold();
+    // this->checkMouseHold();
 }
 
 void Window::checkMouseHold()
@@ -172,7 +190,7 @@ bool Window::loadLibrary()
                     loadedCards[card["name"].asString()] = true; 
                 else 
                 {
-                    std::cerr<<"LibraryLoader: error #2; Card \""<<card["name"].asString()<<"\" - card of this name has been already loaded. Skipping...\n";
+                    std::cerr<<"LibraryLoader: error #2; Card \""<<card["name"].asString()<<"\" - card of this name has already been loaded. Skipping...\n";
                     continue;
                 }
             }

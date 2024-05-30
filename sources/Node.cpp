@@ -13,7 +13,8 @@ void Node::removeChild(Node* child)
         if (*it == child)
         {
             this->children.erase(it);
-            std::cout<<"Great Success!\n";
+            return;
+            // std::cout<<"Great Success!\n";
         }
     }
 }
@@ -36,17 +37,24 @@ void Node::draw(sf::RenderTarget& target)
 int Node::buttonClick(sf::Vector2f mousePosition)
 /* check click for self and children*/
 {
-    if(this->onButtonClick(mousePosition) != 0)
-        return this->onButtonClick(mousePosition);
-
+    int code = this->onButtonClick(mousePosition);
+    if(code != 0)
+    {
+        std::cerr<<"great success!\n";  
+        return code;
+    }
     else
     {    
+        std::cerr<<"I am checking my children\n";
         for (auto it = this->children.begin(); it != this->children.end(); ++it)
         {
-            if((*it)->buttonClick(mousePosition) != 0)
-                return (*it)->buttonClick(mousePosition);       
+            std::cerr<<"I am checking: "<<*it<<"\n";
+            code = (*it)->buttonClick(mousePosition);
+            if(code != 0)
+                return code;       
         }
     }
+    
     return 0;
 }
 

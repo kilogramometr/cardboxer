@@ -34,7 +34,7 @@ class Window : public sf::RenderWindow
     void updateMousePosition();
     void checkMouseHold();
 
-    void checkClisks();
+    void checkClicks();
 
 public:
     Window(sf::Vector2f resolution, std::string title);

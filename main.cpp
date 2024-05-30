@@ -30,18 +30,6 @@ int main(int argc, char *argv[])
     // std::unique_ptr<Window> window = std::make_unique<Window>(Window(sf::Vector2f(800, 600), "Title"));
     while(window->isOpen())
     {
-        sf::Event event;
-        while(window->pollEvent(event))
-        {
-            switch(event.type)
-            {
-                case sf::Event::Closed:
-                    window->close();
-                    break;
-                default:
-                    break;
-            }
-        }
         window->loop();
         // window.display();
         // window.draw(*shape);

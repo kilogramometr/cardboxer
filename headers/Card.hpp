@@ -23,7 +23,12 @@ class Card : public Node, public sf::Sprite
     void setFont();
     
 public:
+    // Card(Card const &card);
+    Card();
     Card(Json::Value card);
+
+    std::string getName();
+    bool operator==(Card &right) { return (this->name->getString() == right.name->getString()); }
     // void load(/* json object card */);
 };
 
