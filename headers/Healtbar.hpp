@@ -12,7 +12,7 @@ private:
     float thick;
     bool direction;
 
-    void onDraw(sf::RenderTarget &target);
+    void onDraw(sf::RenderTarget &target, sf::Transform& transform);
 
 public:
     Healthbar(bool direct);

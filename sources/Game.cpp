@@ -12,4 +12,4 @@ Game::Game()
     this->appendChild(this->returnButton);
 }
 
-void Game::onDraw(sf::RenderTarget& target) {}
+void Game::onDraw(sf::RenderTarget& target, sf::Transform& transform) {}

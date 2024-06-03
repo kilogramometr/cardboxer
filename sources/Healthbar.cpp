@@ -31,8 +31,8 @@ void Healthbar::setHealth(float hp_percent)
     else this->bar.setPosition(this->position.x+this->thick, this->position.y+this->thick - this->bar.getSize().y*(1-hp_percent/100));
 }
 
-void Healthbar::onDraw(sf::RenderTarget &target)
+void Healthbar::onDraw(sf::RenderTarget &target, sf::Transform& transform)
 {
-    target.draw(this->bar);
-    target.draw(*this);
+    target.draw(this->bar, transform);
+    target.draw(*this, transform);
 }
