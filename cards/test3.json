@@ -1,0 +1,25 @@
+{
+    "name": "test3",
+    "description": "description $oh", 
+    
+    "texture": {
+        "file": "test_cards.png",
+        "x": 250,
+        "y": 351,
+        "w": 250,
+        "h": 350
+    },
+
+    "defensive": {
+        "health": 1,
+        "maxHealth": 0,
+        "guard": 0
+    },
+    
+    "offensive": {
+        "health": 0,
+        "maxHealth": 0,
+        "guard": 0
+    } 
+
+}

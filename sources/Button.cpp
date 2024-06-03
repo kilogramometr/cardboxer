@@ -35,17 +35,19 @@ void Button::resetText()
     this->text->setString("Button");
 }
 
-void Button::onDraw(sf::RenderTarget& target)
+void Button::onDraw(sf::RenderTarget& target, sf::Transform& transform)
 {
-    target.draw(*this);
-    target.draw(*this->text);
+    target.draw(*this, transform);
+    target.draw(*this->text, transform);
 }
 
 int Button::onButtonClick(sf::Vector2f mousePosition)
 {
-    if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
-        if(this->getGlobalBounds().contains(mousePosition))
-            return this->code;
-
+    if(this->getGlobalBounds().contains(mousePosition))
+    {
+        std::cerr<<"I contain the mouse\n\n";
+        return this->code;
+    }
+    std::cerr<<"I do not contain the mouse\n\n";
     return 0;
 }

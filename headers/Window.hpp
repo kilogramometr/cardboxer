@@ -16,13 +16,15 @@ class Window : public sf::RenderWindow
     /* Scene */ Node *cardLibrary;
     /* Scene */ Node *Scene;
     // QGraphicsView  *view;
-    std::list<Card> library;
+    std::list<Card *> library;
     // QJsonObject config;
 
     // bool loadLibrary(std::string path);
     // void changeResolution(sf::Vector2f resolution);
     // void changeScene(Node *scene);
     // void createMenu();
+    bool loadLibrary();
+
     void drawScene();
     void setCurrentScene(Node *node);
 
@@ -32,7 +34,7 @@ class Window : public sf::RenderWindow
     void updateMousePosition();
     void checkMouseHold();
 
-    void checkClisks();
+    void checkClicks();
 
 public:
     Window(sf::Vector2f resolution, std::string title);
@@ -44,4 +46,3 @@ public:
     // void exit();
 
 };
-

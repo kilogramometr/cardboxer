@@ -7,8 +7,12 @@ class Node
 {
 private:
     sf::Transform transform;
-    
-    virtual void onDraw(sf::RenderTarget& target) {}
+    bool hidden = false;
+
+    void hide();
+    void reveal();
+
+    virtual void onDraw(sf::RenderTarget& target, sf::Transform& transform) {}
     virtual int onButtonClick(sf::Vector2f mousePosition) {return 0;}
 
 public:
@@ -22,6 +26,6 @@ public:
     // void updateChildren();
     
     
-    void draw(sf::RenderTarget& target);
+    void draw(sf::RenderTarget& target, sf::Transform& parentTransform);
     int buttonClick(sf::Vector2f mousePosition);
 };
