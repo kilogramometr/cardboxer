@@ -1,12 +1,16 @@
 #pragma once
-#include "Node.hpp"
-#include "Healtbar.hpp"
+#include "Boxer.hpp"
 
-class Enemy : public Node
+class Enemy : public Boxer
 {
 private:
-    Healthbar *healthbar;
+    std::list<float> probabilities; 
+    std::list<Card *>::iterator lastPlayed; // last played card
 
 public:
-    Enemy();
+    Enemy(Json::Value enemy);
+
+    std::list<Card *>::iterator chooseCard();
+    void playCard();
+    
 };

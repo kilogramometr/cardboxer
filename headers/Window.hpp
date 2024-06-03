@@ -6,6 +6,7 @@
 #include "Menu.hpp"
 #include "Game.hpp"
 #include "CardLibrary.hpp"
+#include "Enemy.hpp"
 
 class Window : public sf::RenderWindow
 {
@@ -17,6 +18,7 @@ class Window : public sf::RenderWindow
     /* Scene */ Node *Scene;
     // QGraphicsView  *view;
     std::list<Card *> library;
+    std::list<Enemy *> enemies;
     // QJsonObject config;
 
     // bool loadLibrary(std::string path);
@@ -24,6 +26,7 @@ class Window : public sf::RenderWindow
     // void changeScene(Node *scene);
     // void createMenu();
     bool loadLibrary();
+    bool loadEnemies();
 
     void drawScene();
     void setCurrentScene(Node *node);

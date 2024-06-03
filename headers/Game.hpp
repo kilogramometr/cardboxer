@@ -12,6 +12,8 @@ private:
 
     Button *returnButton;
     void onDraw(sf::RenderTarget& target, sf::Transform& transform);
+
+    
 public:
     Game();
 
