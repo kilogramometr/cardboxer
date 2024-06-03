@@ -16,11 +16,13 @@ class Card : public Node, public sf::Sprite
 
     // std::string name;
 
-    void onDraw(sf::RenderTarget& target) override;
+    void onDraw(sf::RenderTarget& target, sf::Transform& transform) override;
     void setName(std::string name, int size);
     void setDesc(std::string descritpion, int size);
     void updateDesc();
     void setFont();
+    void calcDescWrap();
+    void updateTextPosition();
     
 public:
     // Card(Card const &card);

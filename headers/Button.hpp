@@ -11,7 +11,7 @@ class Button : public Node, public sf::RectangleShape
     bool clicked;
     int code;
 
-    void onDraw(sf::RenderTarget& target) override;
+    void onDraw(sf::RenderTarget& target, sf::Transform& transform) override;
     int onButtonClick(sf::Vector2f mousePos) override;
 
     void setText(sf::Vector2f position, std::string buttonText, int textSize, sf::Vector2f textOffset);

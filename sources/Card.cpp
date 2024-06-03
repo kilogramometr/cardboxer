@@ -98,9 +98,35 @@ void Card::updateDesc()
     this->description->setString(this->desc);
 }
 
-void Card::onDraw(sf::RenderTarget& target) 
+void Card::onDraw(sf::RenderTarget& target, sf::Transform& transform) 
 {
-    target.draw(*this);
+    this->updateTextPosition();
+    target.draw(*this, transform);
+    target.draw(*this->name, transform);
+    target.draw(*this->description, transform);
 }
+
+void Card::updateTextPosition()
+{
+    auto position = this->getPosition();
+    auto bounds = this->getLocalBounds();
+    auto scale = this->getScale();
+    
+    float margin = 15*scale.x;
+
+    this->name->setScale(scale);
+    this->name->setPosition(position.x + margin, position.y);
+
+    float middle = (bounds.height*scale.y) / 2;
+    // std::cerr<<bounds.height<<std::endl<<scale.y<<std::endl;
+    this->description->setScale(scale);
+    this->description->setPosition(position.x + margin, middle + 2*margin);
+}
+
+void Card::calcDescWrap()
+{
+
+}
+
 
 std::string Card::getName() { return this->name->getString(); }

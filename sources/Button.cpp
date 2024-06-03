@@ -35,10 +35,10 @@ void Button::resetText()
     this->text->setString("Button");
 }
 
-void Button::onDraw(sf::RenderTarget& target)
+void Button::onDraw(sf::RenderTarget& target, sf::Transform& transform)
 {
-    target.draw(*this);
-    target.draw(*this->text);
+    target.draw(*this, transform);
+    target.draw(*this->text, transform);
 }
 
 int Button::onButtonClick(sf::Vector2f mousePosition)

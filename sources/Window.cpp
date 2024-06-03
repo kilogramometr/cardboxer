@@ -72,7 +72,8 @@ void Window::drawScene()
 {
     this->draw(*this->backGround);
     // this->menu->draw(*this);
-    this->Scene->draw(*this);
+    sf::Transform transform;
+    this->Scene->draw(*this, transform);
     /* draw scene (Node) here*/
 }
 

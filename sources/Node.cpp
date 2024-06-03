@@ -19,18 +19,19 @@ void Node::removeChild(Node* child)
     }
 }
 
-void Node::draw(sf::RenderTarget& target)
+void Node::draw(sf::RenderTarget& target, sf::Transform& parentTransform)
 /* draw self and children */
 {
     // combine the parent transform with the node's one
+    sf::Transform combinedTransform = parentTransform * this->transform;
 
     // let the node draw itself
-    onDraw(target);
+    onDraw(target, combinedTransform);
 
     // draw its children
     for (auto it = this->children.begin(); it != this->children.end(); ++it)
     {
-        (*it)->draw(target);
+        (*it)->draw(target, combinedTransform);
     }
 }
 

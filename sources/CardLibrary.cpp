@@ -34,7 +34,6 @@ void CardLibrary::onDraw(sf::RenderTarget &target){}
 
 void CardLibrary::next() 
 {
-    if (this->cardPrev == **(this->it)) ++it;
     this->cardPrev = this->card;
     this->card = this->cardNext;
 
@@ -48,7 +47,6 @@ void CardLibrary::next()
 
 void CardLibrary::prev() 
 {
-    if (this->cardNext == **(this->it)) --it;
     this->cardNext = this->card;
     this->card = this->cardPrev;
     
@@ -57,7 +55,17 @@ void CardLibrary::prev()
     else
         --this->it;
     
-    this->cardPrev = **(this->it);
+    auto tempIt = this->it;
+    for (int i = 0; i < 2; i++)
+    {
+        if (tempIt == this->library->begin())
+            tempIt =--this->library->end();
+        else
+            --tempIt;
+    }
+
+    this->cardPrev = **(tempIt);
+
 }
 
 void CardLibrary::hideCards()
@@ -86,6 +94,8 @@ void CardLibrary::updateCards()
     this->cardPrev.setPosition({75, 212.5});
     
 }
+
+/* internal handling of button clicks */
 
 int CardLibrary::onButtonClick(sf::Vector2f mousePos)
 {
