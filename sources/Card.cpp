@@ -12,9 +12,9 @@ Card::Card(Json::Value card)
     {   
         this->defensiveAction = new CardAction(
             false,
-            (card["defensive"]["health"].isNull()) ? throw 11 : card["health"].asInt(),
-            (card["defensive"]["maxHealth"].isNull()) ? throw 12 : card["maxHealth"].asInt(),
-            (card["defensive"]["guard"].isNull()) ? throw 13 : card["guard"].asInt()
+            (card["defensive"]["health"].isNull()) ? throw 11 : card["defensive"]["health"].asInt(),
+            (card["defensive"]["maxHealth"].isNull()) ? throw 12 : card["defensive"]["maxHealth"].asInt(),
+            (card["defensive"]["guard"].isNull()) ? throw 13 : card["defensive"]["guard"].asInt()
         );
     }
 
@@ -23,9 +23,9 @@ Card::Card(Json::Value card)
     {
         this->offensiveAction = new CardAction{
             true,
-            (card["offensive"]["health"].isNull()) ? throw 21 : card["health"].asInt(),
-            (card["offensive"]["maxHealth"].isNull()) ? throw 22 : card["maxHealth"].asInt(),
-            (card["offensive"]["guard"].isNull()) ? throw 23 : card["guard"].asInt()
+            (card["offensive"]["health"].isNull()) ? throw 21 : card["offensive"]["health"].asInt(),
+            (card["offensive"]["maxHealth"].isNull()) ? throw 22 : card["offensive"]["maxHealth"].asInt(),
+            (card["offensive"]["guard"].isNull()) ? throw 23 : card["offensive"]["guard"].asInt()
         };
     }
 
@@ -77,10 +77,9 @@ void Card::updateDesc()
 /* update description with values*/
 {
     this->desc = this->originalDesc;
-
     int pos = this->desc.find("$oh");
     if (pos != -1) 
-        { this->desc.replace(pos, 3, std::to_string(this->offensiveAction->getHealthMod())); }
+    { this->desc.replace(pos, 3, std::to_string(this->offensiveAction->getHealthMod())); }
     
     pos = this->desc.find("$om");
     if (pos != -1) 
