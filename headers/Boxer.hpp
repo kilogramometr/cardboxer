@@ -6,7 +6,7 @@
 
 class Boxer : public Node
 {
-private:
+protected:
     Healthbar *healthbar;
     int health;
     int maxHealth;
@@ -20,12 +20,16 @@ public:
 
     void setHealth(int health);
     int getHealth(int health);
+
+    void setMaxHealth(int health);
+    int getMaxHealth(int health);
+
+    void setGuard(int guard);
+    int getGuard(int guard);
     
     void damage(int damage);
     void heal(int heal);
 
     void addToDeck(Card *card);
     void removeFromDeck(Card *card);
-    void removeFromDeck(std::list<Card *> iterator);
-
 };

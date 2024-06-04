@@ -1,10 +1,51 @@
 #include "../headers/Enemy.hpp"
 
-Enemy::Enemy()
+Enemy::Enemy(Json::Value enemy, std::list<Card *>& library)
+    : Boxer()
 {
-    this->healthbar = new Healthbar(1);
-    this->appendChild(this->healthbar);
 
-    //Setting health to 100%
-    this->healthbar->setHealth(30);
+    if (enemy["name"].isNull()) { throw 10; }
+    else
+    {
+        this->name.setString(enemy["name"].asString());
+    }
+
+    if (enemy["hp"].isNull()) { throw 20; }
+    else 
+    {
+        this->setHealth(enemy["hp"].asInt());
+        this->setMaxHealth(enemy["hp"].asInt());
+    }
+
+    if (enemy["texture"].isNull()) { throw 30; }
+    /* load texture or throw error if not exists */
+    else
+    {
+        this->texture = new sf::Texture();
+        std::string path = "./res/textures/" + enemy["texture"]["file"].asString();
+        if(!this->texture->loadFromFile(path))
+            throw 31;
+        this->setTexture(*this->texture);
+
+        this->frames = enemy["texture"]["frames"].asInt();
+        this->frameWidth = enemy["texture"]["frameWidth"].asInt();
+        this->frameHeight = enemy["texture"]["frameHeight"].asInt();
+        this->framePos = { enemy["texture"]["x"].asInt(), enemy["texture"]["y"].asInt() };
+    }
+
+    if (!enemy["actions"].isArray()) { throw 40; }
+    else
+    {
+        int size = enemy["actions"].size();
+        for (int i = 0; i < size; i++)
+        {
+            std::string name = enemy["actions"][i]["cardName"].asString();
+            auto card = std::find(library.begin(), library.end(), name);
+            this->addToDeck(*card);
+            
+            /* search through window->library for the card here */
+            this->probabilities.emplace_back(enemy["actions"][i]["probability"].asFloat());
+        }  
+    } 
+
 }

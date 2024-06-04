@@ -20,14 +20,15 @@ int main(int argc, char *argv[])
     try { window = new Window(sf::Vector2f(800, 600), "Title"); }
     catch (int e) 
     { 
-        (e == 0) ? std::cerr<<"Critical Error: unable to load card library, aborting...\n" 
-                : std::cerr<<"Critical Error: unidentified error #"+std::to_string(e)+" occured, aborting...\n"; 
-        return 0; };
-    // sf::RenderWindow window(sf::VideoMode(800, 600), "Title");
-    // sf::RectangleShape *shape = new sf::RectangleShape({800, 600});
-    // shape->setPosition({0,0});
-    // shape->setFillColor(sf::Color::Black);
-    // std::unique_ptr<Window> window = std::make_unique<Window>(Window(sf::Vector2f(800, 600), "Title"));
+        if (e == 0)
+            std::cerr<<"Critical Error: unable to load card library, aborting...\n";
+        else if (e == 1)
+            std::cerr<<"Critical Error: unable to load enemy list, aborting...\n";
+        else
+            std::cerr<<"Critical Error: unidentified error #"+std::to_string(e)+" occured, aborting...\n"; 
+        return 0; 
+    };
+        
     while(window->isOpen())
     {
         window->loop();

@@ -31,6 +31,7 @@ public:
 
     std::string getName();
     bool operator==(Card &right) { return (this->name->getString() == right.name->getString()); }
+    bool operator==(std::string &right) { return (this->name->getString() == right); }
     // void load(/* json object card */);
 };
 
