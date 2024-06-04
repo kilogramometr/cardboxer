@@ -17,4 +17,9 @@ private:
 public:
     Game();
 
+    void setEnemy(Enemy enemy);
+    void killEnemy();
+    void killPLayer();
+    
+    int onButtonClick(sf::Vector2f mousePosition);
 };

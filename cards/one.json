@@ -20,7 +20,8 @@
     "offensive": {
         "health": 0,
         "maxHealth": 0,
-        "guard": 0
+        "guard": 0,
+        "chain": "...two, ..."
     } 
 
 }

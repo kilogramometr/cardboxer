@@ -31,6 +31,9 @@ public:
     Card();
     Card(Json::Value card);
 
+    CardAction* getDefensiveAction();
+    CardAction* getOffensiveAction();
+
     std::string getName();
     bool operator==(Card &right) { return (this->name->getString() == right.name->getString()); }
     bool operator==(const std::string &right) { return (this->name->getString() == right); }

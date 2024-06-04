@@ -1,5 +1,5 @@
 {
-    "name": "name (needs to be unique!)",
+    "name": "Doubletap",
     "description":
         "description. For variables (values affected by actions) use $[offensive|defensive][health|maxHealth|guard] like that: $oh $om $og $dh $dm $dh", 
      
@@ -18,9 +18,10 @@
     },
     
     "offensive": {
-        "health": 0,
+        "health": 3,
         "maxHealth": 0,
-        "guard": 0
+        "guard": 3,
+        "bypass": true
     } 
 
 }

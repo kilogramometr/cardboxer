@@ -4,7 +4,7 @@
         "description. For variables (values affected by actions) use $[offensive|defensive][health|maxHealth|guard] like that: $oh $om $og $dh $dm $dh", 
      
     "texture": {
-        "file": "file.png",
+        "file": "test_cards.png",
         "x": 0,
         "y": 0,
         "w": 250,
@@ -20,7 +20,8 @@
     "offensive": {
         "health": 0,
         "maxHealth": 0,
-        "guard": 0
+        "guard": 0,
+        "chain": "...three!"
     } 
 
 }

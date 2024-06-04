@@ -12,6 +12,9 @@ Card::Card(Json::Value card)
     {   
         this->defensiveAction = new CardAction(
             false,
+            (card["defensive"]["burn"].isNull()) ? false : card["defensive"]["burn"].asBool(),
+            (card["defensive"]["bypass"].isNull()) ? false : card["defensive"]["bypass"].asBool(),
+            (card["defensive"]["chain"].isNull()) ? "" : card["defensive"]["chain"].asString(),
             (card["defensive"]["health"].isNull()) ? throw 11 : card["defensive"]["health"].asInt(),
             (card["defensive"]["maxHealth"].isNull()) ? throw 12 : card["defensive"]["maxHealth"].asInt(),
             (card["defensive"]["guard"].isNull()) ? throw 13 : card["defensive"]["guard"].asInt()
@@ -23,6 +26,9 @@ Card::Card(Json::Value card)
     {
         this->offensiveAction = new CardAction{
             true,
+            (card["offensive"]["burn"].isNull()) ? false : card["offensive"]["burn"].asBool(),
+            (card["offensive"]["bypass"].isNull()) ? false : card["offensive"]["bypass"].asBool(),
+            (card["offensive"]["chain"].isNull()) ? "" : card["offensive"]["chain"].asString(),
             (card["offensive"]["health"].isNull()) ? throw 21 : card["offensive"]["health"].asInt(),
             (card["offensive"]["maxHealth"].isNull()) ? throw 22 : card["offensive"]["maxHealth"].asInt(),
             (card["offensive"]["guard"].isNull()) ? throw 23 : card["offensive"]["guard"].asInt()
@@ -121,7 +127,7 @@ void Card::updateTextPosition()
     auto bounds = this->getLocalBounds();
     auto scale = this->getScale();
     
-    float margin = 15*scale.x;
+    float margin = 10*scale.x;
 
     this->name->setScale(scale);
     this->name->setPosition(position.x + margin, position.y);
@@ -138,14 +144,14 @@ void Card::calcDescWrap()
     float letterSpacing = this->description->getLetterSpacing();
     float characterSize = this->description->getCharacterSize();
     float cardWidth = this->getTextureRect().width;
-    float currentLine = 0;
+    float currentLine = 10;
     int lastSpace = 0;
 
     for (int i = 0; i < this->desc.length(); i++)
     {
         if (this->desc[i] == '\n')
         {
-            currentLine = 0;
+            currentLine = 10;
             continue;
         }
 
@@ -158,9 +164,9 @@ void Card::calcDescWrap()
       
         if ((currentLine + glyphWidth + 2*letterSpacing) > cardWidth)
         { 
-            currentLine = 0;
+            currentLine = 10;
             int pos; std::string insert;
-            if (i - lastSpace > 10)
+            if (i - lastSpace > 4)
                 { pos = i; insert = "-\n"; }
             else
                 { pos = lastSpace+1; insert = "\n"; }
@@ -198,7 +204,7 @@ void Card::calcNameWrap()
         { 
             currentLine = 0;
             int pos; std::string insert;
-            if (i - lastSpace > 10)
+            if (i - lastSpace > 5)
                 { pos = i; insert = "-\n"; }
             else
                 { pos = lastSpace+1; insert = "\n"; }
@@ -213,3 +219,6 @@ void Card::calcNameWrap()
 
 
 std::string Card::getName() { return this->name->getString(); }
+
+CardAction* Card::getDefensiveAction() { return this->defensiveAction; }
+CardAction* Card::getOffensiveAction() { return this->offensiveAction; }

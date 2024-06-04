@@ -11,9 +11,9 @@ CardLibrary::CardLibrary(std::list<Card *> *library)
     this->cardNext = (this->it == --this->library->end()) ? **(this->library->begin()) : **(++this->it);
     this->cardPrev = **(--this->library->end());
 
-    std::cerr<<this->card.getName()<<std::endl;
-    std::cerr<<this->cardNext.getName()<<std::endl;
-    std::cerr<<this->cardPrev.getName()<<std::endl;
+    // std::cerr<<this->card.getName()<<std::endl;
+    // std::cerr<<this->cardNext.getName()<<std::endl;
+    // std::cerr<<this->cardPrev.getName()<<std::endl;
 
     this->updateCards();
     this->showCards();
@@ -107,7 +107,6 @@ int CardLibrary::onButtonClick(sf::Vector2f mousePos)
             switch(code)
             {
             case 1:
-                // std::cerr<<"Next card"<<std::endl;
                 this->hideCards();
                 this->next();
                 this->updateCards();
@@ -115,7 +114,6 @@ int CardLibrary::onButtonClick(sf::Vector2f mousePos)
                 return 100;
 
             case 2:
-                // std::cerr<<"Prev card"<<std::endl;
                 this->hideCards();
                 this->prev();
                 this->showCards();
