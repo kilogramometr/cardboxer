@@ -44,7 +44,7 @@ void Window::loop()
                 this->close();
                 break;
             case sf::Event::MouseButtonReleased:
-                std::cerr<<"a\n";
+                // std::cerr<<"a\n";
                 this->checkClicks();
                 break;
             default:
@@ -78,7 +78,7 @@ void Window::checkClicks()
 {
     this->updateMousePosition();
     //std::cout<< this->Scene->buttonClick(this->mousePosition)<<std::endl;
-    std::cerr<<"I am checking\n";
+    // std::cerr<<"I am checking\n";
     switch(this->Scene->buttonClick(this->mousePosition))
     {
         case 1: // switch to game scene

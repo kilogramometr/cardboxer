@@ -42,8 +42,8 @@ Card::Card(Json::Value card)
     }
     
     this->setFont();
-    (card["name"].isNull()) ? throw 1 : this->setName(card["name"].asString(), 20);
-    (card["description"].isNull()) ? throw 2 : this->setDesc(card["description"].asString(), 20); 
+    (card["name"].isNull()) ? throw 1 : this->setName(card["name"].asString(), 40);
+    (card["description"].isNull()) ? throw 2 : this->setDesc(card["description"].asString(), 22); 
     // std::cerr<<"\n end of constructor\n";
     // std::cerr<<this->desc<<std::endl<<this->originalDesc<<std::endl;
 }
@@ -57,6 +57,7 @@ void Card::setFont()
 
 void Card::setName(std::string name, int size)
 {
+    this->originalName = name;
     this->name = new sf::Text();
     this->name->setString(name);
     this->name->setCharacterSize(size);
@@ -81,25 +82,34 @@ void Card::updateDesc()
     if (pos != -1) 
         { this->desc.replace(pos, 3, std::to_string(this->offensiveAction->getHealthMod())); }
     
-    // if (this->desc.find("$om") != -1) 
-    //     { this->desc.replace(this->desc.find("$om"), 3, std::to_string(this->offensiveAction->getMaxHealthMod())); }
+    pos = this->desc.find("$om");
+    if (pos != -1) 
+        { this->desc.replace(pos, 3, std::to_string(this->offensiveAction->getMaxHealthMod())); }
     
-    // if ((index = this->desc.find("$og")) != -1) 
-    //     { this->desc.replace(index, 3, std::to_string(this->offensiveAction->getGuardMod())); }
+    pos = this->desc.find("$og");
+    if (pos != -1) 
+        { this->desc.replace(pos, 3, std::to_string(this->offensiveAction->getGuardMod())); }
     
-    // if ((index = this->desc.find("$dh")) != -1) 
-    //     { this->desc.replace(index, 3, std::to_string(this->defensiveAction->getHealthMod())); }
+    pos = this->desc.find("$dh");
+    if (pos != -1) 
+        { this->desc.replace(pos, 3, std::to_string(this->defensiveAction->getHealthMod())); }
     
-    // if ((index = this->desc.find("$dm")) != -1) 
-    //     { this->desc.replace(index, 3, std::to_string(this->defensiveAction->getMaxHealthMod())); }
+    pos = this->desc.find("$dm");
+    if (pos != -1) 
+        { this->desc.replace(pos, 3, std::to_string(this->defensiveAction->getMaxHealthMod())); }
     
-    // if ((index = this->desc.find("$dg")) != -1) 
-    //     { this->desc.replace(index, 3, std::to_string(this->defensiveAction->getGuardMod())); }
+    pos = this->desc.find("$dg");
+    if (pos != -1) 
+        { this->desc.replace(pos, 3, std::to_string(this->defensiveAction->getGuardMod())); }
+
+    this->calcDescWrap();
     this->description->setString(this->desc);
 }
 
 void Card::onDraw(sf::RenderTarget& target, sf::Transform& transform) 
 {
+    this->updateDesc();
+    this->calcNameWrap();
     this->updateTextPosition();
     target.draw(*this, transform);
     target.draw(*this->name, transform);
@@ -117,15 +127,89 @@ void Card::updateTextPosition()
     this->name->setScale(scale);
     this->name->setPosition(position.x + margin, position.y);
 
-    float middle = (bounds.height*scale.y) / 2;
-    // std::cerr<<bounds.height<<std::endl<<scale.y<<std::endl;
+    float middle = (bounds.height*scale.x)/ 2 + position.y;
+    // std::cerr<<position.x<<" "<<position.y<<"\n";
+    // std::cerr<<bounds.height<<std::endl<<scale.y<<std::endl<<std::endl;
     this->description->setScale(scale);
-    this->description->setPosition(position.x + margin, middle + 2*margin);
+    this->description->setPosition(position.x + margin, middle - margin);
 }
 
 void Card::calcDescWrap()
 {
+    float letterSpacing = this->description->getLetterSpacing();
+    float characterSize = this->description->getCharacterSize();
+    float cardWidth = this->getTextureRect().width;
+    float currentLine = 0;
+    int lastSpace = 0;
 
+    for (int i = 0; i < this->desc.length(); i++)
+    {
+        if (this->desc[i] == '\n')
+        {
+            currentLine = 0;
+            continue;
+        }
+
+        if (this->desc[i] == ' ')
+            lastSpace = i;
+
+        sf::Glyph glyph = this->font->getGlyph(this->desc[i], characterSize, false);
+        float glyphWidth = glyph.advance;
+        // std::cerr<<currentLine<<" "<<glyphWidth<<" "<<currentLine+glyphWidth<<std::endl;
+      
+        if ((currentLine + glyphWidth + 2*letterSpacing) > cardWidth)
+        { 
+            currentLine = 0;
+            int pos; std::string insert;
+            if (i - lastSpace > 10)
+                { pos = i; insert = "-\n"; }
+            else
+                { pos = lastSpace+1; insert = "\n"; }
+            this->desc.insert(pos, insert); 
+        }
+        else
+            currentLine += glyphWidth + letterSpacing; 
+    }
+}
+
+void Card::calcNameWrap()
+{
+    float letterSpacing = this->name->getLetterSpacing();
+    float characterSize = this->name->getCharacterSize();
+    float cardWidth = this->getTextureRect().width;
+    float currentLine = 0;
+    int lastSpace = 0;
+    std::string name = this->originalName;
+
+    for (int i = 0; i < name.length(); i++)
+    {
+        if (name[i] == '\n')
+        {
+            currentLine = 0;
+            continue;
+        }
+
+        if (name[i] == ' ')
+            lastSpace = i;
+
+        sf::Glyph glyph = this->font->getGlyph(name[i], characterSize, false);
+        float glyphWidth = glyph.advance;
+
+        if ((currentLine + glyphWidth + 2*letterSpacing) > cardWidth)
+        { 
+            currentLine = 0;
+            int pos; std::string insert;
+            if (i - lastSpace > 10)
+                { pos = i; insert = "-\n"; }
+            else
+                { pos = lastSpace+1; insert = "\n"; }
+            name.insert(pos, insert); 
+        }
+        else
+            currentLine += glyphWidth + letterSpacing; 
+    }
+
+    this->name->setString(name);
 }
 
 

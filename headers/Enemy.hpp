@@ -15,6 +15,7 @@ private:
 
 public:
     Enemy(Json::Value enemy, std::list<Card *>& library);
+    Enemy();
 
     std::list<Card *>::iterator chooseCard();
     void playCard();

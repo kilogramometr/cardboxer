@@ -1,6 +1,13 @@
 [
-    "test.json",
-    "test2.json",
-    "test3.json",
+    // "test.json",
+    // "test2.json",
+    // "test3.json",
+    "jab_rest.json",
+    "slip.json",
+    "doubletap.json",
+    "feint_slip.json",
+    "one.json", 
+    "two.json", 
+    "three.json",
     "idontexist.json"
 ]

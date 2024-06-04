@@ -9,6 +9,7 @@ class Card : public Node, public sf::Sprite
     CardAction *offensiveAction;
     std::string desc;
     std::string originalDesc;
+    std::string originalName;
     sf::Texture *texture;
     sf::Font *font;
     sf::Text *name;
@@ -22,6 +23,7 @@ class Card : public Node, public sf::Sprite
     void updateDesc();
     void setFont();
     void calcDescWrap();
+    void calcNameWrap();
     void updateTextPosition();
     
 public:
@@ -31,7 +33,7 @@ public:
 
     std::string getName();
     bool operator==(Card &right) { return (this->name->getString() == right.name->getString()); }
-    bool operator==(std::string &right) { return (this->name->getString() == right); }
+    bool operator==(const std::string &right) { return (this->name->getString() == right); }
     // void load(/* json object card */);
 };
 

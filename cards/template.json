@@ -3,6 +3,22 @@
     "description":
         "description. For variables (values affected by actions) use $[offensive|defensive][health|maxHealth|guard] like that: $oh $om $og $dh $dm $dh", 
     
+    "comment":
+    {
+        "explanation": "following list is an explanation of each effect in cardAction:",
+        "bypass": "A boolean value, if true HP damage ignores guard.",
+        "chain": "A string value, if player has card of this name in deck or hand, play it immediately. (for enemy if it was not played last turn).",
+        "burn": "A boolean value, if true remove this card from deck instead of moving it to discar pile after playing."
+    },
+
+    "texture": {
+        "file": "file.png",
+        "x": 0,
+        "y": 0,
+        "w": 250,
+        "h": 350
+    },
+
     "defensive": {
         "health": 0,
         "maxHealth": 0,

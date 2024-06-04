@@ -1,0 +1,26 @@
+{
+    "name": "...three!",
+    "description":
+        "description. For variables (values affected by actions) use $[offensive|defensive][health|maxHealth|guard] like that: $oh $om $og $dh $dm $dh", 
+     
+    "texture": {
+        "file": "file.png",
+        "x": 0,
+        "y": 0,
+        "w": 250,
+        "h": 350
+    },
+
+    "defensive": {
+        "health": 0,
+        "maxHealth": 0,
+        "guard": 0
+    },
+    
+    "offensive": {
+        "health": 0,
+        "maxHealth": 0,
+        "guard": 0
+    } 
+
+}

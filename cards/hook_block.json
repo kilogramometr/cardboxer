@@ -1,0 +1,26 @@
+{
+    "name": "Hook / Block",
+    "description":
+        "Offensive:\n\nDefensive:\n", 
+     
+    "texture": {
+        "file": "test_cards.png",
+        "x": 0,
+        "y": 0,
+        "w": 250,
+        "h": 350
+    },
+
+    "defensive": {
+        "health": 0,
+        "maxHealth": 0,
+        "guard": 0
+    },
+    
+    "offensive": {
+        "health": 0,
+        "maxHealth": 0,
+        "guard": 0
+    } 
+
+}

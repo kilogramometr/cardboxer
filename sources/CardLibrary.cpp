@@ -107,7 +107,7 @@ int CardLibrary::onButtonClick(sf::Vector2f mousePos)
             switch(code)
             {
             case 1:
-                std::cerr<<"Next card"<<std::endl;
+                // std::cerr<<"Next card"<<std::endl;
                 this->hideCards();
                 this->next();
                 this->updateCards();
@@ -115,7 +115,7 @@ int CardLibrary::onButtonClick(sf::Vector2f mousePos)
                 return 100;
 
             case 2:
-                std::cerr<<"Prev card"<<std::endl;
+                // std::cerr<<"Prev card"<<std::endl;
                 this->hideCards();
                 this->prev();
                 this->showCards();
