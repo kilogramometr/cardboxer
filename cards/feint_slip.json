@@ -1,7 +1,7 @@
 {
     "name": "Feint / Slip",
     "description":
-        "Offensive:\n\nDefensive:\n", 
+        "Offensive:\nFeint an attack - reduce enemy guard by $og.\n\nDefensive:\nDodge quickly the next attack - increase your guard by $dg.", 
      
     "texture": {
         "file": "test_cards.png",
@@ -14,13 +14,13 @@
     "defensive": {
         "health": 0,
         "maxHealth": 0,
-        "guard": 0
+        "guard": 2
     },
     
     "offensive": {
         "health": 0,
         "maxHealth": 0,
-        "guard": 0
+        "guard": 4
     } 
 
 }

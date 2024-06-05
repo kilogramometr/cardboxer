@@ -1,7 +1,7 @@
 {
     "name": "Roll",
     "description":
-        "description. For variables (values affected by actions) use $[offensive|defensive][health|maxHealth|guard] like that: $oh $om $og $dh $dm $dh", 
+        "Defensive:\nDodge and duck out of the way! Increase your guard by $dg.", 
      
     "texture": {
         "file": "test_cards.png",
@@ -14,13 +14,6 @@
     "defensive": {
         "health": 0,
         "maxHealth": 0,
-        "guard": 0
-    },
-    
-    "offensive": {
-        "health": 0,
-        "maxHealth": 0,
-        "guard": 0
-    } 
-
+        "guard": 4
+    }
 }

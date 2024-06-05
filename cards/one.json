@@ -1,7 +1,7 @@
 {
     "name": "One...",
     "description":
-        "description. For variables (values affected by actions) use $[offensive|defensive][health|maxHealth|guard] like that: $oh $om $og $dh $dm $dh", 
+        "Offensive:\nA quick jab for $oh damage to distract the enemy...\nChain '...two, ...'", 
      
     "texture": {
         "file": "test_cards.png",
@@ -10,15 +10,9 @@
         "w": 250,
         "h": 350
     },
-
-    "defensive": {
-        "health": 0,
-        "maxHealth": 0,
-        "guard": 0
-    },
     
     "offensive": {
-        "health": 0,
+        "health": 1,
         "maxHealth": 0,
         "guard": 0,
         "chain": "...two, ..."

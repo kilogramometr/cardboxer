@@ -1,7 +1,7 @@
 {
     "name": "Doping",
     "description":
-        "Defensive:\nIncrease your maximum health by $dm, take $dh damage and remove this card from the game.", 
+        "Defensive:\nBurn this card.\nIncrease your maximum health by $dm, modify your current health by $dh.", 
      
     "texture": {
         "file": "test_cards.png",
@@ -12,8 +12,8 @@
     },
 
     "defensive": {
-        "health": -3,
-        "maxHealth": 3,
+        "health": -2,
+        "maxHealth": 2,
         "guard": 0,
         "burn": true
     }

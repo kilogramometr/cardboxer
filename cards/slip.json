@@ -1,7 +1,7 @@
 {
     "name": "Slip",
     "description":
-        "Defensive:\nDodge the next attack - increase your guard by $dg", 
+        "Defensive:\nDodge quickly the next attack - increase your guard by $dg", 
      
     "texture": {
         "file": "test_cards.png",

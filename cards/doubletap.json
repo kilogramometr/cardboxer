@@ -1,7 +1,7 @@
 {
     "name": "Doubletap",
     "description":
-        "description. For variables (values affected by actions) use $[offensive|defensive][health|maxHealth|guard] like that: $oh $om $og $dh $dm $dh", 
+        "Offensive:\nTwo hard to block consecutive straights. Reduce enemy guard by $og and deal $oh health damage bypassing remaining guard.", 
      
     "texture": {
         "file": "test_cards.png",
@@ -10,17 +10,11 @@
         "w": 250,
         "h": 350
     },
-
-    "defensive": {
-        "health": 0,
-        "maxHealth": 0,
-        "guard": 0
-    },
     
     "offensive": {
-        "health": 3,
+        "health": 2,
         "maxHealth": 0,
-        "guard": 3,
+        "guard": 2,
         "bypass": true
     } 
 

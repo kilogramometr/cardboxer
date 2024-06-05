@@ -1,7 +1,7 @@
 {
     "name": "...three!",
     "description":
-        "description. For variables (values affected by actions) use $[offensive|defensive][health|maxHealth|guard] like that: $oh $om $og $dh $dm $dh", 
+        "Offensive:\nA powerful hook for $oh damage to finish the combo!", 
      
     "texture": {
         "file": "test_cards.png",
@@ -11,14 +11,8 @@
         "h": 350
     },
 
-    "defensive": {
-        "health": 0,
-        "maxHealth": 0,
-        "guard": 0
-    },
-    
     "offensive": {
-        "health": 0,
+        "health": 3,
         "maxHealth": 0,
         "guard": 0
     } 

@@ -1,7 +1,7 @@
 {
     "name": "Jab / Rest",
     "description":
-        "Offensive:\nHit your enemy lightly for $oh.\n\nDefensive:\nTake a short moment to rest. Reduce your guard by $dg and heal $dh.", 
+        "Offensive:\nHit your enemy lightly for $oh damage.\n\nDefensive:\nTake a short moment to rest. Reduce your guard by $dg and heal $dh hp.", 
      
     "texture": {
         "file": "test_cards.png",

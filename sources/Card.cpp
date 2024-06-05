@@ -166,7 +166,7 @@ void Card::calcDescWrap()
         { 
             currentLine = 10;
             int pos; std::string insert;
-            if (i - lastSpace > 4)
+            if (i - lastSpace > 8)
                 { pos = i; insert = "-\n"; }
             else
                 { pos = lastSpace+1; insert = "\n"; }
