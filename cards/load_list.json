@@ -3,12 +3,15 @@
     // "test2.json",
     // "test3.json",
     "jab_rest.json",
-    "slip.json",
     "doubletap.json",
     "feint_slip.json",
     "one.json", 
     "two.json", 
     "three.json",
     "idontexist.json",
-    "doping.json"
+    "doping.json",
+    "hook_block.json",
+    "uppercut.json",
+    "slip.json",
+    "roll.json"
 ]

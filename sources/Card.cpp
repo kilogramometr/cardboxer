@@ -20,6 +20,7 @@ Card::Card(Json::Value card)
             (card["defensive"]["guard"].isNull()) ? throw 13 : card["defensive"]["guard"].asInt()
         );
     }
+    else this->defensiveAction = nullptr;
 
     if (!card["offensive"].isNull())
     /* load offensive action if exists */
@@ -34,6 +35,7 @@ Card::Card(Json::Value card)
             (card["offensive"]["guard"].isNull()) ? throw 23 : card["offensive"]["guard"].asInt()
         };
     }
+    else this->offensiveAction = nullptr;
 
     if (card["texture"].isNull()) { throw 30; }
     /* load texture or throw error if not exists */
@@ -54,6 +56,34 @@ Card::Card(Json::Value card)
     // std::cerr<<this->desc<<std::endl<<this->originalDesc<<std::endl;
 }
 
+Card::Card(Card &copy)
+{
+    if (copy.defensiveAction != 0)
+    {
+        this->defensiveAction = new CardAction(*copy.defensiveAction);
+    }
+    if (copy.offensiveAction != 0){
+        std::cerr<<"offensive\n";
+        this->offensiveAction = new CardAction(*copy.offensiveAction);}
+    
+    if (copy.texture != 0)
+        this->texture = new sf::Texture(*copy.texture);
+    
+    if (copy.font != 0)
+        this->font = new sf::Font(*copy.font);
+
+    if (copy.name != 0)
+    {
+        this->name = new sf::Text(*copy.name);
+        this->originalName = copy.originalName;
+    }
+    if (copy.description != 0)
+    {
+        this->description = new sf::Text(*copy.description);
+        this->originalDesc = copy.originalDesc;
+        this->desc = copy.desc;
+    }
+}
 
 void Card::setFont()
 {

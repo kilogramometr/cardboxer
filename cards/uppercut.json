@@ -1,7 +1,7 @@
 {
     "name": "Uppercut",
     "description":
-        "Offensive:\n Strike your enemy for $oh damage.", 
+        "Offensive:\nStrike your enemy for $oh damage.", 
      
     "texture": {
         "file": "test_cards.png",

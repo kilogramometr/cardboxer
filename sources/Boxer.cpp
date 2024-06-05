@@ -1,5 +1,5 @@
 #include "../headers/Boxer.hpp"
-
+#include <iostream>
 Boxer::Boxer()
 {
     this->healthbar = new Healthbar(0);
@@ -21,5 +21,5 @@ int Boxer::getGuard(int guard) { return this->guard; }
 void Boxer::damage(int damage) { this->health -= damage; } 
 void Boxer::heal(int heal) { this->health += heal; }
 
-void Boxer::addToDeck(Card *card) { this->deck->emplace_back(card); }
-void Boxer::removeFromDeck(Card *card) { this->deck->remove(card); }
+void Boxer::addToDeck(Card *card) { this->deck.emplace_back(new Card(*card)); }
+void Boxer::removeFromDeck(Card *card) { this->deck.remove(card); }

@@ -1,5 +1,5 @@
 #include "../headers/Enemy.hpp"
-
+#include <iostream>
 Enemy::Enemy(): Boxer() {}
 
 Enemy::Enemy(Json::Value enemy, std::list<Card *>& library)
@@ -39,12 +39,17 @@ Enemy::Enemy(Json::Value enemy, std::list<Card *>& library)
     else
     {
         int size = enemy["actions"].size();
+        std::cerr<<"Number of actions: "<<size<<"\n";
         for (int i = 0; i < size; i++)
         {
             std::string name = enemy["actions"][i]["cardName"].asString();
             auto card = std::find_if(library.begin(), library.end(), [name](Card* _card){ return (*_card == name); });
             if (card != library.end())
-                this->addToDeck(*card);
+            {
+                // this->deck->emplace_back(new Card(**card));
+                this->deck.emplace_back(new Card(**card));
+                // this->addToDeck(*card);
+            }
             else
                 throw 41;
             
@@ -52,5 +57,12 @@ Enemy::Enemy(Json::Value enemy, std::list<Card *>& library)
             this->probabilities.emplace_back(enemy["actions"][i]["probability"].asFloat());
         }  
     } 
+    
+    auto it_d = this->deck.begin();
+    auto it_p = this->probabilities.begin();
 
-}
+    for (; it_d != this->deck.end() && it_p != this->probabilities.end(); ++it_d, ++it_p)
+    {
+        std::cerr<<(*it_d)->getName()<<" "<<(*it_p)<<"\n";
+    }
+}    

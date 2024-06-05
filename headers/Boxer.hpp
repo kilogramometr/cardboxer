@@ -11,7 +11,7 @@ protected:
     int health;
     int maxHealth;
     int guard;
-    std::list<Card *> *deck;
+    std::list<Card *> deck;
 
     void updateHealthbar();
 

@@ -1,5 +1,5 @@
 #include "../headers/CardAction.hpp"
-
+#include <iostream>
 CardAction::CardAction(bool offensive, bool burn, bool bypass, std::string chain, int health, int maxHealth, int guard)
 {
     this->offensive = offensive;
@@ -10,6 +10,17 @@ CardAction::CardAction(bool offensive, bool burn, bool bypass, std::string chain
     this->maxHealthMod = maxHealth;
     this->guardMod = guard;
 
+}
+
+CardAction::CardAction(CardAction &copy)
+{
+    this->offensive = copy.offensive;
+    this->burn = copy.burn;
+    this->bypass = copy.bypass;
+    this->chain = copy.chain;
+    this->healthMod = copy.healthMod;
+    this->maxHealthMod = copy.maxHealthMod;
+    this->guardMod = copy.guardMod;
 }
 
 // std::pair<bool, bool> getType();

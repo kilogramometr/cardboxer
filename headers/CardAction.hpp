@@ -15,7 +15,7 @@ class CardAction
 
 public:
     CardAction(bool offensive, bool burn, bool bypass, std::string chain, int health, int maxHealth, int guard);
-
+    CardAction(CardAction &copy);
     int getHealthMod();
     void setHealthMod(int health);
 

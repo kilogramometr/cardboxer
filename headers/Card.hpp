@@ -30,6 +30,7 @@ public:
     // Card(Card const &card);
     Card();
     Card(Json::Value card);
+    Card(Card &copy);
 
     CardAction* getDefensiveAction();
     CardAction* getOffensiveAction();
