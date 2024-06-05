@@ -1,0 +1,21 @@
+{
+    "name": "One...",
+    "description":
+        "Offensive:\nA quick jab for $oh damage to distract the enemy...\nChain '...two, ...'", 
+     
+    "texture": {
+        "file": "test_cards.png",
+        "x": 0,
+        "y": 0,
+        "w": 250,
+        "h": 350
+    },
+    
+    "offensive": {
+        "health": 1,
+        "maxHealth": 0,
+        "guard": 0,
+        "chain": "...two, ..."
+    } 
+
+}

@@ -1,0 +1,24 @@
+{
+    "hp": 20,
+    "name": "name",
+
+    "texture": {
+        "file": "file",
+        "x": 0,
+        "y": 0,
+        "frames": 0,
+        "frameWidth": 0,
+        "frameHeight": 0
+    },
+
+    "actions": [
+        {
+            "cardName": "name",
+            "probability": 0.2
+        },
+        {
+            "cardName": "name",
+            "probability": 0.8
+        }
+    ]
+}

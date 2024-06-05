@@ -1,0 +1,21 @@
+{
+    "name": "...two, ...",
+    "description":
+        "Offensive:\nA followup cross for $oh damage to tire the enemy...\nChain '...three!'", 
+     
+    "texture": {
+        "file": "test_cards.png",
+        "x": 0,
+        "y": 0,
+        "w": 250,
+        "h": 350
+    },
+    
+    "offensive": {
+        "health": 2,
+        "maxHealth": 0,
+        "guard": 0,
+        "chain": "...three!"
+    } 
+
+}

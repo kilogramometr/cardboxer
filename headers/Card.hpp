@@ -9,6 +9,7 @@ class Card : public Node, public sf::Sprite
     CardAction *offensiveAction;
     std::string desc;
     std::string originalDesc;
+    std::string originalName;
     sf::Texture *texture;
     sf::Font *font;
     sf::Text *name;
@@ -22,15 +23,21 @@ class Card : public Node, public sf::Sprite
     void updateDesc();
     void setFont();
     void calcDescWrap();
+    void calcNameWrap();
     void updateTextPosition();
     
 public:
     // Card(Card const &card);
     Card();
     Card(Json::Value card);
+    Card(Card &copy);
+
+    CardAction* getDefensiveAction();
+    CardAction* getOffensiveAction();
 
     std::string getName();
     bool operator==(Card &right) { return (this->name->getString() == right.name->getString()); }
+    bool operator==(const std::string &right) { return (this->name->getString() == right); }
     // void load(/* json object card */);
 };
 

@@ -8,10 +8,12 @@ make: # you may need to make twice if main.o doesn't exist. I do not understand 
 	g++ -std=c++14 -o ./build/app ${OBJS} ${LINKS}
 	cp -ru ./cards ./build/
 	cp -ru ./res ./build/
+	cp -ru ./enemies ./build/
 
 update:
 	cp -ru ./cards ./build/
 	cp -ru ./res ./build/
+	cp -ru ./enemies ./build/
 
 run:
 	cd build; \

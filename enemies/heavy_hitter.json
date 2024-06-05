@@ -1,0 +1,28 @@
+{
+    "hp": 10,
+    "name": "Heavy Hitter",
+
+    "texture": {
+        "file": "test_cards.png",
+        "x": 0,
+        "y": 0,
+        "frames": 0,
+        "frameWidth": 0,
+        "frameHeight": 0
+    },
+
+    "actions": [
+        {
+            "cardName": "Uppercut",
+            "probability": 0.4
+        },
+        {
+            "cardName": "Doubletap",
+            "probability": 0.4
+        },
+        {
+            "cardName": "Slip",
+            "probability": 0.2
+        }
+    ]
+}

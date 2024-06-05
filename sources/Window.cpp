@@ -16,6 +16,7 @@ Window::Window(sf::Vector2f resolution, std::string title)
     this->backGround->setPosition(0, 0);
     
     if (!this->loadLibrary()) throw 0;
+    if (!this->loadEnemies()) throw 1;
     
     // create scene and view
     this->menu = new Menu();
@@ -23,20 +24,8 @@ Window::Window(sf::Vector2f resolution, std::string title)
     this->cardLibrary = new CardLibrary(&this->library);
     this->setCurrentScene(this->menu);
 
-    // this->createMenu();
-    // this->view  = new QGraphicsView();
-    // // set view options
-    // this->view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    // this->view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    // this->changeScene(this->menu); // set current scene, by default menu
-    // this->view->setMinimumSize(this->resolution);
-    // this->view->setSceneRect(0, 0, this->resolution.width() - 5,  this->resolution.height() - 5);
-    // this->view->setBackgroundBrush(Qt::black);
-    // this->view->show();
-    // this->setWindowTitle("");
-
     //Set max framerate
-    this->setVerticalSyncEnabled(true);
+    this->setVerticalSyncEnabled(false);
     this->setFramerateLimit(60);
     this->setTitle("Cardboxer");
 
@@ -55,7 +44,7 @@ void Window::loop()
                 this->close();
                 break;
             case sf::Event::MouseButtonReleased:
-                std::cerr<<"a\n";
+                // std::cerr<<"a\n";
                 this->checkClicks();
                 break;
             default:
@@ -63,7 +52,6 @@ void Window::loop()
         }
     }
 
-    // this->checkClicks(); //Event pooling but for button codes
     this->drawScene();
     this->display();
 }
@@ -71,10 +59,8 @@ void Window::loop()
 void Window::drawScene()
 {
     this->draw(*this->backGround);
-    // this->menu->draw(*this);
     sf::Transform transform;
     this->Scene->draw(*this, transform);
-    /* draw scene (Node) here*/
 }
 
 void Window::setCurrentScene(Node *node)
@@ -86,14 +72,13 @@ void Window::updateMousePosition()
 {
     sf::Vector2i mousePositionWindow = sf::Mouse::getPosition(*this);
     this->mousePosition = this->mapPixelToCoords(mousePositionWindow);
-    //std::cout << this->mousePosition.x << " " << this->mousePosition.y << std::endl;
 }
 
 void Window::checkClicks()
 {
     this->updateMousePosition();
     //std::cout<< this->Scene->buttonClick(this->mousePosition)<<std::endl;
-    std::cerr<<"I am checking\n";
+    // std::cerr<<"I am checking\n";
     switch(this->Scene->buttonClick(this->mousePosition))
     {
         case 1: // switch to game scene
@@ -112,9 +97,6 @@ void Window::checkClicks()
         default:
             break;
     }
-    
-
-    // this->checkMouseHold();
 }
 
 void Window::checkMouseHold()
@@ -124,22 +106,7 @@ void Window::checkMouseHold()
     else
         this->mouseHold = false;
 }
-/*
- * UTILITY
- */
 
-// void Window::changeResolution(QSize resolution)
-// /* set new resolution */
-// {
-//     this->resolution = resolution;
-//     this->view->setMinimumSize(this->resolution);
-// }
-
-// void Window::changeScene(QGraphicsScene *scene)
-// /* change currently shown scene */
-// {
-//     this->view->setScene(scene);
-// }
 
 /*
  * INIT
@@ -199,7 +166,7 @@ bool Window::loadLibrary()
             try { this->library.emplace_back(new Card(card)); }
             catch (int e)
             {
-                std::cerr<<"\nError\n";
+                // std::cerr<<"\nError\n";
                 failures++;
                 switch(e)
                 {
@@ -241,22 +208,75 @@ bool Window::loadLibrary()
     return true;
 }
 
-// /*
-//  * SIGNALS
-//  */
+bool Window::loadEnemies()
+{
+    std::ifstream file("./enemies/load_list.json", std::ifstream::binary);
+    Json::Value list;
+    int failures = 0;
+    if(file.is_open())
+    {   
+        try { file >> list; }
+        catch(Json::RuntimeError e) 
+        {
+            e.what();
+            return false; 
+        }
+        file.close();
+    }
+    else 
+    {
+        std::cerr<<"\nEnemyLoader: Panic! Unable to open load list for enemies! Can't procede!\n";
+        return false;
+    }
 
-// void Window::newGame()
-// /* create new game and set it as current scene */
-// {
-//     this->game = new Game();
-//     // TODO: Connect game's backToMenu signal to Window's slot
-//     this->changeScene(this->game);
-// }
+    for (auto f : list)
+    {
+        std::string path = "./enemies/"+f.asString();
+        file.open(path, std::ifstream::binary);
+        Json::Value enemy;
+        if(file.is_open())
+        {
+            file >> enemy;
+            file.close();
 
-// void Window::backToMenu()
-// {
-//     // TODO: Remove game's connection to Window's slots
-//     this->changeScene(this->menu);
-//     delete this->game;
-// }
+            if (enemy["name"].isNull())
+            {
+                std::cerr<<"EnemyLoader: error #1; file "<<f.asString()<<" - attribute \"name\" is NULL (expected string). Skipping...\n";
+            }
 
+            try { this->enemies.emplace_back(new Enemy(enemy, library)); }
+            catch (int e)
+            {
+                // std::cerr<<"\nError\n";
+                failures++;
+                switch(e)
+                {
+                case 10:
+                    std::cerr<<"EnemyLoader: error #"+std::to_string(e)+"; Card from file \""+ f.asString() +"\" - attribute \"name\" NULL (expected string).\n";
+                    break;
+                case 20:
+                    std::cerr<<"EnemyLoader: error #"+std::to_string(e)+"; Card \""+ enemy["name"].asString() +"\" - attribute \"hp\" is NULL (expected int).\n";
+                    break;
+                case 30:
+                    std::cerr<<"EnemyLoader: error #"+std::to_string(e)+"; Card \""+ enemy["name"].asString() +"\" - attribute \"texture\" is NULL (expected object).\n";
+                    break;
+                case 31:
+                    std::cerr<<"EnemyLoader: error #"+std::to_string(e)+"; Card \""+ enemy["name"].asString() +"\" - can't open texture file \""+ enemy["texture"]["file"].asString() +"\" .\n";
+                    break;
+                case 40:
+                    std::cerr<<"EnemyLoader: error #"+std::to_string(e)+"; Card \""+ enemy["name"].asString() +"\" - attribute \"actions\" is NULL (expected array).\n";
+                    break;
+                
+                default:
+                    std::cerr<<"EnemyLoader: unidentified error #"<<e<<"\n";
+                    break;
+                }
+                // if (e > 10) this->library.pop_back();
+            }
+        }
+        else { std::cerr<<"EnemyLoader: Can't open enemy file: \""<<f.asString()<<"\". Skipping...\n"; failures++; }
+    }
+    std::cerr<<"EnemyLoader: Loaded "<<this->enemies.size()<<" enemies, failed to load "<<failures<<".\n";
+    return true;
+
+}

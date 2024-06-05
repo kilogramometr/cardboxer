@@ -1,12 +1,17 @@
-#pragma once
-#include "Node.hpp"
-#include "Healtbar.hpp"
+#include "Boxer.hpp"
 
-class Player : public Node
+class Player : public Boxer
 {
 private:
-Healthbar *healthbar;
+    std::list<Card *> *hand;
+    std::list<Card *> *discardPile;
 
 public:
     Player();
+
+    void draw(); // from deck to hand
+    void discard(); // from hand to discard
+    void shuffle(); // shuffle order in deck
+    void reshuffle(); // discardPile -> deck + shuffle
+
 };

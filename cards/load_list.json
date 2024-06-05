@@ -1,6 +1,17 @@
 [
-    "test.json",
-    "test2.json",
-    "test3.json",
-    "idontexist.json"
+    // "test.json",
+    // "test2.json",
+    // "test3.json",
+    "jab_rest.json",
+    "doubletap.json",
+    "feint_slip.json",
+    "one.json", 
+    "two.json", 
+    "three.json",
+    "idontexist.json",
+    "doping.json",
+    "hook_block.json",
+    "uppercut.json",
+    "slip.json",
+    "roll.json"
 ]

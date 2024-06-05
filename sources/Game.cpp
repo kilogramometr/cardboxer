@@ -13,3 +13,28 @@ Game::Game()
 }
 
 void Game::onDraw(sf::RenderTarget& target, sf::Transform& transform) {}
+
+void Game::setEnemy(Enemy enemy) { this->enemy = &enemy; }
+void Game::killEnemy() { delete this->player; };
+void Game::killPLayer() { delete this->enemy; };
+
+
+int Game::onButtonClick(sf::Vector2f mousePosition)
+{
+    for (auto i = this->children.begin(); i != this->children.end(); ++i)
+    {
+        int code = (*i)->buttonClick(mousePosition);
+        if (code != 0)
+        {
+            switch (code)
+            {
+            case 3:
+                return 3;
+
+            default:
+                break;
+            }
+        }
+    }
+    return 100;
+}

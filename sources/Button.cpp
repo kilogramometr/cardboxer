@@ -45,9 +45,9 @@ int Button::onButtonClick(sf::Vector2f mousePosition)
 {
     if(this->getGlobalBounds().contains(mousePosition))
     {
-        std::cerr<<"I contain the mouse\n\n";
+        // std::cerr<<"I contain the mouse\n\n";
         return this->code;
     }
-    std::cerr<<"I do not contain the mouse\n\n";
+    // std::cerr<<"I do not contain the mouse\n\n";
     return 0;
 }
