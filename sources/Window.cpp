@@ -52,6 +52,7 @@ void Window::loop()
         }
     }
 
+    this->Scene->update();
     this->drawScene();
     this->display();
 }

@@ -59,5 +59,15 @@ int Node::buttonClick(sf::Vector2f mousePosition)
     return 0;
 }
 
+void Node::update()
+{
+    this->onUpdate();
+
+    for (auto it = this->children.begin(); it != this->children.end(); ++it)
+    {
+        (*it)->update();
+    }
+}
+
 void Node::hide() { this->hidden = false; }
 void Node::reveal() { this->hidden = true; }

@@ -14,6 +14,11 @@ Game::Game()
 
 void Game::onDraw(sf::RenderTarget& target, sf::Transform& transform) {}
 
+void Game::onUpdate()
+{
+    //std::cout<<"Game screen update"<<std::endl;
+}
+
 void Game::setEnemy(Enemy enemy) { this->enemy = &enemy; }
 void Game::killEnemy() { delete this->player; };
 void Game::killPLayer() { delete this->enemy; };
