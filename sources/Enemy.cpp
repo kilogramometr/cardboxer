@@ -1,10 +1,23 @@
 #include "../headers/Enemy.hpp"
 #include <iostream>
-Enemy::Enemy(): Boxer() {}
+Enemy::Enemy(): Boxer()
+{
+    this->healthbar = new Healthbar(1);
+    this->appendChild(this->healthbar);
+
+    //Setting health to 80%
+    this->healthbar->setHealth(80);
+}
 
 Enemy::Enemy(Json::Value enemy, std::list<Card *>& library)
     : Boxer()
 {
+    this->healthbar = new Healthbar(1);
+    this->appendChild(this->healthbar);
+
+    //Setting health to 80%
+    this->healthbar->setHealth(80);
+
 
     if (enemy["name"].isNull()) { throw 10; }
     else

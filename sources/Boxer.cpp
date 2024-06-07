@@ -2,11 +2,7 @@
 #include <iostream>
 Boxer::Boxer()
 {
-    this->healthbar = new Healthbar(0);
-    this->appendChild(this->healthbar);
-
-    //Setting health to 80%
-    this->healthbar->setHealth(80);
+    
 }
 
 void Boxer::setHealth(int health) { this->health = health; }
