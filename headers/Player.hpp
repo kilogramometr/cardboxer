@@ -1,8 +1,11 @@
 #include "Boxer.hpp"
+#include "Shield.hpp"
 
 class Player : public Boxer
 {
 private:
+    Shield* shield;
+
     std::list<Card *> *hand;
     std::list<Card *> *discardPile;
 

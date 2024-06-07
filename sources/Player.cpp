@@ -7,4 +7,7 @@ Player::Player()
 
     //Setting health to 80%
     this->healthbar->setHealth(80);
+
+    this->shield = new Shield();
+    this->appendChild(this->shield);
 }
