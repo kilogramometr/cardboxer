@@ -8,6 +8,9 @@ Enemy::Enemy(): Boxer()
     //Setting health to 80%
     this->healthbar->setHealth(80);
 
+    this->shield = new Shield(1);
+    this->appendChild(this->shield);
+
     this->loadSprites();
 }
 

@@ -13,11 +13,11 @@ private:
     sf::Text text;
     sf::Font font;
 
-    void setSprite();
+    void setSprite(bool dir);
     void setText();
 
     void onDraw(sf::RenderTarget &target, sf::Transform& transform);
 public:
-    Shield();
+    Shield(bool dir);
     void setPoints(int points);
 };

@@ -1,21 +1,22 @@
 #include "../headers/Shield.hpp"
 
-Shield::Shield()
+Shield::Shield(bool dir)
 {
     this->points = 0;
 
-    this->setSprite();
+    this->setSprite(dir);
     this->setText();
 }
 
-void Shield::setSprite()
+void Shield::setSprite(bool dir)
 {
     if(!this->texture.loadFromFile("../res/textures/shield.png"))
         std::cout<<"Failed to load shield texture"<<std::endl;
     
     this->setTexture(this->texture);
     this->setScale(sf::Vector2f(0.75, 0.75));
-    this->setPosition(sf::Vector2f(45, 480));
+    if (dir == 0) this->setPosition(sf::Vector2f(45, 480));
+    else this->setPosition(sf::Vector2f(755-this->getGlobalBounds().width, 5));
 }
 
 void Shield::setText()

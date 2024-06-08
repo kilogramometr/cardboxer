@@ -1,5 +1,6 @@
 #pragma once
 #include "Boxer.hpp"
+#include "Shield.hpp"
 
 class Enemy : public Boxer, public sf::Sprite
 {
@@ -13,6 +14,7 @@ private:
     sf::Vector2f framePos;
     sf::Text name;
 
+    Shield *shield;
     Sprite sprite;
     int charakter;
     sf::Texture sam_idleTexture;
