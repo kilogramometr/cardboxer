@@ -7,6 +7,8 @@ Enemy::Enemy(): Boxer()
 
     //Setting health to 80%
     this->healthbar->setHealth(80);
+
+    this->loadSprites();
 }
 
 Enemy::Enemy(Json::Value enemy, std::list<Card *>& library)
@@ -17,6 +19,8 @@ Enemy::Enemy(Json::Value enemy, std::list<Card *>& library)
 
     //Setting health to 80%
     this->healthbar->setHealth(80);
+
+    this->loadSprites();
 
 
     if (enemy["name"].isNull()) { throw 10; }
@@ -79,3 +83,14 @@ Enemy::Enemy(Json::Value enemy, std::list<Card *>& library)
         std::cerr<<(*it_d)->getName()<<" "<<(*it_p)<<"\n";
     }
 }    
+
+void Enemy::loadSprites()
+{
+    this->sam_idleTexture.loadFromFile("../res/textures/Samurai/Idle.png");
+    this->sprite.setTexture(this->sam_idleTexture);
+}
+
+void Enemy::onDraw(sf::RenderTarget &target, sf::Transform& transform)
+{
+    //target.draw(this->sprite);
+}

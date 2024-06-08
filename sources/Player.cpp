@@ -228,3 +228,23 @@ void Player::setDead()
     this->maxFrame = 3;
     this->animationTimer = 0;
 }
+
+void Player::attack1()
+{
+    this->setAttack1();
+}
+
+void Player::attack2()
+{
+    this->setAttack2();
+}
+
+void Player::attack3()
+{
+    this->setAttack3();
+}
+
+void Player::dead()
+{
+    this->setDead();
+}

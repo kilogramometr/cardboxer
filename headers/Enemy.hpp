@@ -13,6 +13,23 @@ private:
     sf::Vector2f framePos;
     sf::Text name;
 
+    Sprite sprite;
+    int charakter;
+    sf::Texture sam_idleTexture;
+    sf::Texture sam_attack1Texture;
+    sf::Texture sam_attack2Texture;
+    sf::Texture sam_attack3Texture;
+    sf::Texture sam_deadTexture;
+
+    sf::Texture shi_idleTexture;
+    sf::Texture shi_attack1Texture;
+    sf::Texture shi_attack2Texture;
+    sf::Texture shi_attack3Texture;
+    sf::Texture shi_dead;
+
+    void loadSprites();
+
+    void onDraw(sf::RenderTarget &target, sf::Transform& transform);
 public:
     Enemy(Json::Value enemy, std::list<Card *>& library);
     Enemy();
