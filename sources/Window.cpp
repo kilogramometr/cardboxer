@@ -11,9 +11,12 @@ Window::Window(sf::Vector2f resolution, std::string title)
 
     
     // set backGround
-    this->backGround = new sf::RectangleShape(resolution);
-    this->backGround->setFillColor(sf::Color::Black);
-    this->backGround->setPosition(0, 0);
+    //this->backGround = new sf::RectangleShape(resolution);
+    //this->backGround->setFillColor(sf::Color::Black);
+    //this->backGround->setPosition(0, 0);
+    if(!this->backgroundTexture.loadFromFile("../res/textures/background.png"))
+        std::cout<<"Unable to load background texture"<<std::endl;
+    this->backGround.setTexture(this->backgroundTexture);
     
     if (!this->loadLibrary()) throw 0;
     if (!this->loadEnemies()) throw 1;
@@ -59,7 +62,7 @@ void Window::loop()
 
 void Window::drawScene()
 {
-    this->draw(*this->backGround);
+    this->draw(this->backGround);
     sf::Transform transform;
     this->Scene->draw(*this, transform);
 }

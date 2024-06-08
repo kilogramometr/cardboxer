@@ -11,7 +11,8 @@
 class Window : public sf::RenderWindow
 {
     sf::Vector2f resolution;
-    sf::RectangleShape *backGround;
+    sf::Sprite backGround;
+    sf::Texture backgroundTexture;
     /* Scene */ Menu *menu;
     /* Scene */ Node *game;
     /* Scene */ Node *cardLibrary;
