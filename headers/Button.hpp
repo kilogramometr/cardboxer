@@ -21,6 +21,7 @@ public:
     Button(sf::Vector2f position, sf::Vector2f size, sf::Vector2f textOffset, int textSize, sf::Color color, std::string buttonText, int code);
     
     
+    void setText(std::string text);
     void resetText();
 };
 

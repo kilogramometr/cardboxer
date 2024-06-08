@@ -54,35 +54,48 @@ Card::Card(Json::Value card)
     (card["description"].isNull()) ? throw 2 : this->setDesc(card["description"].asString(), 22); 
     // std::cerr<<"\n end of constructor\n";
     // std::cerr<<this->desc<<std::endl<<this->originalDesc<<std::endl;
+
+    this->setPosition(0, 0);
 }
 
 Card::Card(Card &copy)
 {
     if (copy.defensiveAction != 0)
-    {
-        this->defensiveAction = new CardAction(*copy.defensiveAction);
-    }
+    { this->defensiveAction = new CardAction(*copy.defensiveAction);}
+
     if (copy.offensiveAction != 0){
-        std::cerr<<"offensive\n";
-        this->offensiveAction = new CardAction(*copy.offensiveAction);}
+    {   //std::cerr<<"offensive\n";
+        this->offensiveAction = new CardAction(*copy.offensiveAction);} }
     
+    // std::cerr<<"texture\n";
     if (copy.texture != 0)
+    {
         this->texture = new sf::Texture(*copy.texture);
+        this->setTexture(*this->texture);
+        this->setTextureRect(copy.getTextureRect());
+    }
+
     
+    // std::cerr<<"font\n";
     if (copy.font != 0)
         this->font = new sf::Font(*copy.font);
 
+    // std::cerr<<"name\n";
     if (copy.name != 0)
     {
         this->name = new sf::Text(*copy.name);
         this->originalName = copy.originalName;
+        std::cerr<<copy.originalName<<"\n";
     }
+
+    // std::cerr<<"desc\n";
     if (copy.description != 0)
     {
         this->description = new sf::Text(*copy.description);
         this->originalDesc = copy.originalDesc;
         this->desc = copy.desc;
     }
+    // std::cerr<<"end copy\n";
 }
 
 void Card::setFont()
@@ -176,22 +189,20 @@ void Card::calcDescWrap()
     float cardWidth = this->getTextureRect().width;
     float currentLine = 10;
     int lastSpace = 0;
-
     for (int i = 0; i < this->desc.length(); i++)
     {
+        // std::cerr<<i<<" "<<this->desc.length()<<"\n";
         if (this->desc[i] == '\n')
         {
             currentLine = 10;
             continue;
         }
-
         if (this->desc[i] == ' ')
             lastSpace = i;
 
         sf::Glyph glyph = this->font->getGlyph(this->desc[i], characterSize, false);
         float glyphWidth = glyph.advance;
-        // std::cerr<<currentLine<<" "<<glyphWidth<<" "<<currentLine+glyphWidth<<std::endl;
-      
+    
         if ((currentLine + glyphWidth + 2*letterSpacing) > cardWidth)
         { 
             currentLine = 10;

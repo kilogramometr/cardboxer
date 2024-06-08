@@ -1,12 +1,11 @@
 #include "../headers/Player.hpp"
-
+#include <random>
 Player::Player()
 {
     this->healthbar = new Healthbar(0);
     this->appendChild(this->healthbar);
 
-    //Setting health to 80%
-    this->healthbar->setHealth(80);
+    this->healthbar->setHealth(100);
 
     this->shield = new Shield(0);
     this->appendChild(this->shield);
@@ -35,7 +34,7 @@ void Player::onDraw(sf::RenderTarget &target, sf::Transform& transform)
     target.draw(this->sprite, transform);
 }
 
-void Player::onUpdate()
+void Player::onUpdate(sf::Vector2f mousePos)
 {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
         this->setAttack1();
@@ -78,27 +77,27 @@ void Player::setFrame()
         {
             case 1:
                 this->sprite.setTextureRect(sf::IntRect(46, 47, 35, 81));
-                std::cout<<"Idle frame 1"<<std::endl;
+                //std::cerr<<"Idle frame 1"<<std::endl;
                 break;
             case 2:
                 this->sprite.setTextureRect(sf::IntRect(174, 47, 35, 81));
-                std::cout<<"Idle frame 2"<<std::endl;
+                //std::cerr<<"Idle frame 2"<<std::endl;
                 break;
             case 3:
                 this->sprite.setTextureRect(sf::IntRect(301, 47, 35, 81));
-                std::cout<<"Idle frame 3"<<std::endl;
+                //std::cerr<<"Idle frame 3"<<std::endl;
                 break;
             case 4:
                 this->sprite.setTextureRect(sf::IntRect(428, 47, 35, 81));
-                std::cout<<"Idle frame 4"<<std::endl;
+                //std::cerr<<"Idle frame 4"<<std::endl;
                 break;
             case 5:
                 this->sprite.setTextureRect(sf::IntRect(557, 47, 35, 81));
-                std::cout<<"Idle frame 5"<<std::endl;
+                //std::cerr<<"Idle frame 5"<<std::endl;
                 break;
             case 6:
                 this->sprite.setTextureRect(sf::IntRect(686, 47, 35, 81));
-                std::cout<<"Idle frame 6"<<std::endl;
+                //std::cerr<<"Idle frame 6"<<std::endl;
                 break;
         }
     }
@@ -108,19 +107,19 @@ void Player::setFrame()
         {
             case 1:
                 this->sprite.setTextureRect(sf::IntRect(38, 47, 60, 81));
-                std::cout<<"Attack1 frame 1"<<std::endl;
+                //std::cerr<<"Attack1 frame 1"<<std::endl;
                 break;
             case 2:
                 this->sprite.setTextureRect(sf::IntRect(166, 47, 60, 81));
-                std::cout<<"Attack1 frame 2"<<std::endl;
+                //std::cerr<<"Attack1 frame 2"<<std::endl;
                 break;
             case 3:
                 this->sprite.setTextureRect(sf::IntRect(295, 47, 60, 81));
-                std::cout<<"Attack1 frame 3"<<std::endl;
+                //std::cerr<<"Attack1 frame 3"<<std::endl;
                 break;
             case 4:
                 this->sprite.setTextureRect(sf::IntRect(423, 47, 60, 81));
-                std::cout<<"Attack1 frame 4"<<std::endl;
+                //std::cerr<<"Attack1 frame 4"<<std::endl;
                 break;
         }
     }
@@ -130,15 +129,15 @@ void Player::setFrame()
         {
             case 1:
                 this->sprite.setTextureRect(sf::IntRect(36, 47, 60, 81));
-                std::cout<<"Attack2 frame 1"<<std::endl;
+                //std::cerr<<"Attack2 frame 1"<<std::endl;
                 break;
             case 2:
                 this->sprite.setTextureRect(sf::IntRect(164, 47, 60, 81));
-                std::cout<<"Attack2 frame 2"<<std::endl;
+                //std::cerr<<"Attack2 frame 2"<<std::endl;
                 break;
             case 3:
                 this->sprite.setTextureRect(sf::IntRect(292, 47, 60, 81));
-                std::cout<<"Attack2 frame 3"<<std::endl;
+                //std::cerr<<"Attack2 frame 3"<<std::endl;
                 break;
         }
     }
@@ -148,19 +147,19 @@ void Player::setFrame()
         {
             case 1:
                 this->sprite.setTextureRect(sf::IntRect(35, 47, 60, 81));
-                std::cout<<"Attack3 frame 1"<<std::endl;
+                //std::cerr<<"Attack3 frame 1"<<std::endl;
                 break;
             case 2:
                 this->sprite.setTextureRect(sf::IntRect(178, 47, 60, 81));
-                std::cout<<"Attack3 frame 2"<<std::endl;
+                //std::cerr<<"Attack3 frame 2"<<std::endl;
                 break;
             case 3:
                 this->sprite.setTextureRect(sf::IntRect(301, 47, 60, 81));
-                std::cout<<"Attack3 frame 3"<<std::endl;
+                //std::cerr<<"Attack3 frame 3"<<std::endl;
                 break;
             case 4:
                 this->sprite.setTextureRect(sf::IntRect(423, 47, 60, 81));
-                std::cout<<"Attack3 frame 4"<<std::endl;
+                //std::cerr<<"Attack3 frame 4"<<std::endl;
                 break;
         }
     }
@@ -170,15 +169,15 @@ void Player::setFrame()
         {
             case 1:
                 this->sprite.setTextureRect(sf::IntRect(35, 47, 70, 81));
-                std::cout<<"Dead frame 1"<<std::endl;
+                //std::cerr<<"Dead frame 1"<<std::endl;
                 break;
             case 2:
                 this->sprite.setTextureRect(sf::IntRect(163, 47, 70, 81));
-                std::cout<<"Dead frame 2"<<std::endl;
+                //std::cerr<<"Dead frame 2"<<std::endl;
                 break;
             case 3:
                 this->sprite.setTextureRect(sf::IntRect(290, 47, 75, 81));
-                std::cout<<"Dead frame 3"<<std::endl;
+                //std::cerr<<"Dead frame 3"<<std::endl;
                 break;
         }
     }
@@ -248,3 +247,44 @@ void Player::dead()
 {
     this->setDead();
 }
+
+void Player::burnCard(Card *card)
+{
+    auto it = std::find(this->hand.begin(), this->hand.end(), card);
+    if (it != this->hand.end())
+    {
+        this->hand.remove(card);
+        delete card;
+    }
+}
+
+void Player::draw()
+{
+    this->hand.emplace_back(*this->deck.begin());
+    this->deck.pop_front();
+}
+
+void Player::discard(Card *card)
+{
+    this->discardPile.emplace_back(card);
+    this->hand.remove(card);
+}
+
+void Player::shuffle()
+{
+    std::random_device device;
+    std::mt19937 twister(device());
+    std::vector<Card *> temp(this->deck.begin(), this->deck.end());
+    std::shuffle(temp.begin(), temp.end(), twister);
+    std::copy(temp.begin(), temp.end(), this->deck.begin());
+}
+
+void Player::reshuffle()
+{
+    this->deck = this->discardPile;
+    this->discardPile.clear();
+    this->shuffle();
+}
+
+int Player::getDiscardSize() { return this->discardPile.size(); }
+bool Player::handEmpty() { return this->hand.empty(); }

@@ -32,12 +32,12 @@ private:
     void loadSprites();
 
     void onDraw(sf::RenderTarget &target, sf::Transform& transform);
+    std::list<Card *>::iterator chooseCard();
 public:
     Enemy(Json::Value enemy, std::list<Card *>& library);
     Enemy();
 
-    std::list<Card *>::iterator chooseCard();
-    void playCard();
+    Card* playCard();
     void nextFrame();
     void prevFrame();
     void setFrame();

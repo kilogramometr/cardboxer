@@ -19,17 +19,22 @@ public:
     Boxer();
 
     void setHealth(int health);
-    int getHealth(int health);
+    int getHealth();
 
     void setMaxHealth(int health);
-    int getMaxHealth(int health);
+    int getMaxHealth();
 
     void setGuard(int guard);
-    int getGuard(int guard);
+    int getGuard();
     
-    void damage(int damage);
+    void damage(int damage, bool bypass);
     void heal(int heal);
 
     void addToDeck(Card *card);
     void removeFromDeck(Card *card);
+    void clearDeck();
+    int getDeckSize();
+    
+    void burnCard(Card *card) {};
+
 };

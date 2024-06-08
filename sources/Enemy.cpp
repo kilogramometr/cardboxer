@@ -1,12 +1,13 @@
 #include "../headers/Enemy.hpp"
+#include "../headers/utils.hpp"
 #include <iostream>
+
 Enemy::Enemy(): Boxer()
 {
     this->healthbar = new Healthbar(1);
     this->appendChild(this->healthbar);
 
-    //Setting health to 80%
-    this->healthbar->setHealth(80);
+    this->healthbar->setHealth(100);
 
     this->shield = new Shield(1);
     this->appendChild(this->shield);
@@ -20,8 +21,7 @@ Enemy::Enemy(Json::Value enemy, std::list<Card *>& library)
     this->healthbar = new Healthbar(1);
     this->appendChild(this->healthbar);
 
-    //Setting health to 80%
-    this->healthbar->setHealth(80);
+    this->healthbar->setHealth(100);
 
     this->loadSprites();
 
@@ -93,7 +93,30 @@ void Enemy::loadSprites()
     this->sprite.setTexture(this->sam_idleTexture);
 }
 
-void Enemy::onDraw(sf::RenderTarget &target, sf::Transform& transform)
+void Enemy::onDraw(sf::RenderTarget &target, sf::Transform& transform) {}
+
+
+std::list<Card *>::iterator Enemy::chooseCard()
 {
-    //target.draw(this->sprite);
+    int random = randomUniform(1, 100);
+    int chance = 0;
+    auto it_d = this->deck.begin();
+    auto it_p = this->probabilities.begin();
+    for (; it_d != this->deck.end() && it_p != this->probabilities.end(); ++it_d, ++it_p)
+    {
+        chance += (*it_p) * 100;
+        if (it_d == this->lastPlayed)
+            continue;
+        if (chance >= random)
+            break;
+    }
+
+    return (this->deck.end() == it_d) ? --it_d : it_d;
+}
+
+Card* Enemy::playCard()
+{
+    auto it = this->chooseCard();
+    this->lastPlayed = it;
+    return *it;
 }
