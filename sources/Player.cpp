@@ -94,15 +94,19 @@ void Player::setFrame()
         {
             case 1:
                 this->sprite.setTextureRect(sf::IntRect(38, 47, 60, 81));
+                std::cout<<"Attack1 frame 1"<<std::endl;
                 break;
             case 2:
                 this->sprite.setTextureRect(sf::IntRect(166, 47, 60, 81));
+                std::cout<<"Attack1 frame 2"<<std::endl;
                 break;
             case 3:
                 this->sprite.setTextureRect(sf::IntRect(295, 47, 60, 81));
+                std::cout<<"Attack1 frame 3"<<std::endl;
                 break;
             case 4:
                 this->sprite.setTextureRect(sf::IntRect(423, 47, 60, 81));
+                std::cout<<"Attack1 frame 4"<<std::endl;
                 break;
         }
     }
