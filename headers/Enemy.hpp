@@ -15,8 +15,14 @@ private:
     sf::Text name;
 
     Shield *shield;
-    Sprite sprite;
+
     int charakter;
+
+    int frame;
+    int maxFrame;
+    int animationTimer;
+    int animationType;
+
     sf::Texture sam_idleTexture;
     sf::Texture sam_attack1Texture;
     sf::Texture sam_attack2Texture;
@@ -29,9 +35,20 @@ private:
     sf::Texture shi_attack3Texture;
     sf::Texture shi_dead;
 
+    void construct();
     void loadSprites();
 
+    void animate();
+    void setAnimationFrame();
+    void onUpdate();
     void onDraw(sf::RenderTarget &target, sf::Transform& transform);
+
+    void setIdle();
+    void setAttack1();
+    void setAttack2();
+    void setAttack3();
+    void setDead();
+
 public:
     Enemy(Json::Value enemy, std::list<Card *>& library);
     Enemy();
