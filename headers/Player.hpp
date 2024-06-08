@@ -29,6 +29,9 @@ private:
     void onUpdate();
 
     void setAttack1();
+    void setAttack2();
+    void setAttack3();
+    void setDead();
     void setIdle();
 public:
     Player();

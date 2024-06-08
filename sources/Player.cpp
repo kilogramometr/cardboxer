@@ -19,7 +19,7 @@ void Player::initSprite()
     this->idleTexture.loadFromFile("../res/textures/Fighter/Idle.png");
     this->attack1Texture.loadFromFile("../res/textures/Fighter/Attack_1.png");
     this->attack2Texture.loadFromFile("../res/textures/Fighter/Attack_2.png");
-    this->attack2Texture.loadFromFile("../res/textures/Fighter/Attack_3.png");
+    this->attack3Texture.loadFromFile("../res/textures/Fighter/Attack_3.png");
     this->deadTexture.loadFromFile("../res/textures/Fighter/Dead.png");
 
     this->sprite.setTexture(this->idleTexture);
@@ -33,6 +33,20 @@ void Player::initSprite()
 void Player::onDraw(sf::RenderTarget &target, sf::Transform& transform)
 {
     target.draw(this->sprite, transform);
+}
+
+void Player::onUpdate()
+{
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+        this->setAttack1();
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+        this->setAttack2();
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
+        this->setAttack3();
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num4))
+        this->setDead();
+
+    this->animate();
 }
 
 void Player::animate()
@@ -110,13 +124,64 @@ void Player::setFrame()
                 break;
         }
     }
-}
-
-void Player::onUpdate()
-{
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-        this->setAttack1();
-    this->animate();
+    else if(this->animationType == 2)
+    {
+        switch(this->frame)
+        {
+            case 1:
+                this->sprite.setTextureRect(sf::IntRect(36, 47, 60, 81));
+                std::cout<<"Attack2 frame 1"<<std::endl;
+                break;
+            case 2:
+                this->sprite.setTextureRect(sf::IntRect(164, 47, 60, 81));
+                std::cout<<"Attack2 frame 2"<<std::endl;
+                break;
+            case 3:
+                this->sprite.setTextureRect(sf::IntRect(292, 47, 60, 81));
+                std::cout<<"Attack2 frame 3"<<std::endl;
+                break;
+        }
+    }
+    else if(this->animationType == 3)
+    {
+        switch(this->frame)
+        {
+            case 1:
+                this->sprite.setTextureRect(sf::IntRect(35, 47, 60, 81));
+                std::cout<<"Attack3 frame 1"<<std::endl;
+                break;
+            case 2:
+                this->sprite.setTextureRect(sf::IntRect(178, 47, 60, 81));
+                std::cout<<"Attack3 frame 2"<<std::endl;
+                break;
+            case 3:
+                this->sprite.setTextureRect(sf::IntRect(301, 47, 60, 81));
+                std::cout<<"Attack3 frame 3"<<std::endl;
+                break;
+            case 4:
+                this->sprite.setTextureRect(sf::IntRect(423, 47, 60, 81));
+                std::cout<<"Attack3 frame 4"<<std::endl;
+                break;
+        }
+    }
+    else if(this->animationType == 4)
+    {
+        switch(this->frame)
+        {
+            case 1:
+                this->sprite.setTextureRect(sf::IntRect(35, 47, 70, 81));
+                std::cout<<"Dead frame 1"<<std::endl;
+                break;
+            case 2:
+                this->sprite.setTextureRect(sf::IntRect(163, 47, 70, 81));
+                std::cout<<"Dead frame 2"<<std::endl;
+                break;
+            case 3:
+                this->sprite.setTextureRect(sf::IntRect(290, 47, 75, 81));
+                std::cout<<"Dead frame 3"<<std::endl;
+                break;
+        }
+    }
 }
 
 void Player::setIdle()
@@ -134,5 +199,32 @@ void Player::setAttack1()
     this->animationType = 1;
     this->frame = 1;
     this->maxFrame = 4;
+    this->animationTimer = 0;
+}
+
+void Player::setAttack2()
+{
+    this->sprite.setTexture(this->attack2Texture);
+    this->animationType = 2;
+    this->frame = 1;
+    this->maxFrame = 3;
+    this->animationTimer = 0;
+}
+
+void Player::setAttack3()
+{
+    this->sprite.setTexture(this->attack3Texture);
+    this->animationType = 3;
+    this->frame = 1;
+    this->maxFrame = 4;
+    this->animationTimer = 0;
+}
+
+void Player::setDead()
+{
+    this->sprite.setTexture(this->deadTexture);
+    this->animationType = 4;
+    this->frame = 1;
+    this->maxFrame = 3;
     this->animationTimer = 0;
 }
