@@ -43,20 +43,17 @@ void Player::animate()
         {
             this->frame += 1;
             this->animationTimer = 0;
-            this->setFrame();
         }
         else
         {
             this->setIdle();
-            this->setFrame();
         }
     }
     else
     {
         this->animationTimer += 1;
     }
-
-    
+    this->setFrame();
 }
 
 void Player::setFrame()
@@ -91,10 +88,30 @@ void Player::setFrame()
                 break;
         }
     }
+    else if(this->animationType == 1)
+    {
+        switch(this->frame)
+        {
+            case 1:
+                this->sprite.setTextureRect(sf::IntRect(38, 47, 60, 81));
+                break;
+            case 2:
+                this->sprite.setTextureRect(sf::IntRect(166, 47, 60, 81));
+                break;
+            case 3:
+                this->sprite.setTextureRect(sf::IntRect(295, 47, 60, 81));
+                break;
+            case 4:
+                this->sprite.setTextureRect(sf::IntRect(423, 47, 60, 81));
+                break;
+        }
+    }
 }
 
 void Player::onUpdate()
 {
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+        this->setAttack1();
     this->animate();
 }
 
