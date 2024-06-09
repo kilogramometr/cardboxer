@@ -1,14 +1,15 @@
 #include "../headers/Enemy.hpp"
 #include <iostream>
-Enemy::Enemy(): Boxer()
+Enemy::Enemy(int charakter): Boxer()
 {
-    this->construct();
+    this->charakter = charakter;
+    this->construct(charakter);
 }
 
-Enemy::Enemy(Json::Value enemy, std::list<Card *>& library)
+Enemy::Enemy(Json::Value enemy, std::list<Card *>& library, int charakter)
     : Boxer()
 {
-    this->construct();
+    this->construct(charakter);
 
 
     if (enemy["name"].isNull()) { throw 10; }
@@ -72,7 +73,7 @@ Enemy::Enemy(Json::Value enemy, std::list<Card *>& library)
     }
 }    
 
-void Enemy::construct()
+void Enemy::construct(int charakter)
 {
     this->healthbar = new Healthbar(1);
     this->appendChild(this->healthbar);
@@ -80,6 +81,8 @@ void Enemy::construct()
 
     this->shield = new Shield(1);
     this->appendChild(this->shield);
+
+    this->charakter = charakter;
 
     this->loadSprites();
 
@@ -102,8 +105,6 @@ void Enemy::loadSprites()
 
     this->setScale(sf::Vector2f(-1.5, 1.5));
     this->setPosition(sf::Vector2f(600, 320));
-
-    this->charakter = 0;
 }
 
 void Enemy::onDraw(sf::RenderTarget &target, sf::Transform& transform)

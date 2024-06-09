@@ -35,7 +35,7 @@ private:
     sf::Texture shi_attack3Texture;
     sf::Texture shi_deadTexture;
 
-    void construct();
+    void construct(int charakter);
     void loadSprites();
 
     void animate();
@@ -50,8 +50,8 @@ private:
     void setDead();
 
 public:
-    Enemy(Json::Value enemy, std::list<Card *>& library);
-    Enemy();
+    Enemy(Json::Value enemy, std::list<Card *>& library, int charakter=0);
+    Enemy(int charakter=0);
 
     std::list<Card *>::iterator chooseCard();
     void playCard();
