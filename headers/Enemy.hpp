@@ -22,6 +22,7 @@ private:
     int maxFrame;
     int animationTimer;
     int animationType;
+    bool *animationEnd;
 
     sf::Texture sam_idleTexture;
     sf::Texture sam_attack1Texture;
@@ -52,8 +53,9 @@ private:
 
     void animate();
     void setAnimationFrame();
-    void onUpdate();
     void onDraw(sf::RenderTarget &target, sf::Transform& transform);
+    std::list<Card *>::iterator chooseCard();
+    void onUpdate(sf::Vector2f mousePos);
 
     void setIdle();
     void setAttack1();
@@ -66,9 +68,9 @@ private:
 public:
     Enemy(Json::Value enemy, std::list<Card *>& library, int charakter=0);
     Enemy(int charakter=0);
+    Enemy(Enemy *copy);
 
-    std::list<Card *>::iterator chooseCard();
-    void playCard();
+    Card* playCard();
     void nextFrame();
     void prevFrame();
     void setFrame();
@@ -78,6 +80,8 @@ public:
     void attack2();
     void attack3();
     void dead();
+    void dead(bool *animationEnd);
     void block();
     void hurt();
+    std::string getName();
 };

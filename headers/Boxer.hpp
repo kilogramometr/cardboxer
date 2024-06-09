@@ -14,22 +14,34 @@ protected:
     std::list<Card *> deck;
 
     void updateHealthbar();
+    void onUpdate(sf::Vector2f mousePos);
 
 public:
     Boxer();
 
     void setHealth(int health);
-    int getHealth(int health);
+    int getHealth();
 
     void setMaxHealth(int health);
-    int getMaxHealth(int health);
+    int getMaxHealth();
 
     void setGuard(int guard);
-    int getGuard(int guard);
+    int getGuard();
     
-    void damage(int damage);
+    void damage(int damage, bool bypass);
     void heal(int heal);
 
     void addToDeck(Card *card);
     void removeFromDeck(Card *card);
+    void clearDeck();
+    int getDeckSize();
+    
+    void burnCard(Card *card) {};
+
+    
+    virtual void attack1() {};
+    virtual void attack2() {};
+    virtual void attack3() {};
+    virtual void dead() {};
+    virtual void block() {};
 };

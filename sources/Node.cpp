@@ -8,15 +8,7 @@ void Node::appendChild(Node* child) { this->children.emplace_back(child); }
 void Node::removeChild(Node* child) 
 /* remove that emelement from list  */
 {
-    for (auto it = this->children.begin(); it != this->children.end(); ++it)
-    {
-        if (*it == child)
-        {
-            this->children.erase(it);
-            return;
-            // std::cout<<"Great Success!\n";
-        }
-    }
+    this->children.remove(child);
 }
 
 void Node::draw(sf::RenderTarget& target, sf::Transform& parentTransform)
@@ -31,7 +23,9 @@ void Node::draw(sf::RenderTarget& target, sf::Transform& parentTransform)
     // draw its children
     for (auto it = this->children.begin(); it != this->children.end(); ++it)
     {
-        (*it)->draw(target, combinedTransform);
+        // std::cerr<<*it<<"\n";
+        if (*it != nullptr)
+            (*it)->draw(target, combinedTransform);
     }
 }
 
@@ -59,13 +53,13 @@ int Node::buttonClick(sf::Vector2f mousePosition)
     return 0;
 }
 
-void Node::update()
+void Node::update(sf::Vector2f mousePos)
 {
-    this->onUpdate();
+    this->onUpdate(mousePos);
 
     for (auto it = this->children.begin(); it != this->children.end(); ++it)
     {
-        (*it)->update();
+        (*it)->update(mousePos);
     }
 }
 

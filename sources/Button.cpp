@@ -30,6 +30,11 @@ void Button::setText(sf::Vector2f position, std::string buttonText, int textSize
     this->text->move(textOffset);
 }
 
+void Button::setText(std::string text)
+{
+    this->text->setString(text);
+}
+
 void Button::resetText()
 {
     this->text->setString("Button");

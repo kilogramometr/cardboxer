@@ -1,0 +1,72 @@
+{
+    "hp": 10,
+    "name": "Shinobi",
+
+    "textures": 
+    {
+        "idle": {
+            "file": "file",
+            "frames": 0,
+            "frameHeight": 0,
+            "frameWidth": 0,
+            "frameSpacing": 0
+        },
+        "attack1": {
+            "file": "file",
+            "frames": 0,
+            "frameHeight": 0,
+            "frameWidth": 0,
+            "frameSpacing": 0
+        },
+        "attack2": {
+            "file": "file",
+            "frames": 0,
+            "frameHeight": 0,
+            "frameWidth": 0,
+            "frameSpacing": 0
+        },
+        "attack3": {
+            "file": "file",
+            "frames": 0,
+            "frameHeight": 0,
+            "frameWidth": 0,
+            "frameSpacing": 0
+        },
+        "shield": {
+            "file": "file",
+            "frames": 0,
+            "frameHeight": 0,
+            "frameWidth": 0,
+            "frameSpacing": 0
+        },
+        "hurt": {
+            "file": "file",
+            "frames": 0,
+            "frameHeight": 0,
+            "frameWidth": 0,
+            "frameSpacing": 0
+        },
+        "dead": {
+            "file": "file",
+            "frames": 0,
+            "frameHeight": 0,
+            "frameWidth": 0,
+            "frameSpacing": 0
+        }
+    },
+
+    "actions": [
+        {
+            "cardName": "Rest",
+            "probability": 0.25
+        },
+        {
+            "cardName": "Doubletap",
+            "probability": 0.25
+        },
+        {
+            "cardName": "Feint",
+            "probability": 0.5
+        }
+    ]
+}

@@ -1,8 +1,33 @@
 {
     "hp": 10,
-    "name": "Heavy Hitter",
+    "name": "Samurai",
 
-    "texture": {
+    "textures": 
+    {
+        "idle": {
+
+        },
+        "attack1": {
+
+        },
+        "attack2": {
+
+        },
+        "attack3": {
+
+        },
+        "shield": {
+
+        },
+        "hurt": {
+
+        },
+        "dead": {
+            
+        },
+
+    }
+    {
         "file": "test_cards.png",
         "x": 0,
         "y": 0,
@@ -10,8 +35,6 @@
         "frameWidth": 0,
         "frameHeight": 0
     },
-
-    "character": 0,
 
     "actions": [
         {

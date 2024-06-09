@@ -21,15 +21,16 @@ private:
     int animationTimer;
     int animationType;
 
-    std::list<Card *> *hand;
-    std::list<Card *> *discardPile;
+    bool *animationEnd;
+
+    std::list<Card *> discardPile;
 
     void initSprite();
     void onDraw(sf::RenderTarget &target, sf::Transform& transform);
     void animate();
     void setFrame();
-    void onUpdate();
-
+    void onUpdate(sf::Vector2f mousePos);
+    
     void setAttack1();
     void setAttack2();
     void setAttack3();
@@ -40,8 +41,9 @@ private:
 public:
     Player();
 
+    std::list<Card *> hand;
     void draw(); // from deck to hand
-    void discard(); // from hand to discard
+    void discard(Card *card); // from hand to discard
     void shuffle(); // shuffle order in deck
     void reshuffle(); // discardPile -> deck + shuffle
 
@@ -50,6 +52,10 @@ public:
     void attack2();
     void attack3();
     void dead();
+    void dead(bool *animationEnd);
     void block();
     void hurt();
+    void burnCard(Card *card);
+    int getDiscardSize();
+    bool handEmpty();
 };

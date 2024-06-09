@@ -7,7 +7,7 @@ Card::Card() {}
 Card::Card(Json::Value card) 
 /* Card constuctor */
 {
-    if (!card["defensive"].isNull())
+    if (!card["defensive"].isNull() && card["defensive"].isObject())
     /* load defensive action if exists */
     {   
         this->defensiveAction = new CardAction(
@@ -17,12 +17,13 @@ Card::Card(Json::Value card)
             (card["defensive"]["chain"].isNull()) ? "" : card["defensive"]["chain"].asString(),
             (card["defensive"]["health"].isNull()) ? throw 11 : card["defensive"]["health"].asInt(),
             (card["defensive"]["maxHealth"].isNull()) ? throw 12 : card["defensive"]["maxHealth"].asInt(),
-            (card["defensive"]["guard"].isNull()) ? throw 13 : card["defensive"]["guard"].asInt()
+            (card["defensive"]["guard"].isNull()) ? throw 13 : card["defensive"]["guard"].asInt(),
+            (!card["defensive"]["animation"].isNull()) ? card["defensive"]["animation"].asInt() : 5
         );
     }
     else this->defensiveAction = nullptr;
 
-    if (!card["offensive"].isNull())
+    if (!card["offensive"].isNull() && card["offensive"].isObject())
     /* load offensive action if exists */
     {
         this->offensiveAction = new CardAction{
@@ -32,7 +33,8 @@ Card::Card(Json::Value card)
             (card["offensive"]["chain"].isNull()) ? "" : card["offensive"]["chain"].asString(),
             (card["offensive"]["health"].isNull()) ? throw 21 : card["offensive"]["health"].asInt(),
             (card["offensive"]["maxHealth"].isNull()) ? throw 22 : card["offensive"]["maxHealth"].asInt(),
-            (card["offensive"]["guard"].isNull()) ? throw 23 : card["offensive"]["guard"].asInt()
+            (card["offensive"]["guard"].isNull()) ? throw 23 : card["offensive"]["guard"].asInt(),
+            (!card["offensive"]["animation"].isNull()) ? card["offensive"]["animation"].asInt() : 2
         };
     }
     else this->offensiveAction = nullptr;
@@ -54,35 +56,51 @@ Card::Card(Json::Value card)
     (card["description"].isNull()) ? throw 2 : this->setDesc(card["description"].asString(), 22); 
     // std::cerr<<"\n end of constructor\n";
     // std::cerr<<this->desc<<std::endl<<this->originalDesc<<std::endl;
+
+    this->obtainable = (card["obtainable"].isBool()) ? card["obtainable"].asBool() : true;
+
+    this->setPosition(0, 0);
 }
 
 Card::Card(Card &copy)
 {
-    if (copy.defensiveAction != 0)
-    {
-        this->defensiveAction = new CardAction(*copy.defensiveAction);
-    }
-    if (copy.offensiveAction != 0){
-        std::cerr<<"offensive\n";
-        this->offensiveAction = new CardAction(*copy.offensiveAction);}
+    if (copy.defensiveAction != nullptr)
+    { this->defensiveAction = new CardAction(*copy.defensiveAction); }
+    else this->defensiveAction = nullptr;
+
+    if (copy.offensiveAction != nullptr)
+    { this->offensiveAction = new CardAction(*copy.offensiveAction); }
+    else this->offensiveAction = nullptr;
     
+    // std::cerr<<"texture\n";
     if (copy.texture != 0)
+    {
         this->texture = new sf::Texture(*copy.texture);
+        this->setTexture(*this->texture);
+        this->setTextureRect(copy.getTextureRect());
+    }
+
     
+    // std::cerr<<"font\n";
     if (copy.font != 0)
         this->font = new sf::Font(*copy.font);
 
+    // std::cerr<<"name\n";
     if (copy.name != 0)
     {
         this->name = new sf::Text(*copy.name);
         this->originalName = copy.originalName;
+        std::cerr<<copy.originalName<<"\n";
     }
+
+    // std::cerr<<"desc\n";
     if (copy.description != 0)
     {
         this->description = new sf::Text(*copy.description);
         this->originalDesc = copy.originalDesc;
         this->desc = copy.desc;
     }
+    // std::cerr<<"end copy\n";
 }
 
 void Card::setFont()
@@ -176,22 +194,20 @@ void Card::calcDescWrap()
     float cardWidth = this->getTextureRect().width;
     float currentLine = 10;
     int lastSpace = 0;
-
     for (int i = 0; i < this->desc.length(); i++)
     {
+        // std::cerr<<i<<" "<<this->desc.length()<<"\n";
         if (this->desc[i] == '\n')
         {
             currentLine = 10;
             continue;
         }
-
         if (this->desc[i] == ' ')
             lastSpace = i;
 
         sf::Glyph glyph = this->font->getGlyph(this->desc[i], characterSize, false);
         float glyphWidth = glyph.advance;
-        // std::cerr<<currentLine<<" "<<glyphWidth<<" "<<currentLine+glyphWidth<<std::endl;
-      
+    
         if ((currentLine + glyphWidth + 2*letterSpacing) > cardWidth)
         { 
             currentLine = 10;
@@ -252,3 +268,4 @@ std::string Card::getName() { return this->name->getString(); }
 
 CardAction* Card::getDefensiveAction() { return this->defensiveAction; }
 CardAction* Card::getOffensiveAction() { return this->offensiveAction; }
+bool Card::isObtainable() { return this->obtainable; }

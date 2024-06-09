@@ -1,7 +1,7 @@
 {
     "name": "Hook / Block",
     "description":
-        "Offensive:\n\nDefensive:\n", 
+        "Offensive:\bA powerful arched blow - deal $oh damage.\n\nDefensive:\n", 
      
     "texture": {
         "file": "test_cards.png",
@@ -14,13 +14,15 @@
     "defensive": {
         "health": 0,
         "maxHealth": 0,
-        "guard": 3
+        "guard": 3,
+        "animation": 5
     },
     
     "offensive": {
         "health": 3,
         "maxHealth": 0,
-        "guard": 0
+        "guard": 0,
+        "animation": 2
     } 
 
 }
