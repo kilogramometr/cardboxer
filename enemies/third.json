@@ -1,0 +1,53 @@
+{
+    "hp": 10,
+    "name": "Samurai",
+
+    "textures": 
+    {
+        "idle": {
+
+        },
+        "attack1": {
+
+        },
+        "attack2": {
+
+        },
+        "attack3": {
+
+        },
+        "shield": {
+
+        },
+        "hurt": {
+
+        },
+        "dead": {
+            
+        },
+
+    }
+    {
+        "file": "test_cards.png",
+        "x": 0,
+        "y": 0,
+        "frames": 0,
+        "frameWidth": 0,
+        "frameHeight": 0
+    },
+
+    "actions": [
+        {
+            "cardName": "Uppercut",
+            "probability": 0.4
+        },
+        {
+            "cardName": "Doubletap",
+            "probability": 0.4
+        },
+        {
+            "cardName": "Slip",
+            "probability": 0.2
+        }
+    ]
+}

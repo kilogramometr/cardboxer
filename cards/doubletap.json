@@ -14,8 +14,10 @@
     "offensive": {
         "health": 2,
         "maxHealth": 0,
-        "guard": 2,
+        "guard": -2,
         "bypass": true
-    } 
+    },
+
+    "defensive": null
 
 }

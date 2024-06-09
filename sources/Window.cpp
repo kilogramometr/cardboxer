@@ -23,7 +23,7 @@ Window::Window(sf::Vector2f resolution, std::string title)
     
     // create scene and view
     this->menu = new Menu();
-    this->game = new Game();
+    this->game = new Game(&library, &enemies);
     this->cardLibrary = new CardLibrary(&this->library);
     this->setCurrentScene(this->menu);
 
@@ -55,7 +55,8 @@ void Window::loop()
         }
     }
 
-    this->Scene->update();
+    this->updateMousePosition();
+    this->Scene->update(this->mousePosition);
     this->drawScene();
     this->display();
 }

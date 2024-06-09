@@ -7,21 +7,49 @@
 class Game : public Node
 {
 private:
+    std::list<Card *> *library;
+    std::list<Enemy *> *enemies;
     Player *player;
     Enemy *enemy;
 
+    Button *restartButton;
     Button *returnButton;
+    Button *playerDeck;
+    Button *playerDiscard;
+    Button *offensiveButton;
+    Button *defensiveButton;
+    Button *drawButton;
+    
+    Card hoverCard;
+    Card lastPlayed;
+    bool playerTurn;
+    bool moved;
+    bool choose;
+    sf::Clock timer;
+    sf::Vector2f lastPos;
+    std::list<Card *>::iterator lastMoved;
+    
     void onDraw(sf::RenderTarget& target, sf::Transform& transform);
 
-    void onUpdate();
-
-    
-public:
-    Game();
-
-    void setEnemy(Enemy enemy);
+    void onUpdate(sf::Vector2f mousePos);
+    void turn();
+    void hideCards();
+    void showCards();
+    void updateCards();
+    void showButtons();
+    void hideButtons();
+    void updateLastPlayed();
+    void updateHoverCard();
+    void randomEnemy();
     void killEnemy();
-    void killPLayer();
+    void killPlayer();
+public:
+    Game(std::list<Card *> *library, std::list<Enemy *> *enemies);
+
+    void resolveCard(Card *card, Boxer *source, bool offensive);
+    void randomisePlayerDeck(std::list<Card *> *library);
+    void setEnemy(Enemy enemy);
     
     int onButtonClick(sf::Vector2f mousePosition);
 };
+

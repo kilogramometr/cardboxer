@@ -49,8 +49,9 @@ private:
 
     void animate();
     void setAnimationFrame();
-    void onUpdate();
     void onDraw(sf::RenderTarget &target, sf::Transform& transform);
+    std::list<Card *>::iterator chooseCard();
+    void onUpdate(sf::Vector2f mousePos);
 
     void setIdle();
     void setAttack1();
@@ -62,9 +63,9 @@ private:
 public:
     Enemy(Json::Value enemy, std::list<Card *>& library, int charakter=0);
     Enemy(int charakter=0);
+    Enemy(Enemy *copy);
 
-    std::list<Card *>::iterator chooseCard();
-    void playCard();
+    Card* playCard();
     void nextFrame();
     void prevFrame();
     void setFrame();
@@ -75,4 +76,5 @@ public:
     void attack3();
     void dead();
     void block();
+    std::string getName();
 };

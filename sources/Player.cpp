@@ -1,9 +1,16 @@
 #include "../headers/Player.hpp"
 
+#include <random>
+
 Player::Player() : Boxer()
 {
+    this->setGuard(0);
+    this->setHealth(10);
+    this->setMaxHealth(10);
+
     this->healthbar = new Healthbar(0);
     this->appendChild(this->healthbar);
+
     this->healthbar->setHealth(100);
 
     this->shield = new Shield(0);
@@ -34,7 +41,7 @@ void Player::onDraw(sf::RenderTarget &target, sf::Transform& transform)
     target.draw(this->sprite, transform);
 }
 
-void Player::onUpdate()
+void Player::onUpdate(sf::Vector2f mousePos)
 {
     this->healthbar->setHealth(this->health);
     this->shield->setPoints(this->guard);
@@ -51,6 +58,9 @@ void Player::onUpdate()
         this->block();
 
     this->animate();
+
+    this->updateHealthbar();
+    this->shield->setPoints(this->guard);
 }
 
 void Player::animate()
@@ -277,7 +287,56 @@ void Player::dead()
     this->setDead();
 }
 
+void Player::burnCard(Card *card)
+{
+    std::string name = card->getName();
+    auto it = std::find_if(this->hand.begin(), this->hand.end(), [name](Card *card){return card->getName()==name;});
+    if (it != this->hand.end())
+    {
+        *it = nullptr;
+        this->hand.erase(it);
+    }
+    it = std::find_if(this->discardPile.begin(), this->discardPile.end(), [name](Card *card){return card->getName()==name;});
+    if (it != this->discardPile.end())
+    {
+        *it = nullptr;
+        it = this->discardPile.erase(it);
+    }
+}
+
+void Player::draw()
+{
+    this->hand.emplace_back(*this->deck.begin());
+    this->deck.pop_front();
+}
+
+void Player::discard(Card *card)
+{
+    this->discardPile.emplace_back(card);
+    this->hand.remove(card);
+}
+
+void Player::shuffle()
+{
+    std::random_device device;
+    std::mt19937 twister(device());
+    std::vector<Card *> temp(this->deck.begin(), this->deck.end());
+    std::shuffle(temp.begin(), temp.end(), twister);
+    std::copy(temp.begin(), temp.end(), this->deck.begin());
+}
+
+void Player::reshuffle()
+{
+    this->deck = this->discardPile;
+    this->discardPile.clear();
+    this->shuffle();
+}
+
+int Player::getDiscardSize() { return this->discardPile.size(); }
+bool Player::handEmpty() { return this->hand.empty(); }
+
 void Player::block()
 {
     this->setBlock();
 }
+

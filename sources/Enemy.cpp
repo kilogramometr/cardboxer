@@ -1,14 +1,35 @@
 #include "../headers/Enemy.hpp"
+#include "../headers/utils.hpp"
 #include <iostream>
-Enemy::Enemy(int charakter): Boxer()
+
+Enemy::Enemy(): Boxer()
 {
-    this->charakter = charakter;
-    this->construct(charakter);
+    this->charakter = 1;
+    this->setHealth(10);
+    this->setMaxHealth(10);
+    this->setGuard(0);
+
+    this->healthbar = new Healthbar(1);
+    this->appendChild(this->healthbar);
+
+    this->healthbar->setHealth(100);
+
+    this->shield = new Shield(1);
+    this->appendChild(this->shield);
+
+    this->loadSprites();
+
 }
 
 Enemy::Enemy(Json::Value enemy, std::list<Card *>& library, int charakter)
     : Boxer()
 {
+    this->healthbar = new Healthbar(1);
+    this->appendChild(this->healthbar);
+
+    this->healthbar->setHealth(100);
+
+    this->loadSprites();
     this->construct(charakter);
 
 
@@ -45,7 +66,7 @@ Enemy::Enemy(Json::Value enemy, std::list<Card *>& library, int charakter)
     else
     {
         int size = enemy["actions"].size();
-        std::cerr<<"Number of actions: "<<size<<"\n";
+        // std::cerr<<"Number of actions: "<<size<<"\n";
         for (int i = 0; i < size; i++)
         {
             std::string name = enemy["actions"][i]["cardName"].asString();
@@ -67,27 +88,46 @@ Enemy::Enemy(Json::Value enemy, std::list<Card *>& library, int charakter)
     auto it_d = this->deck.begin();
     auto it_p = this->probabilities.begin();
 
-    for (; it_d != this->deck.end() && it_p != this->probabilities.end(); ++it_d, ++it_p)
-    {
-        std::cerr<<(*it_d)->getName()<<" "<<(*it_p)<<"\n";
-    }
+    // for (; it_d != this->deck.end() && it_p != this->probabilities.end(); ++it_d, ++it_p)
+    // {
+    //     std::cerr<<(*it_d)->getName()<<" "<<(*it_p)<<"\n";
+    // }
 }    
 
-void Enemy::construct(int charakter)
+Enemy::Enemy(Enemy *copy)
 {
+    this->probabilities = copy->probabilities;
+    this->health = copy->health;
+    this->maxHealth = copy->maxHealth;
+    this->name = copy->name;
+    this->charakter = copy->charakter;
+    this->deck = copy->deck;
+    
+    this->setGuard(0);
     this->healthbar = new Healthbar(1);
     this->appendChild(this->healthbar);
+
     this->healthbar->setHealth(100);
 
     this->shield = new Shield(1);
     this->appendChild(this->shield);
-
+    this->charakter = copy->charakter;
+    this->loadSprites();
+    this->setIdle();
+}
+  
+void Enemy::construct(int charakter)
+{
+    this->healthbar = new Healthbar(1);
+    this->appendChild(this->healthbar);
+  
     this->charakter = charakter;
 
     this->loadSprites();
 
     this->setIdle();
 }
+
 
 void Enemy::loadSprites()
 {
@@ -116,16 +156,46 @@ void Enemy::loadSprites()
     this->setPosition(sf::Vector2f(600, 320));
 }
 
-void Enemy::onDraw(sf::RenderTarget &target, sf::Transform& transform)
+void Enemy::onDraw(sf::RenderTarget &target, sf::Transform& transform) 
 {
     target.draw(*this);
 }
 
-void Enemy::onUpdate()
-{
-    this->healthbar->setHealth(this->health);
-    this->shield->setPoints(this->guard);
 
+
+std::list<Card *>::iterator Enemy::chooseCard()
+{
+  int random = randomUniform(1, 100);
+  int chance = 0;
+  auto it_d = this->deck.begin();
+  auto it_p = this->probabilities.begin();
+  for (; it_d != this->deck.end() && it_p != this->probabilities.end(); ++it_d, ++it_p)
+  {
+      chance += (*it_p) * 100;
+      if (it_d == this->lastPlayed)
+          continue;
+      if (chance >= random)
+          break;
+  }
+  return (this->deck.end() == it_d) ? --it_d : it_d;
+}
+  
+Card* Enemy::playCard()
+{
+    auto it = this->chooseCard();
+    this->lastPlayed = it;
+    return *it;
+}
+  
+std::string Enemy::getName() { return this->name.getString(); }
+
+    
+
+void Enemy::onUpdate(sf::Vector2f mousePos)
+{
+    this->updateHealthbar();
+    this->shield->setPoints(this->guard);
+  
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
         this->attack1();
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
