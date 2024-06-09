@@ -33,7 +33,7 @@ private:
     sf::Texture shi_attack1Texture;
     sf::Texture shi_attack2Texture;
     sf::Texture shi_attack3Texture;
-    sf::Texture shi_dead;
+    sf::Texture shi_deadTexture;
 
     void construct();
     void loadSprites();
