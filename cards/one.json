@@ -16,6 +16,7 @@
         "maxHealth": 0,
         "guard": 0,
         "chain": "...two, ..."
-    } 
+    },
 
+    "defensive": null
 }

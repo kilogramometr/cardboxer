@@ -2,6 +2,10 @@
 #include <random>
 Player::Player()
 {
+    this->setGuard(0);
+    this->setHealth(10);
+    this->setMaxHealth(10);
+
     this->healthbar = new Healthbar(0);
     this->appendChild(this->healthbar);
 
@@ -46,6 +50,9 @@ void Player::onUpdate(sf::Vector2f mousePos)
         this->setDead();
 
     this->animate();
+
+    this->updateHealthbar();
+    this->shield->setPoints(this->guard);
 }
 
 void Player::animate()
@@ -250,11 +257,18 @@ void Player::dead()
 
 void Player::burnCard(Card *card)
 {
-    auto it = std::find(this->hand.begin(), this->hand.end(), card);
+    std::string name = card->getName();
+    auto it = std::find_if(this->hand.begin(), this->hand.end(), [name](Card *card){return card->getName()==name;});
     if (it != this->hand.end())
     {
-        this->hand.remove(card);
-        delete card;
+        *it = nullptr;
+        this->hand.erase(it);
+    }
+    it = std::find_if(this->discardPile.begin(), this->discardPile.end(), [name](Card *card){return card->getName()==name;});
+    if (it != this->discardPile.end())
+    {
+        *it = nullptr;
+        it = this->discardPile.erase(it);
     }
 }
 

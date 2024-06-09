@@ -4,6 +4,10 @@
 
 Enemy::Enemy(): Boxer()
 {
+    this->setHealth(10);
+    this->setMaxHealth(10);
+    this->setGuard(0);
+
     this->healthbar = new Healthbar(1);
     this->appendChild(this->healthbar);
 
@@ -59,7 +63,7 @@ Enemy::Enemy(Json::Value enemy, std::list<Card *>& library)
     else
     {
         int size = enemy["actions"].size();
-        std::cerr<<"Number of actions: "<<size<<"\n";
+        // std::cerr<<"Number of actions: "<<size<<"\n";
         for (int i = 0; i < size; i++)
         {
             std::string name = enemy["actions"][i]["cardName"].asString();
@@ -81,11 +85,33 @@ Enemy::Enemy(Json::Value enemy, std::list<Card *>& library)
     auto it_d = this->deck.begin();
     auto it_p = this->probabilities.begin();
 
-    for (; it_d != this->deck.end() && it_p != this->probabilities.end(); ++it_d, ++it_p)
-    {
-        std::cerr<<(*it_d)->getName()<<" "<<(*it_p)<<"\n";
-    }
+    // for (; it_d != this->deck.end() && it_p != this->probabilities.end(); ++it_d, ++it_p)
+    // {
+    //     std::cerr<<(*it_d)->getName()<<" "<<(*it_p)<<"\n";
+    // }
 }    
+
+Enemy::Enemy(Enemy *copy)
+{
+    this->probabilities = copy->probabilities;
+    this->health = copy->health;
+    this->maxHealth = copy->maxHealth;
+    this->name = copy->name;
+    this->charakter = copy->charakter;
+    this->deck = copy->deck;
+    
+    this->setGuard(0);
+    this->healthbar = new Healthbar(1);
+    this->appendChild(this->healthbar);
+
+    this->healthbar->setHealth(100);
+
+    this->shield = new Shield(1);
+    this->appendChild(this->shield);
+
+    this->loadSprites();
+}
+
 
 void Enemy::loadSprites()
 {
@@ -120,3 +146,11 @@ Card* Enemy::playCard()
     this->lastPlayed = it;
     return *it;
 }
+
+void Enemy::onUpdate(sf::Vector2f mousePos)
+{
+    this->updateHealthbar();
+    this->shield->setPoints(this->guard);
+}
+
+std::string Enemy::getName() { return this->name.getString(); }

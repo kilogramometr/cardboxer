@@ -7,7 +7,7 @@ Card::Card() {}
 Card::Card(Json::Value card) 
 /* Card constuctor */
 {
-    if (!card["defensive"].isNull())
+    if (!card["defensive"].isNull() && card["defensive"].isObject())
     /* load defensive action if exists */
     {   
         this->defensiveAction = new CardAction(
@@ -22,7 +22,7 @@ Card::Card(Json::Value card)
     }
     else this->defensiveAction = nullptr;
 
-    if (!card["offensive"].isNull())
+    if (!card["offensive"].isNull() && card["offensive"].isObject())
     /* load offensive action if exists */
     {
         this->offensiveAction = new CardAction{
@@ -55,17 +55,20 @@ Card::Card(Json::Value card)
     // std::cerr<<"\n end of constructor\n";
     // std::cerr<<this->desc<<std::endl<<this->originalDesc<<std::endl;
 
+    this->obtainable = (card["obtainable"].isBool()) ? card["obtainable"].asBool() : true;
+
     this->setPosition(0, 0);
 }
 
 Card::Card(Card &copy)
 {
-    if (copy.defensiveAction != 0)
-    { this->defensiveAction = new CardAction(*copy.defensiveAction);}
+    if (copy.defensiveAction != nullptr)
+    { this->defensiveAction = new CardAction(*copy.defensiveAction); }
+    else this->defensiveAction = nullptr;
 
-    if (copy.offensiveAction != 0){
-    {   //std::cerr<<"offensive\n";
-        this->offensiveAction = new CardAction(*copy.offensiveAction);} }
+    if (copy.offensiveAction != nullptr)
+    { this->offensiveAction = new CardAction(*copy.offensiveAction); }
+    else this->offensiveAction = nullptr;
     
     // std::cerr<<"texture\n";
     if (copy.texture != 0)
@@ -263,3 +266,4 @@ std::string Card::getName() { return this->name->getString(); }
 
 CardAction* Card::getDefensiveAction() { return this->defensiveAction; }
 CardAction* Card::getOffensiveAction() { return this->offensiveAction; }
+bool Card::isObtainable() { return this->obtainable; }

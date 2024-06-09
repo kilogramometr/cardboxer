@@ -12,9 +12,11 @@
     },
 
     "offensive": {
-        "health": 5,
+        "health": 4,
         "maxHealth": 0,
         "guard": 0
-    } 
+    },
+
+    "defensive": null
 
 }

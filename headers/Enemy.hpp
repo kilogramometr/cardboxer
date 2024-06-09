@@ -33,13 +33,16 @@ private:
 
     void onDraw(sf::RenderTarget &target, sf::Transform& transform);
     std::list<Card *>::iterator chooseCard();
+    void onUpdate(sf::Vector2f mousePos);
 public:
     Enemy(Json::Value enemy, std::list<Card *>& library);
     Enemy();
+    Enemy(Enemy *copy);
 
     Card* playCard();
     void nextFrame();
     void prevFrame();
     void setFrame();
-    
+    std::string getName();
+
 };

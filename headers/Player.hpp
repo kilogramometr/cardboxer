@@ -26,7 +26,7 @@ private:
     void animate();
     void setFrame();
     void onUpdate(sf::Vector2f mousePos);
-
+    
     void setAttack1();
     void setAttack2();
     void setAttack3();

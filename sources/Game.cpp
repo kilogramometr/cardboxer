@@ -1,24 +1,32 @@
 #include "../headers/Game.hpp"
 #include "../headers/utils.hpp"
 
-Game::Game(std::list<Card *> *library)
+Game::Game(std::list<Card *> *library, std::list<Enemy *> *enemies)
 {
+
     this->library = library;
+    this->enemies = enemies;
     this->player = new Player;
     this->appendChild(this->player);
 
-    this->enemy = new Enemy;
+    this->randomEnemy();
     this->appendChild(this->enemy);
 
     this->playerTurn = true;
+    this->moved = false;
+    this->choose = false;
 
     this->randomisePlayerDeck(library);
 
-    this->returnButton = new Button({300, 0}, {100, 50}, {5, -5}, 38, sf::Color::Red, "Return", 3);
-    this->restartButton = new Button({400, 0}, {100, 50}, {5, -5}, 38, sf::Color::Black, "Restart", 4);
+    this->returnButton = new Button({300, 0}, {100, 50}, {5, -4}, 38, sf::Color::Red, "Return", 3);
+    this->restartButton = new Button({400, 0}, {100, 50}, {5, -4}, 38, sf::Color::Black, "Restart", 4);
     
-    this->playerDeck = new Button({657, 400}, {71.5, 100}, {25, -10}, 50, sf::Color::Green, "0", 3);
-    this->playerDiscard = new Button({728.5, 400}, {71.5, 100}, {25, -10}, 50, sf::Color::Blue, "0", 1);
+    this->playerDeck = new Button({657, 400}, {71.5, 100}, {25, -10}, 50, sf::Color::Green, "0", 0);
+    this->playerDiscard = new Button({728.5, 400}, {71.5, 100}, {25, -10}, 50, sf::Color::Blue, "0", 0);
+    this->drawButton = new Button({657, 500}, {143, 100}, {25, -10}, 50, sf::Color::Green, "Draw", 2);
+
+    this->offensiveButton = new Button({212.5, 262.5}, {125, 75}, {5, 6}, 38, sf::Color::Red, "Offensive", 5);
+    this->defensiveButton = new Button({462.5, 262.5}, {125, 75}, {5, 6}, 38, sf::Color::Blue, "Defensive", 6);
     
     for (int i = 0; i < 3; i++) { this->player->draw(); }
     this->lastMoved = this->player->hand.end();
@@ -30,6 +38,7 @@ Game::Game(std::list<Card *> *library)
     this->appendChild(this->restartButton);
     this->appendChild(this->playerDeck);
     this->appendChild(this->playerDiscard);
+    this->appendChild(this->drawButton);
     
 }
 
@@ -37,15 +46,17 @@ void Game::onDraw(sf::RenderTarget& target, sf::Transform& transform) {}
 
 void Game::onUpdate(sf::Vector2f mousePos)
 {
+    // update deck text
     this->playerDeck->setText(std::to_string(this->player->getDeckSize()));
     this->playerDiscard->setText(std::to_string(this->player->getDiscardSize()));
+    //resolve enemy turn
     if (!playerTurn)
     {
         sf::Time t = timer.getElapsedTime();
         if (t.asMilliseconds() > 2500)
             this->turn();
     }
-    
+    //draw cards if hand empty
     if (this->player->handEmpty())
     {
         this->hideCards();
@@ -58,6 +69,8 @@ void Game::onUpdate(sf::Vector2f mousePos)
         this->showCards();
     }
 
+
+    //resolve hover and drag&drop
     bool hover = false;
     bool hold = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
     auto it = this->player->hand.begin();
@@ -70,8 +83,7 @@ void Game::onUpdate(sf::Vector2f mousePos)
         }
 
     }
-    
-    if (hold && hover)
+    if (hold && hover && !this->choose)
     {
         auto change = mousePos - this->lastPos;
         this->removeChild(&this->hoverCard);
@@ -79,7 +91,7 @@ void Game::onUpdate(sf::Vector2f mousePos)
         this->moved = true;
         this->lastMoved = it;
     }
-    else if (hold && !hover && this->moved)
+    else if (hold && !hover && this->moved && !this->choose)
     {
         auto change = mousePos - this->lastPos;
         this->removeChild(&this->hoverCard);
@@ -91,27 +103,41 @@ void Game::onUpdate(sf::Vector2f mousePos)
         if ( this->lastMoved != this->player->hand.end() && 455 - (*this->lastMoved)->getPosition().y > 100)
         {
             std::cerr<<"Card Playerd: "<<(*this->lastMoved)->getName()<<"\n";
+            this->updateLastPlayed();
+            this->showButtons();
             this->hideCards();
             this->player->discard(*this->lastMoved);
             this->showCards();
+            this->choose = true;
         }
         else 
         { this->appendChild(&this->hoverCard); }
         this->updateCards();
         this->hoverCard = **it;
-        this->hoverCard.setScale({1, 1});
-        this->hoverCard.setPosition({275, 100});
+        this->updateHoverCard();
         this->moved = false;
         this->lastMoved = this->player->hand.end();
+    }
+    else if (this->lastPlayed.getGlobalBounds().contains(mousePos))
+    {
+        this->updateCards();
+        this->hoverCard = this->lastPlayed;
+        this->updateHoverCard();
+        this->moved = false;
+        this->lastMoved = this->player->hand.end();
+        this->appendChild(&this->hoverCard);
     }
     else 
     {
         if ( this->lastMoved != this->player->hand.end() && 455 - (*this->lastMoved)->getPosition().y > 100)
         {
             std::cerr<<"Card Playerd: "<<(*this->lastMoved)->getName()<<"\n";
+            this->updateLastPlayed();
+            this->showButtons();
             this->hideCards();
             this->player->discard(*this->lastMoved);
             this->showCards();
+            this->choose = true;
         }
         this->removeChild(&this->hoverCard); 
         this->moved = false;
@@ -128,22 +154,39 @@ void Game::killPlayer() { delete this->enemy; };
 void Game::randomisePlayerDeck(std::list<Card *> *library)
 {
     this->player->clearDeck();
+    std::list<Card *> checklist;
     for (int i = 0; i < 3; i++)
     {
         int size = library->size();
         int pos = randomUniform(0, size-1);
         auto it = library->begin();
         std::advance(it, pos);
-        this->player->addToDeck(*it);
-        std::cerr<<(*it)->getTextureRect().width<<"\n";
+        if ((*it)->isObtainable())
+        {
+            bool add = true;
+            for (auto jt = checklist.begin(); jt != checklist.end(); ++jt)
+            {   
+                if ((*jt)->getName() == (*it)->getName()) 
+                { add = false; break; }
+            }  
+            if (add)
+            {
+                this->player->addToDeck(*it);
+                checklist.push_back(*it);
+            }
+            else --i;
+        }
+        else --i;
     }
 }
 
 void Game::resolveCard(Card *card, Boxer *source, bool offensive)
 {
-    this->lastPlayed = *card;
+    std::cerr<<offensive<<"\n";
     CardAction *action = (offensive) ?
         card->getOffensiveAction() : card->getDefensiveAction();
+    
+    std::cerr<<"Target"<<"\n";
     Boxer *target;
     if (source == this->player) 
     {
@@ -155,19 +198,31 @@ void Game::resolveCard(Card *card, Boxer *source, bool offensive)
         if (offensive) target = this->player;
         else target = this->enemy;
     }
+    std::cerr<<"resolve"<<"\n";
+
+    std::cerr<<target->getHealth()<<" "<<action->getHealthMod()<<" health\n";
+    std::cerr<<target->getMaxHealth()<<" "<<action->getMaxHealthMod()<<" maxhealth\n";
+    std::cerr<<target->getGuard()<<" "<<action->getGuardMod()<<" guard\n";
 
     target->damage(action->getHealthMod(), action->isBypass());
     target->setMaxHealth(action->getMaxHealthMod() + target->getMaxHealth());
     target->setGuard(action->getGuardMod() + target->getGuard());
 
+    std::cerr<<target->getHealth()<<" health\n";
+    std::cerr<<target->getMaxHealth()<<" maxhealth\n";
+    std::cerr<<target->getGuard()<<" guard\n";
+    
+    if (action->getChain() != "")
+    {
+        auto it = std::find_if(this->player->hand.begin(), this->player->hand.end(), [action](Card *card){ return *card == action->getChain(); });
+        if (it != this->player->hand.end()) std::cerr<<"I found it\n";
+        else std::cerr<<"I didn't find it\n";
+    }
+
     if (source == this->enemy)
         { return; }
-    else 
-    {
-        this->removeChild(card);
-        if (action->isBurn()) this->player->burnCard(card);
-        else this->player->discard(card);
-    }
+    else if (action->isBurn()) this->player->burnCard(card);
+    std::cerr<<"D "<<action->getHealthMod()<<" H "<<action->getMaxHealthMod()<<" G "<<action->getGuardMod()<<"\n";
 }
 
 void Game::turn()
@@ -189,6 +244,103 @@ void Game::turn()
     this->playerTurn = !this->playerTurn;
 }
 
+int Game::onButtonClick(sf::Vector2f mousePosition)
+{
+    for (auto i = this->children.begin(); i != this->children.end(); ++i)
+    {
+        int code = (*i)->buttonClick(mousePosition);
+        if (code != 0)
+        {
+            switch (code)
+            {
+            case 1:
+                this->turn();
+                this->playerTurn = false;
+                return 100;
+
+            case 2:
+                if (this->player->getDeckSize() == 0 && this->player->getDiscardSize() == 0)
+                    return 100;
+                this->hideCards();
+                if (this->player->getDeckSize() == 0)
+                    this->player->reshuffle();
+                if (this->player->getDeckSize() > 0)
+                    this->player->draw();
+                this->updateCards();
+                this->showCards();
+                return 100;
+
+            case 3:
+                return 3;
+
+            case 4:
+                this->moved = false;
+                this->choose = false;
+                this->playerTurn = true;
+                this->hideCards();
+                this->hideButtons();
+                this->removeChild(&this->lastPlayed);
+                this->removeChild(this->player);
+                this->removeChild(this->enemy);
+                this->player = new Player();
+                this->randomEnemy();
+                this->randomisePlayerDeck(this->library);
+                for (int i = 0; i < 3; i++) { this->player->draw(); }
+                this->lastMoved = this->player->hand.end();
+                this->updateCards();
+                this->showCards();
+                this->appendChild(this->player);
+                this->appendChild(this->enemy);
+                return 100;
+            
+            case 5:
+                this->resolveCard(&this->lastPlayed, this->player, true);
+                this->hideButtons();
+                this->choose = false;
+                return 100;
+
+            case 6:
+                this->resolveCard(&this->lastPlayed, this->player, false);
+                this->hideButtons();
+                this->choose = false;
+                return 100;
+
+            default:
+                break;
+            }
+        }
+    }
+    return 100;
+}
+
+void Game::updateLastPlayed()
+{
+    this->removeChild(&this->lastPlayed);
+    this->lastPlayed = **this->lastMoved;
+    this->lastPlayed.setScale({0.4, 0.4});
+    this->lastPlayed.setPosition({0, 0});
+    this->appendChild(&this->lastPlayed);
+}
+
+void Game::showButtons()
+{
+    if (this->lastPlayed.getOffensiveAction() != nullptr)
+        this->appendChild(this->offensiveButton);
+    if (this->lastPlayed.getDefensiveAction() != nullptr)
+        this->appendChild(this->defensiveButton);
+}
+
+void Game::hideButtons()
+{
+    this->removeChild(this->offensiveButton);
+    this->removeChild(this->defensiveButton);
+}
+
+void Game::updateHoverCard()
+{
+    this->hoverCard.setScale({1, 1});
+    this->hoverCard.setPosition({275, 100});
+}
 
 void Game::hideCards()
 {
@@ -214,38 +366,11 @@ void Game::updateCards()
     }
 }
 
-int Game::onButtonClick(sf::Vector2f mousePosition)
+void Game::randomEnemy()
 {
-    for (auto i = this->children.begin(); i != this->children.end(); ++i)
-    {
-        int code = (*i)->buttonClick(mousePosition);
-        if (code != 0)
-        {
-            switch (code)
-            {
-            case 1:
-                this->turn();
-                this->playerTurn = false;
-                return 100;
-
-            case 3:
-                return 3;
-
-            case 4:
-                this->hideCards();
-                this->player = new Player();
-                this->enemy = new Enemy();
-                this->randomisePlayerDeck(this->library);
-                for (int i = 0; i < 3; i++) { this->player->draw(); }
-                this->lastMoved = this->player->hand.end();
-                this->updateCards();
-                this->showCards();
-                return 100;
-
-            default:
-                break;
-            }
-        }
-    }
-    return 100;
+    int size = this->enemies->size();
+    auto it = this->enemies->begin();
+    int random = randomUniform(0, size-1);
+    std::advance(it, random);
+    this->enemy = new Enemy(*it);
 }

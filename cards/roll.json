@@ -11,6 +11,8 @@
         "h": 350
     },
 
+    "offensive": null,
+
     "defensive": {
         "health": 0,
         "maxHealth": 0,

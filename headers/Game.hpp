@@ -8,6 +8,7 @@ class Game : public Node
 {
 private:
     std::list<Card *> *library;
+    std::list<Enemy *> *enemies;
     Player *player;
     Enemy *enemy;
 
@@ -15,11 +16,15 @@ private:
     Button *returnButton;
     Button *playerDeck;
     Button *playerDiscard;
+    Button *offensiveButton;
+    Button *defensiveButton;
+    Button *drawButton;
     
     Card hoverCard;
     Card lastPlayed;
     bool playerTurn;
-    bool moved = false;
+    bool moved;
+    bool choose;
     sf::Clock timer;
     sf::Vector2f lastPos;
     std::list<Card *>::iterator lastMoved;
@@ -28,17 +33,23 @@ private:
 
     void onUpdate(sf::Vector2f mousePos);
     void turn();
+    void hideCards();
+    void showCards();
+    void updateCards();
+    void showButtons();
+    void hideButtons();
+    void updateLastPlayed();
+    void updateHoverCard();
+    void randomEnemy();
+    void killEnemy();
+    void killPlayer();
 public:
-    Game(std::list<Card *> *library);
+    Game(std::list<Card *> *library, std::list<Enemy *> *enemies);
 
     void resolveCard(Card *card, Boxer *source, bool offensive);
     void randomisePlayerDeck(std::list<Card *> *library);
     void setEnemy(Enemy enemy);
-    void killEnemy();
-    void killPlayer();
     
     int onButtonClick(sf::Vector2f mousePosition);
-    void hideCards();
-    void showCards();
-    void updateCards();
 };
+

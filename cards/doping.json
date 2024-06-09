@@ -11,8 +11,10 @@
         "h": 350
     },
 
+    "offensive": null,
+
     "defensive": {
-        "health": -2,
+        "health": 2,
         "maxHealth": 2,
         "guard": 0,
         "burn": true

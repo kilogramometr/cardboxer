@@ -8,7 +8,7 @@ int Boxer::getHealth() { return this->health; }
 void Boxer::setMaxHealth(int health) 
 { 
     this->maxHealth = health;
-    if (this->maxHealth > this->health)
+    if (this->maxHealth < this->health)
         this->health = this->maxHealth;
 }
 int Boxer::getMaxHealth() { return this->maxHealth; }
@@ -29,6 +29,7 @@ void Boxer::damage(int damage, bool bypass)
             this->guard = 0;
         }
     }
+    else this->health -= damage;
 }
 
 void Boxer::heal(int heal) { this->health += heal; }
@@ -45,3 +46,12 @@ void Boxer::clearDeck()
 }
 
 int Boxer::getDeckSize() { return this->deck.size(); }
+
+void Boxer::updateHealthbar()
+{
+
+    float h = ((float)this->health / (float)this->maxHealth) * 100;
+    this->healthbar->setHealth(h);
+}
+
+void Boxer::onUpdate(sf::Vector2f mousePos) {}

@@ -14,6 +14,7 @@ class Card : public Node, public sf::Sprite
     sf::Font *font;
     sf::Text *name;
     sf::Text *description;
+    bool obtainable;
 
     // std::string name;
 
@@ -34,7 +35,7 @@ public:
 
     CardAction* getDefensiveAction();
     CardAction* getOffensiveAction();
-
+    bool isObtainable();
     std::string getName();
     bool operator==(Card &right) { return (this->name->getString() == right.name->getString()); }
     bool operator==(const std::string &right) { return (this->name->getString() == right); }

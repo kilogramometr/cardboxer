@@ -14,6 +14,7 @@ protected:
     std::list<Card *> deck;
 
     void updateHealthbar();
+    void onUpdate(sf::Vector2f mousePos);
 
 public:
     Boxer();
@@ -36,5 +37,4 @@ public:
     int getDeckSize();
     
     void burnCard(Card *card) {};
-
 };
