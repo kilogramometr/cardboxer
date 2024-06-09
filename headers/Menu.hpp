@@ -8,10 +8,13 @@ private:
     Button *gameButton;
     Button *cardsLibraryButton;
     Button *exitButton;
+
+    sf::Text text;
+    sf::Font font;
     // QPushButton *gameButton;
     // QPushButton *exitButton;
 
-    void onDraw(sf::RenderTarget& target);
+    void onDraw(sf::RenderTarget& target, sf::Transform& transform);
 public:
     Menu();
 // signals:
