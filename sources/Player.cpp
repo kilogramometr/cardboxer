@@ -1,12 +1,10 @@
 #include "../headers/Player.hpp"
 
-Player::Player()
+Player::Player() : Boxer()
 {
     this->healthbar = new Healthbar(0);
     this->appendChild(this->healthbar);
-
-    //Setting health to 80%
-    this->healthbar->setHealth(80);
+    this->healthbar->setHealth(100);
 
     this->shield = new Shield(0);
     this->appendChild(this->shield);
@@ -37,6 +35,9 @@ void Player::onDraw(sf::RenderTarget &target, sf::Transform& transform)
 
 void Player::onUpdate()
 {
+    this->healthbar->setHealth(this->health);
+    this->shield->setPoints(this->guard);
+
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
         this->setAttack1();
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))

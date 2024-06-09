@@ -76,9 +76,7 @@ void Enemy::construct()
 {
     this->healthbar = new Healthbar(1);
     this->appendChild(this->healthbar);
-
-    //Setting health to 80%
-    this->healthbar->setHealth(80);
+    this->healthbar->setHealth(100);
 
     this->shield = new Shield(1);
     this->appendChild(this->shield);
@@ -115,6 +113,9 @@ void Enemy::onDraw(sf::RenderTarget &target, sf::Transform& transform)
 
 void Enemy::onUpdate()
 {
+    this->healthbar->setHealth(this->health);
+    this->shield->setPoints(this->guard);
+
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
         this->setAttack1();
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
