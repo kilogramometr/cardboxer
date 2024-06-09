@@ -327,6 +327,9 @@ void Enemy::setAnimationFrame()
                 case 4:
                     this->setTextureRect(sf::IntRect(414, 47, 60, 81));
                     break;
+                case 5:
+                    this->setTextureRect(sf::IntRect(414, 47, 60, 81));
+                    break;
             }
         }
         else if(this->charakter == 1)
@@ -337,9 +340,15 @@ void Enemy::setAnimationFrame()
                     this->setTextureRect(sf::IntRect(45, 47, 60, 81));
                     break;
                 case 2:
-                    this->setTextureRect(sf::IntRect(151, 47, 101, 81));
+                    this->setTextureRect(sf::IntRect(45, 47, 60, 81));
                     break;
                 case 3:
+                    this->setTextureRect(sf::IntRect(151, 47, 101, 81));
+                    break;
+                case 4:
+                    this->setTextureRect(sf::IntRect(275, 47, 60, 81));
+                    break;
+                case 5:
                     this->setTextureRect(sf::IntRect(275, 47, 60, 81));
                     break;
             }
@@ -352,9 +361,15 @@ void Enemy::setAnimationFrame()
                     this->setTextureRect(sf::IntRect(21, 47, 80, 81));
                     break;
                 case 2:
-                    this->setTextureRect(sf::IntRect(157, 47, 80, 81));
+                    this->setTextureRect(sf::IntRect(21, 47, 80, 81));
                     break;
                 case 3:
+                    this->setTextureRect(sf::IntRect(157, 47, 80, 81));
+                    break;
+                case 4:
+                    this->setTextureRect(sf::IntRect(286, 47, 80, 81));
+                    break;
+                case 5:
                     this->setTextureRect(sf::IntRect(286, 47, 80, 81));
                     break;
             }
@@ -370,9 +385,15 @@ void Enemy::setAnimationFrame()
                     this->setTextureRect(sf::IntRect(22, 47, 60, 81));
                     break;
                 case 2:
-                    this->setTextureRect(sf::IntRect(152, 47, 60, 81));
+                    this->setTextureRect(sf::IntRect(22, 47, 60, 81));
                     break;
                 case 3:
+                    this->setTextureRect(sf::IntRect(152, 47, 60, 81));
+                    break;
+                case 4:
+                    this->setTextureRect(sf::IntRect(280, 47, 101, 81));
+                    break;
+                case 5:
                     this->setTextureRect(sf::IntRect(280, 47, 101, 81));
                     break;
             }
@@ -385,12 +406,15 @@ void Enemy::setAnimationFrame()
                     this->setTextureRect(sf::IntRect(22, 47, 60, 81));
                     break;
                 case 2:
-                    this->setTextureRect(sf::IntRect(159, 47, 60, 81));
+                    this->setTextureRect(sf::IntRect(22, 47, 60, 81));
                     break;
                 case 3:
-                    this->setTextureRect(sf::IntRect(296, 47, 101, 81));
+                    this->setTextureRect(sf::IntRect(159, 47, 60, 81));
                     break;
                 case 4:
+                    this->setTextureRect(sf::IntRect(296, 47, 101, 81));
+                    break;
+                case 5:
                     this->setTextureRect(sf::IntRect(424, 47, 60, 81));
                     break;
             }
@@ -411,6 +435,9 @@ void Enemy::setAnimationFrame()
                 case 4:
                     this->setTextureRect(sf::IntRect(413, 47, 101, 81));
                     break;
+                case 5:
+                    this->setTextureRect(sf::IntRect(413, 47, 101, 81));
+                    break;
             }
         }
     }
@@ -424,9 +451,15 @@ void Enemy::setAnimationFrame()
                     this->setTextureRect(sf::IntRect(25, 47, 60, 81));
                     break;
                 case 2:
-                    this->setTextureRect(sf::IntRect(152, 47, 60, 81));
+                    this->setTextureRect(sf::IntRect(25, 47, 60, 81));
                     break;
                 case 3:
+                    this->setTextureRect(sf::IntRect(152, 47, 60, 81));
+                    break;
+                case 4:
+                    this->setTextureRect(sf::IntRect(285, 47, 101, 81));
+                    break;
+                case 5:
                     this->setTextureRect(sf::IntRect(285, 47, 101, 81));
                     break;
             }
@@ -445,6 +478,9 @@ void Enemy::setAnimationFrame()
                     this->setTextureRect(sf::IntRect(295, 47, 60, 81));
                     break;
                 case 4:
+                    this->setTextureRect(sf::IntRect(422, 47, 101, 81));
+                    break;
+                case 5:
                     this->setTextureRect(sf::IntRect(422, 47, 101, 81));
                     break;
             }
@@ -490,6 +526,15 @@ void Enemy::setAnimationFrame()
                     this->setTextureRect(sf::IntRect(36, 47, 60, 81));
                     break;
                 case 2:
+                    this->setTextureRect(sf::IntRect(36, 47, 60, 81));
+                    break;
+                case 3:
+                    this->setTextureRect(sf::IntRect(36, 47, 60, 81));
+                    break;
+                case 4:
+                    this->setTextureRect(sf::IntRect(164, 47, 60, 81));
+                    break;
+                case 5:
                     this->setTextureRect(sf::IntRect(164, 47, 60, 81));
                     break;
             }
@@ -510,6 +555,9 @@ void Enemy::setAnimationFrame()
                 case 4:
                     this->setTextureRect(sf::IntRect(422, 47, 80, 81));
                     break;
+                case 5:
+                    this->setTextureRect(sf::IntRect(422, 47, 80, 81));
+                    break;
             }
         }
         else if(this->charakter == 2)
@@ -520,6 +568,15 @@ void Enemy::setAnimationFrame()
                     this->setTextureRect(sf::IntRect(40, 47, 80, 81));
                     break;
                 case 2:
+                    this->setTextureRect(sf::IntRect(40, 47, 80, 81));
+                    break;
+                case 3:
+                    this->setTextureRect(sf::IntRect(40, 47, 80, 81));
+                    break;
+                case 4:
+                    this->setTextureRect(sf::IntRect(167, 47, 80, 81));
+                    break;
+                case 5:
                     this->setTextureRect(sf::IntRect(167, 47, 80, 81));
                     break;
             }
@@ -535,6 +592,15 @@ void Enemy::setAnimationFrame()
                     this->setTextureRect(sf::IntRect(40, 47, 60, 81));
                     break;
                 case 2:
+                    this->setTextureRect(sf::IntRect(40, 47, 60, 81));
+                    break;
+                case 3:
+                    this->setTextureRect(sf::IntRect(40, 47, 60, 81));
+                    break;
+                case 4:
+                    this->setTextureRect(sf::IntRect(168, 47, 60, 81));
+                    break;
+                case 5:
                     this->setTextureRect(sf::IntRect(168, 47, 60, 81));
                     break;
             }
@@ -547,6 +613,15 @@ void Enemy::setAnimationFrame()
                     this->setTextureRect(sf::IntRect(45, 47, 80, 81));
                     break;
                 case 2:
+                    this->setTextureRect(sf::IntRect(45, 47, 80, 81));
+                    break;
+                case 3:
+                    this->setTextureRect(sf::IntRect(45, 47, 80, 81));
+                    break;
+                case 4:
+                    this->setTextureRect(sf::IntRect(173, 47, 80, 81));
+                    break;
+                case 5:
                     this->setTextureRect(sf::IntRect(173, 47, 80, 81));
                     break;
             }
@@ -559,6 +634,15 @@ void Enemy::setAnimationFrame()
                     this->setTextureRect(sf::IntRect(30, 47, 80, 81));
                     break;
                 case 2:
+                    this->setTextureRect(sf::IntRect(30, 47, 80, 81));
+                    break;
+                case 3:
+                    this->setTextureRect(sf::IntRect(30, 47, 80, 81));
+                    break;
+                case 4:
+                    this->setTextureRect(sf::IntRect(30, 47, 80, 81));
+                    break;
+                case 5:
                     this->setTextureRect(sf::IntRect(30, 47, 80, 81));
                     break;
             }
@@ -615,17 +699,17 @@ void Enemy::setAttack2()
     if(this->charakter == 0)
     {
         this->setTexture(this->sam_attack2Texture);
-        this->maxFrame = 4;
+        this->maxFrame = 5;
     }
     else if(this->charakter == 1)
     {
         this->setTexture(this->shi_attack2Texture);
-        this->maxFrame = 3;
+        this->maxFrame = 5;
     }
     else if(this->charakter == 2)
     {
         this->setTexture(this->vam_attack2Texture);
-        this->maxFrame = 3;
+        this->maxFrame = 5;
     }
     this->frame = 1;
     this->animationTimer = 0;
@@ -637,17 +721,17 @@ void Enemy::setAttack3()
     if(this->charakter == 0)
     {
         this->setTexture(this->sam_attack3Texture);
-        this->maxFrame = 3;
+        this->maxFrame = 5;
     }
     else if(this->charakter == 1)
     {
         this->setTexture(this->shi_attack3Texture);
-        this->maxFrame = 3;
+        this->maxFrame = 5;
     }
     else if(this->charakter == 2)
     {
         this->setTexture(this->vam_attack3Texture);
-        this->maxFrame = 4;
+        this->maxFrame = 5;
     }
     this->frame = 1;
     this->animationTimer = 0;
@@ -659,12 +743,12 @@ void Enemy::setDead()
     if(this->charakter == 0)
     {
         this->setTexture(this->sam_deadTexture);
-        this->maxFrame = 3;
+        this->maxFrame = 5;
     }
     else if(this->charakter == 1)
     {
         this->setTexture(this->shi_deadTexture);
-        this->maxFrame = 4;
+        this->maxFrame = 5;
     }
     else if(this->charakter == 2)
     {
@@ -681,17 +765,17 @@ void Enemy::setBlock()
     if(this->charakter == 0)
     {
         this->setTexture(this->sam_blockTexture);
-        this->maxFrame = 2;
+        this->maxFrame = 5;
     }
     else if(this->charakter == 1)
     {
         this->setTexture(this->shi_blockTexture);
-        this->maxFrame = 4;
+        this->maxFrame = 5;
     }
     else if(this->charakter == 2)
     {
         this->setTexture(this->vam_blockTexture);
-        this->maxFrame = 2;
+        this->maxFrame = 5;
     }
     this->frame = 1;
     this->animationTimer = 0;
@@ -703,17 +787,17 @@ void Enemy::setHurt()
     if(this->charakter == 0)
     {
         this->setTexture(this->sam_hurtTexture);
-        this->maxFrame = 2;
+        this->maxFrame = 5;
     }
     else if(this->charakter == 1)
     {
         this->setTexture(this->shi_hurtTexture);
-        this->maxFrame = 2;
+        this->maxFrame = 5;
     }
     else if(this->charakter == 2)
     {
         this->setTexture(this->vam_hurtTexture);
-        this->maxFrame = 2;
+        this->maxFrame = 5;
     }
     this->frame = 1;
     this->animationTimer = 0;
