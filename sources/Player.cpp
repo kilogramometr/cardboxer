@@ -20,6 +20,7 @@ void Player::initSprite()
     this->attack3Texture.loadFromFile("../res/textures/Fighter/Attack_3.png");
     this->deadTexture.loadFromFile("../res/textures/Fighter/Dead.png");
     this->blockTexture.loadFromFile("../res/textures/Fighter/Shield.png");
+    this->hurtTexture.loadFromFile("../res/textures/Fighter/Hurt.png");
 
     this->sprite.setTexture(this->idleTexture);
     this->sprite.setTextureRect(sf::IntRect(46, 47, 30, 81));
@@ -49,6 +50,8 @@ void Player::onUpdate()
         this->dead();
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num5))
         this->block();
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num6))
+        this->hurt();
 
     this->animate();
 }
@@ -200,7 +203,21 @@ void Player::setFrame()
                 break;
         }
     }
-    
+    else if(this->animationType == 6)
+    {
+        switch(this->frame)
+        {
+            case 1:
+                this->sprite.setTextureRect(sf::IntRect(38, 47, 70, 81));
+                break;
+            case 2:
+                this->sprite.setTextureRect(sf::IntRect(166, 47, 70, 81));
+                break;
+            case 3:
+                this->sprite.setTextureRect(sf::IntRect(295, 47, 70, 81));
+                break;
+        }
+    }
 }
 
 void Player::setIdle()
@@ -257,6 +274,15 @@ void Player::setBlock()
     this->animationTimer = 0;
 }
 
+void Player::setHurt()
+{
+    this->sprite.setTexture(this->hurtTexture);
+    this->animationType = 6;
+    this->frame = 1;
+    this->maxFrame = 3;
+    this->animationTimer = 0;
+}
+
 void Player::attack1()
 {
     this->setAttack1();
@@ -280,4 +306,9 @@ void Player::dead()
 void Player::block()
 {
     this->setBlock();
+}
+
+void Player::hurt()
+{
+    this->setHurt();
 }

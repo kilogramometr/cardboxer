@@ -12,6 +12,7 @@ private:
     sf::Texture attack3Texture;
     sf::Texture deadTexture;
     sf::Texture blockTexture;
+    sf::Texture hurtTexture;
 
     Shield* shield;
 
@@ -34,6 +35,7 @@ private:
     void setAttack3();
     void setDead();
     void setBlock();
+    void setHurt();
     void setIdle();
 public:
     Player();
@@ -49,4 +51,5 @@ public:
     void attack3();
     void dead();
     void block();
+    void hurt();
 };
