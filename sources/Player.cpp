@@ -21,13 +21,13 @@ Player::Player() : Boxer()
 
 void Player::initSprite()
 {
-    this->idleTexture.loadFromFile("../res/textures/Fighter/Idle.png");
-    this->attack1Texture.loadFromFile("../res/textures/Fighter/Attack_1.png");
-    this->attack2Texture.loadFromFile("../res/textures/Fighter/Attack_2.png");
-    this->attack3Texture.loadFromFile("../res/textures/Fighter/Attack_3.png");
-    this->deadTexture.loadFromFile("../res/textures/Fighter/Dead.png");
-    this->blockTexture.loadFromFile("../res/textures/Fighter/Shield.png");
-    this->hurtTexture.loadFromFile("../res/textures/Fighter/Hurt.png");
+    this->idleTexture.loadFromFile("./res/textures/Fighter/Idle.png");
+    this->attack1Texture.loadFromFile("./res/textures/Fighter/Attack_1.png");
+    this->attack2Texture.loadFromFile("./res/textures/Fighter/Attack_2.png");
+    this->attack3Texture.loadFromFile("./res/textures/Fighter/Attack_3.png");
+    this->deadTexture.loadFromFile("./res/textures/Fighter/Dead.png");
+    this->blockTexture.loadFromFile("./res/textures/Fighter/Shield.png");
+    this->hurtTexture.loadFromFile("./res/textures/Fighter/Hurt.png");
 
     this->sprite.setTexture(this->idleTexture);
     this->sprite.setTextureRect(sf::IntRect(46, 47, 30, 81));

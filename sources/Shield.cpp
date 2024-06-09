@@ -10,7 +10,7 @@ Shield::Shield(bool dir)
 
 void Shield::setSprite(bool dir)
 {
-    if(!this->texture.loadFromFile("../res/textures/shield.png"))
+    if(!this->texture.loadFromFile("./res/textures/shield.png"))
         std::cout<<"Failed to load shield texture"<<std::endl;
     
     this->setTexture(this->texture);

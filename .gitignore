@@ -3,3 +3,10 @@
 *.o
 .vscode
 build/
+BUILDING\ WINDOWs/
+cardboxer-winx64/
+dump/
+*.7z
+*.zip
+*.tar
+*.tar.gz

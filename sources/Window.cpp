@@ -10,7 +10,7 @@ Window::Window(sf::Vector2f resolution, std::string title)
     // set resolution
     this->resolution = resolution;
 
-    if(!this->backgroundTexture.loadFromFile("../res/textures/background.png"))
+    if(!this->backgroundTexture.loadFromFile("./res/textures/background.png"))
         std::cout<<"Unable to load background texture"<<std::endl;
     this->backGround.setTexture(this->backgroundTexture);
     

@@ -128,29 +128,29 @@ void Enemy::construct(int charakter)
 
 void Enemy::loadSprites()
 {
-    this->sam_idleTexture.loadFromFile("../res/textures/Samurai/Idle.png");
-    this->sam_attack1Texture.loadFromFile("../res/textures/Samurai/Attack_1.png");
-    this->sam_attack2Texture.loadFromFile("../res/textures/Samurai/Attack_2.png");
-    this->sam_attack3Texture.loadFromFile("../res/textures/Samurai/Attack_3.png");
-    this->sam_deadTexture.loadFromFile("../res/textures/Samurai/Dead.png");
-    this->sam_blockTexture.loadFromFile("../res/textures/Samurai/Shield.png");
-    this->sam_hurtTexture.loadFromFile("../res/textures/Samurai/Hurt.png");
+    this->sam_idleTexture.loadFromFile("./res/textures/Samurai/Idle.png");
+    this->sam_attack1Texture.loadFromFile("./res/textures/Samurai/Attack_1.png");
+    this->sam_attack2Texture.loadFromFile("./res/textures/Samurai/Attack_2.png");
+    this->sam_attack3Texture.loadFromFile("./res/textures/Samurai/Attack_3.png");
+    this->sam_deadTexture.loadFromFile("./res/textures/Samurai/Dead.png");
+    this->sam_blockTexture.loadFromFile("./res/textures/Samurai/Shield.png");
+    this->sam_hurtTexture.loadFromFile("./res/textures/Samurai/Hurt.png");
 
-    this->shi_idleTexture.loadFromFile("../res/textures/Shinobi/Idle.png");
-    this->shi_attack1Texture.loadFromFile("../res/textures/Shinobi/Attack_1.png");
-    this->shi_attack2Texture.loadFromFile("../res/textures/Shinobi/Attack_2.png");
-    this->shi_attack3Texture.loadFromFile("../res/textures/Shinobi/Attack_3.png");
-    this->shi_deadTexture.loadFromFile("../res/textures/Shinobi/Dead.png");
-    this->shi_blockTexture.loadFromFile("../res/textures/Shinobi/Shield.png");
-    this->shi_hurtTexture.loadFromFile("../res/textures/Shinobi/Hurt.png");
+    this->shi_idleTexture.loadFromFile("./res/textures/Shinobi/Idle.png");
+    this->shi_attack1Texture.loadFromFile("./res/textures/Shinobi/Attack_1.png");
+    this->shi_attack2Texture.loadFromFile("./res/textures/Shinobi/Attack_2.png");
+    this->shi_attack3Texture.loadFromFile("./res/textures/Shinobi/Attack_3.png");
+    this->shi_deadTexture.loadFromFile("./res/textures/Shinobi/Dead.png");
+    this->shi_blockTexture.loadFromFile("./res/textures/Shinobi/Shield.png");
+    this->shi_hurtTexture.loadFromFile("./res/textures/Shinobi/Hurt.png");
 
-    this->vam_idleTexture.loadFromFile("../res/textures/Vampire/Idle.png");
-    this->vam_attack1Texture.loadFromFile("../res/textures/Vampire/Attack_1.png");
-    this->vam_attack2Texture.loadFromFile("../res/textures/Vampire/Attack_2.png");
-    this->vam_attack3Texture.loadFromFile("../res/textures/Vampire/Attack_3.png");
-    this->vam_deadTexture.loadFromFile("../res/textures/Vampire/Dead.png");
-    this->vam_blockTexture.loadFromFile("../res/textures/Vampire/Protect.png");
-    this->vam_hurtTexture.loadFromFile("../res/textures/Vampire/Hurt.png");
+    this->vam_idleTexture.loadFromFile("./res/textures/Vampire/Idle.png");
+    this->vam_attack1Texture.loadFromFile("./res/textures/Vampire/Attack_1.png");
+    this->vam_attack2Texture.loadFromFile("./res/textures/Vampire/Attack_2.png");
+    this->vam_attack3Texture.loadFromFile("./res/textures/Vampire/Attack_3.png");
+    this->vam_deadTexture.loadFromFile("./res/textures/Vampire/Dead.png");
+    this->vam_blockTexture.loadFromFile("./res/textures/Vampire/Protect.png");
+    this->vam_hurtTexture.loadFromFile("./res/textures/Vampire/Hurt.png");
 
     this->setScale(sf::Vector2f(-1.5, 1.5));
     this->setPosition(sf::Vector2f(600, 320));
