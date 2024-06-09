@@ -30,6 +30,7 @@ private:
     sf::Texture sam_attack3Texture;
     sf::Texture sam_deadTexture;
     sf::Texture sam_blockTexture;
+    sf::Texture sam_hurtTexture;
 
     sf::Texture shi_idleTexture;
     sf::Texture shi_attack1Texture;
@@ -37,6 +38,7 @@ private:
     sf::Texture shi_attack3Texture;
     sf::Texture shi_deadTexture;
     sf::Texture shi_blockTexture;
+    sf::Texture shi_hurtTexture;
 
     sf::Texture vam_idleTexture;
     sf::Texture vam_attack1Texture;
@@ -44,6 +46,7 @@ private:
     sf::Texture vam_attack3Texture;
     sf::Texture vam_deadTexture;
     sf::Texture vam_blockTexture;
+    sf::Texture vam_hurtTexture;
 
     void construct(int charakter);
     void loadSprites();
@@ -60,6 +63,7 @@ private:
     void setAttack3();
     void setDead();
     void setBlock();
+    void setHurt();
 
 public:
     Enemy(Json::Value enemy, std::list<Card *>& library, int charakter=0);
@@ -78,5 +82,6 @@ public:
     void dead();
     void dead(bool *animationEnd);
     void block();
+    void hurt();
     std::string getName();
 };

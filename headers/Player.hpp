@@ -12,6 +12,7 @@ private:
     sf::Texture attack3Texture;
     sf::Texture deadTexture;
     sf::Texture blockTexture;
+    sf::Texture hurtTexture;
 
     Shield* shield;
 
@@ -35,6 +36,7 @@ private:
     void setAttack3();
     void setDead();
     void setBlock();
+    void setHurt();
     void setIdle();
 public:
     Player();
@@ -52,8 +54,8 @@ public:
     void dead();
     void dead(bool *animationEnd);
     void block();
+    void hurt();
     void burnCard(Card *card);
     int getDiscardSize();
     bool handEmpty();
-
 };
