@@ -39,6 +39,10 @@ void Shield::setPoints(int points)
 
     if(this->points < 10) this->text.setPosition(sf::Vector2f(this->getPosition().x + 52, this->getPosition().y+15));
     else this->text.setPosition(sf::Vector2f(this->getPosition().x+40, this->getPosition().y+15));
+
+    std::stringstream ss;
+    ss << this->points;
+    this->text.setString(ss.str());
 }
 
 void Shield::onDraw(sf::RenderTarget &target, sf::Transform& transform)

@@ -15,31 +15,64 @@ private:
     sf::Text name;
 
     Shield *shield;
-    Sprite sprite;
+
     int charakter;
+
+    int frame;
+    int maxFrame;
+    int animationTimer;
+    int animationType;
+
     sf::Texture sam_idleTexture;
     sf::Texture sam_attack1Texture;
     sf::Texture sam_attack2Texture;
     sf::Texture sam_attack3Texture;
     sf::Texture sam_deadTexture;
+    sf::Texture sam_blockTexture;
 
     sf::Texture shi_idleTexture;
     sf::Texture shi_attack1Texture;
     sf::Texture shi_attack2Texture;
     sf::Texture shi_attack3Texture;
-    sf::Texture shi_dead;
+    sf::Texture shi_deadTexture;
+    sf::Texture shi_blockTexture;
 
+    sf::Texture vam_idleTexture;
+    sf::Texture vam_attack1Texture;
+    sf::Texture vam_attack2Texture;
+    sf::Texture vam_attack3Texture;
+    sf::Texture vam_deadTexture;
+    sf::Texture vam_blockTexture;
+
+    void construct(int charakter);
     void loadSprites();
 
+    void animate();
+    void setAnimationFrame();
+    void onUpdate();
     void onDraw(sf::RenderTarget &target, sf::Transform& transform);
+
+    void setIdle();
+    void setAttack1();
+    void setAttack2();
+    void setAttack3();
+    void setDead();
+    void setBlock();
+
 public:
-    Enemy(Json::Value enemy, std::list<Card *>& library);
-    Enemy();
+    Enemy(Json::Value enemy, std::list<Card *>& library, int charakter=0);
+    Enemy(int charakter=0);
 
     std::list<Card *>::iterator chooseCard();
     void playCard();
     void nextFrame();
     void prevFrame();
     void setFrame();
-    
+
+    //Animations
+    void attack1();
+    void attack2();
+    void attack3();
+    void dead();
+    void block();
 };

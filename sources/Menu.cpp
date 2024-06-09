@@ -14,6 +14,16 @@ Menu::Menu()
     
     // this->gameButton = new QPushButton();
     // this->exitButton = new QPushButton();
+
+    this->font.loadFromFile("./res/fonts/pixellettersfull.ttf");
+    this->text.setFont(this->font);
+    this->text.setPosition(sf::Vector2f(130, -30));
+    this->text.setCharacterSize(150);
+    this->text.setFillColor(sf::Color::Black);
+    this->text.setString("Cardboxer");
 }
 
-void Menu::onDraw(sf::RenderTarget& target) {}
+void Menu::onDraw(sf::RenderTarget& target, sf::Transform& transform)
+{
+    target.draw(this->text, transform);
+}

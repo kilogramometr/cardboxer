@@ -2,7 +2,8 @@
 #include <iostream>
 Boxer::Boxer()
 {
-    
+    this->health = 100;
+    this->guard = 0;
 }
 
 void Boxer::setHealth(int health) { this->health = health; }

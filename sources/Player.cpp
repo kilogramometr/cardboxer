@@ -1,12 +1,10 @@
 #include "../headers/Player.hpp"
 
-Player::Player()
+Player::Player() : Boxer()
 {
     this->healthbar = new Healthbar(0);
     this->appendChild(this->healthbar);
-
-    //Setting health to 80%
-    this->healthbar->setHealth(80);
+    this->healthbar->setHealth(100);
 
     this->shield = new Shield(0);
     this->appendChild(this->shield);
@@ -21,6 +19,7 @@ void Player::initSprite()
     this->attack2Texture.loadFromFile("../res/textures/Fighter/Attack_2.png");
     this->attack3Texture.loadFromFile("../res/textures/Fighter/Attack_3.png");
     this->deadTexture.loadFromFile("../res/textures/Fighter/Dead.png");
+    this->blockTexture.loadFromFile("../res/textures/Fighter/Shield.png");
 
     this->sprite.setTexture(this->idleTexture);
     this->sprite.setTextureRect(sf::IntRect(46, 47, 30, 81));
@@ -37,14 +36,19 @@ void Player::onDraw(sf::RenderTarget &target, sf::Transform& transform)
 
 void Player::onUpdate()
 {
+    this->healthbar->setHealth(this->health);
+    this->shield->setPoints(this->guard);
+
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-        this->setAttack1();
+        this->attack1();
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
-        this->setAttack2();
+        this->attack2();
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
-        this->setAttack3();
+        this->attack3();
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num4))
-        this->setDead();
+        this->dead();
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num5))
+        this->block();
 
     this->animate();
 }
@@ -78,27 +82,27 @@ void Player::setFrame()
         {
             case 1:
                 this->sprite.setTextureRect(sf::IntRect(46, 47, 35, 81));
-                std::cout<<"Idle frame 1"<<std::endl;
+                //std::cout<<"Idle frame 1"<<std::endl;
                 break;
             case 2:
                 this->sprite.setTextureRect(sf::IntRect(174, 47, 35, 81));
-                std::cout<<"Idle frame 2"<<std::endl;
+                //std::cout<<"Idle frame 2"<<std::endl;
                 break;
             case 3:
                 this->sprite.setTextureRect(sf::IntRect(301, 47, 35, 81));
-                std::cout<<"Idle frame 3"<<std::endl;
+                //std::cout<<"Idle frame 3"<<std::endl;
                 break;
             case 4:
                 this->sprite.setTextureRect(sf::IntRect(428, 47, 35, 81));
-                std::cout<<"Idle frame 4"<<std::endl;
+                //std::cout<<"Idle frame 4"<<std::endl;
                 break;
             case 5:
                 this->sprite.setTextureRect(sf::IntRect(557, 47, 35, 81));
-                std::cout<<"Idle frame 5"<<std::endl;
+                //std::cout<<"Idle frame 5"<<std::endl;
                 break;
             case 6:
                 this->sprite.setTextureRect(sf::IntRect(686, 47, 35, 81));
-                std::cout<<"Idle frame 6"<<std::endl;
+                //std::cout<<"Idle frame 6"<<std::endl;
                 break;
         }
     }
@@ -108,19 +112,19 @@ void Player::setFrame()
         {
             case 1:
                 this->sprite.setTextureRect(sf::IntRect(38, 47, 60, 81));
-                std::cout<<"Attack1 frame 1"<<std::endl;
+                //std::cout<<"Attack1 frame 1"<<std::endl;
                 break;
             case 2:
                 this->sprite.setTextureRect(sf::IntRect(166, 47, 60, 81));
-                std::cout<<"Attack1 frame 2"<<std::endl;
+                //std::cout<<"Attack1 frame 2"<<std::endl;
                 break;
             case 3:
                 this->sprite.setTextureRect(sf::IntRect(295, 47, 60, 81));
-                std::cout<<"Attack1 frame 3"<<std::endl;
+                //std::cout<<"Attack1 frame 3"<<std::endl;
                 break;
             case 4:
                 this->sprite.setTextureRect(sf::IntRect(423, 47, 60, 81));
-                std::cout<<"Attack1 frame 4"<<std::endl;
+                //std::cout<<"Attack1 frame 4"<<std::endl;
                 break;
         }
     }
@@ -130,15 +134,15 @@ void Player::setFrame()
         {
             case 1:
                 this->sprite.setTextureRect(sf::IntRect(36, 47, 60, 81));
-                std::cout<<"Attack2 frame 1"<<std::endl;
+                //std::cout<<"Attack2 frame 1"<<std::endl;
                 break;
             case 2:
                 this->sprite.setTextureRect(sf::IntRect(164, 47, 60, 81));
-                std::cout<<"Attack2 frame 2"<<std::endl;
+                //std::cout<<"Attack2 frame 2"<<std::endl;
                 break;
             case 3:
                 this->sprite.setTextureRect(sf::IntRect(292, 47, 60, 81));
-                std::cout<<"Attack2 frame 3"<<std::endl;
+                //std::cout<<"Attack2 frame 3"<<std::endl;
                 break;
         }
     }
@@ -148,19 +152,19 @@ void Player::setFrame()
         {
             case 1:
                 this->sprite.setTextureRect(sf::IntRect(35, 47, 60, 81));
-                std::cout<<"Attack3 frame 1"<<std::endl;
+                //std::cout<<"Attack3 frame 1"<<std::endl;
                 break;
             case 2:
                 this->sprite.setTextureRect(sf::IntRect(178, 47, 60, 81));
-                std::cout<<"Attack3 frame 2"<<std::endl;
+                //std::cout<<"Attack3 frame 2"<<std::endl;
                 break;
             case 3:
                 this->sprite.setTextureRect(sf::IntRect(301, 47, 60, 81));
-                std::cout<<"Attack3 frame 3"<<std::endl;
+                //std::cout<<"Attack3 frame 3"<<std::endl;
                 break;
             case 4:
                 this->sprite.setTextureRect(sf::IntRect(423, 47, 60, 81));
-                std::cout<<"Attack3 frame 4"<<std::endl;
+                //std::cout<<"Attack3 frame 4"<<std::endl;
                 break;
         }
     }
@@ -170,18 +174,33 @@ void Player::setFrame()
         {
             case 1:
                 this->sprite.setTextureRect(sf::IntRect(35, 47, 70, 81));
-                std::cout<<"Dead frame 1"<<std::endl;
+                //std::cout<<"Dead frame 1"<<std::endl;
                 break;
             case 2:
                 this->sprite.setTextureRect(sf::IntRect(163, 47, 70, 81));
-                std::cout<<"Dead frame 2"<<std::endl;
+                //std::cout<<"Dead frame 2"<<std::endl;
                 break;
             case 3:
                 this->sprite.setTextureRect(sf::IntRect(290, 47, 75, 81));
-                std::cout<<"Dead frame 3"<<std::endl;
+                //std::cout<<"Dead frame 3"<<std::endl;
                 break;
         }
     }
+    else if(this->animationType == 5)
+    {
+        switch(this->frame)
+        {
+            case 1:
+                this->sprite.setTextureRect(sf::IntRect(41, 47, 70, 81));
+                //std::cout<<"Dead frame 1"<<std::endl;
+                break;
+            case 2:
+                this->sprite.setTextureRect(sf::IntRect(169, 47, 70, 81));
+                //std::cout<<"Dead frame 2"<<std::endl;
+                break;
+        }
+    }
+    
 }
 
 void Player::setIdle()
@@ -229,6 +248,15 @@ void Player::setDead()
     this->animationTimer = 0;
 }
 
+void Player::setBlock()
+{
+    this->sprite.setTexture(this->blockTexture);
+    this->animationType = 5;
+    this->frame = 1;
+    this->maxFrame = 2;
+    this->animationTimer = 0;
+}
+
 void Player::attack1()
 {
     this->setAttack1();
@@ -247,4 +275,9 @@ void Player::attack3()
 void Player::dead()
 {
     this->setDead();
+}
+
+void Player::block()
+{
+    this->setBlock();
 }
