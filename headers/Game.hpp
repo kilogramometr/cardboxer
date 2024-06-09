@@ -22,13 +22,19 @@ private:
     
     Card hoverCard;
     Card lastPlayed;
+    Card *nextPlay = nullptr;
     bool playerTurn;
     bool moved;
     bool choose;
+    bool playerDead = false;
+    bool animationEnd = false;
+    bool enemyDead = false;
+    bool chain = false;
+
     sf::Clock timer;
     sf::Vector2f lastPos;
     std::list<Card *>::iterator lastMoved;
-    
+        
     void onDraw(sf::RenderTarget& target, sf::Transform& transform);
 
     void onUpdate(sf::Vector2f mousePos);
@@ -38,7 +44,7 @@ private:
     void updateCards();
     void showButtons();
     void hideButtons();
-    void updateLastPlayed();
+    void updateLastPlayed(Card card);
     void updateHoverCard();
     void randomEnemy();
     void killEnemy();

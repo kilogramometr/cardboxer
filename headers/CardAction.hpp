@@ -1,6 +1,7 @@
 #pragma once
 #include <utility> // std::pair
 #include <string>
+#include "utils.hpp"
 
 class CardAction 
 {
@@ -12,9 +13,11 @@ class CardAction
     int healthMod;
     int maxHealthMod;
     int guardMod;
+    Animation animation;
+
 
 public:
-    CardAction(bool offensive, bool burn, bool bypass, std::string chain, int health, int maxHealth, int guard);
+    CardAction(bool offensive, bool burn, bool bypass, std::string chain, int health, int maxHealth, int guard, int animation);
     CardAction(CardAction &copy);
     int getHealthMod();
     void setHealthMod(int health);
@@ -31,5 +34,6 @@ public:
     bool isBurn();
 
     std::string getChain();
+    Animation getAnimation();
     // std::pair<bool, bool> getType();
 };

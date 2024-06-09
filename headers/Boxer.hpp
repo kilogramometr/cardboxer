@@ -37,4 +37,11 @@ public:
     int getDeckSize();
     
     void burnCard(Card *card) {};
+
+    
+    virtual void attack1() {};
+    virtual void attack2() {};
+    virtual void attack3() {};
+    virtual void dead() {};
+    virtual void block() {};
 };

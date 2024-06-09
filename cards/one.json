@@ -15,7 +15,8 @@
         "health": 1,
         "maxHealth": 0,
         "guard": 0,
-        "chain": "...two, ..."
+        "chain": "...two, ...",
+        "animation": 2
     },
 
     "defensive": null

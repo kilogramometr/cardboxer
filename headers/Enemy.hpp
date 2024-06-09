@@ -22,6 +22,7 @@ private:
     int maxFrame;
     int animationTimer;
     int animationType;
+    bool *animationEnd;
 
     sf::Texture sam_idleTexture;
     sf::Texture sam_attack1Texture;
@@ -75,6 +76,7 @@ public:
     void attack2();
     void attack3();
     void dead();
+    void dead(bool *animationEnd);
     void block();
     std::string getName();
 };

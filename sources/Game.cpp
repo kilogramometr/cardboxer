@@ -46,6 +46,29 @@ void Game::onDraw(sf::RenderTarget& target, sf::Transform& transform) {}
 
 void Game::onUpdate(sf::Vector2f mousePos)
 {
+    if (!this->enemyDead && this->enemy->getHealth() <= 0)
+        { this->killEnemy(); this->enemyDead = true; }
+    if (!this->playerDead && this->player->getHealth() <= 0)
+        { this->killPlayer(); this->playerDead = true; }
+
+    if (this->chain)
+    {
+        sf::Time t = timer.getElapsedTime();
+        if (t.asMilliseconds() > 750)
+        {
+            this->chain = false;
+            this->updateLastPlayed(*this->nextPlay);
+            this->hideCards();
+            this->player->discard(this->nextPlay);
+            this->showCards();
+            this->resolveCard(this->nextPlay, this->player, true);
+            this->nextPlay = nullptr;
+            this->choose = false;
+            this->playerTurn = false;
+            this->timer.restart();
+        }
+    }
+
     // update deck text
     this->playerDeck->setText(std::to_string(this->player->getDeckSize()));
     this->playerDiscard->setText(std::to_string(this->player->getDiscardSize()));
@@ -53,11 +76,11 @@ void Game::onUpdate(sf::Vector2f mousePos)
     if (!playerTurn)
     {
         sf::Time t = timer.getElapsedTime();
-        if (t.asMilliseconds() > 2500)
+        if (t.asMilliseconds() > 1500)
             this->turn();
     }
     //draw cards if hand empty
-    if (this->player->handEmpty())
+    if (this->player->handEmpty() && this->playerTurn)
     {
         this->hideCards();
         for (int i = 0; i < 3; i++)
@@ -83,7 +106,7 @@ void Game::onUpdate(sf::Vector2f mousePos)
         }
 
     }
-    if (hold && hover && !this->choose)
+    if (hold && hover && !this->choose && this->playerTurn)
     {
         auto change = mousePos - this->lastPos;
         this->removeChild(&this->hoverCard);
@@ -91,7 +114,7 @@ void Game::onUpdate(sf::Vector2f mousePos)
         this->moved = true;
         this->lastMoved = it;
     }
-    else if (hold && !hover && this->moved && !this->choose)
+    else if (hold && !hover && this->moved && !this->choose && this->playerTurn)
     {
         auto change = mousePos - this->lastPos;
         this->removeChild(&this->hoverCard);
@@ -100,10 +123,10 @@ void Game::onUpdate(sf::Vector2f mousePos)
     }
     else if (hover)
     {
-        if ( this->lastMoved != this->player->hand.end() && 455 - (*this->lastMoved)->getPosition().y > 100)
+        if ( this->lastMoved != this->player->hand.end() && 455 - (*this->lastMoved)->getPosition().y > 100 && this->playerTurn)
         {
             std::cerr<<"Card Playerd: "<<(*this->lastMoved)->getName()<<"\n";
-            this->updateLastPlayed();
+            this->updateLastPlayed(**this->lastMoved);
             this->showButtons();
             this->hideCards();
             this->player->discard(*this->lastMoved);
@@ -129,10 +152,10 @@ void Game::onUpdate(sf::Vector2f mousePos)
     }
     else 
     {
-        if ( this->lastMoved != this->player->hand.end() && 455 - (*this->lastMoved)->getPosition().y > 100)
+        if ( this->lastMoved != this->player->hand.end() && 455 - (*this->lastMoved)->getPosition().y > 100 && this->playerTurn)
         {
             std::cerr<<"Card Playerd: "<<(*this->lastMoved)->getName()<<"\n";
-            this->updateLastPlayed();
+            this->updateLastPlayed(**this->lastMoved);
             this->showButtons();
             this->hideCards();
             this->player->discard(*this->lastMoved);
@@ -148,8 +171,16 @@ void Game::onUpdate(sf::Vector2f mousePos)
 }
 
 void Game::setEnemy(Enemy enemy) { this->enemy = &enemy; }
-void Game::killEnemy() { delete this->player; };
-void Game::killPlayer() { delete this->enemy; };
+
+void Game::killEnemy() 
+{ 
+    this->enemy->dead(&animationEnd);
+};
+
+void Game::killPlayer() 
+{
+    this->player->dead(&animationEnd); 
+};
 
 void Game::randomisePlayerDeck(std::list<Card *> *library)
 {
@@ -212,17 +243,41 @@ void Game::resolveCard(Card *card, Boxer *source, bool offensive)
     std::cerr<<target->getMaxHealth()<<" maxhealth\n";
     std::cerr<<target->getGuard()<<" guard\n";
     
+
+
+    std::cerr<<action->getAnimation()<<"\n";
+    switch(action->getAnimation())
+    {
+    case Animation::attack1:
+        source->attack1();
+        break;
+    case Animation::attack2:
+        source->attack2();
+        break;
+    case Animation::attack3:
+        source->attack3();
+        break;
+    case Animation::block:
+        source->block();
+        break;
+    default:
+        break;
+    }
+
     if (action->getChain() != "")
     {
         auto it = std::find_if(this->player->hand.begin(), this->player->hand.end(), [action](Card *card){ return *card == action->getChain(); });
-        if (it != this->player->hand.end()) std::cerr<<"I found it\n";
-        else std::cerr<<"I didn't find it\n";
+        if (it != this->player->hand.end()) 
+        {
+            this->nextPlay = *it;
+            this->chain = true;
+        }
     }
-
+    
     if (source == this->enemy)
         { return; }
     else if (action->isBurn()) this->player->burnCard(card);
-    std::cerr<<"D "<<action->getHealthMod()<<" H "<<action->getMaxHealthMod()<<" G "<<action->getGuardMod()<<"\n";
+
 }
 
 void Game::turn()
@@ -232,14 +287,13 @@ void Game::turn()
     if (!playerTurn)
     {
         std::cerr<<"Happy times\n";
-        // Card *c = new Card(this->enemy->playCard());
-        // bool offensive = (c->getOffensiveAction() != nullptr);
-        // this->resolveCard(c, this->enemy, offensive);
-    }
-    else 
-    {
-        this->timer.restart();
-        std::cerr<<"Restart timer\n";
+
+        Card *c = this->enemy->playCard();
+        std::cerr<<"Card: "<<c->getName();
+        bool offensive = (c->getOffensiveAction() != nullptr);
+        this->updateLastPlayed(*c);
+        std::cerr<<"updated\n";
+        this->resolveCard(c, this->enemy, offensive);
     }
     this->playerTurn = !this->playerTurn;
 }
@@ -254,8 +308,6 @@ int Game::onButtonClick(sf::Vector2f mousePosition)
             switch (code)
             {
             case 1:
-                this->turn();
-                this->playerTurn = false;
                 return 100;
 
             case 2:
@@ -268,6 +320,8 @@ int Game::onButtonClick(sf::Vector2f mousePosition)
                     this->player->draw();
                 this->updateCards();
                 this->showCards();
+                this->playerTurn = false;
+                this->timer.restart();
                 return 100;
 
             case 3:
@@ -297,12 +351,16 @@ int Game::onButtonClick(sf::Vector2f mousePosition)
                 this->resolveCard(&this->lastPlayed, this->player, true);
                 this->hideButtons();
                 this->choose = false;
+                this->playerTurn = false;
+                this->timer.restart();
                 return 100;
 
             case 6:
                 this->resolveCard(&this->lastPlayed, this->player, false);
                 this->hideButtons();
                 this->choose = false;
+                this->playerTurn = false;
+                this->timer.restart();
                 return 100;
 
             default:
@@ -313,10 +371,10 @@ int Game::onButtonClick(sf::Vector2f mousePosition)
     return 100;
 }
 
-void Game::updateLastPlayed()
+void Game::updateLastPlayed(Card card)
 {
     this->removeChild(&this->lastPlayed);
-    this->lastPlayed = **this->lastMoved;
+    this->lastPlayed = card;
     this->lastPlayed.setScale({0.4, 0.4});
     this->lastPlayed.setPosition({0, 0});
     this->appendChild(&this->lastPlayed);
