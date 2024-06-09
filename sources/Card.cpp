@@ -74,7 +74,6 @@ Card::Card(const Card &copy)
     { this->offensiveAction = new CardAction(*copy.offensiveAction); }
     else this->offensiveAction = nullptr;
     
-    // std::cerr<<"texture\n";
     if (copy.texture != 0)
     {
         this->texture = new sf::Texture(*copy.texture);
@@ -83,26 +82,21 @@ Card::Card(const Card &copy)
     }
 
     
-    // std::cerr<<"font\n";
     if (copy.font != 0)
         this->font = new sf::Font(*copy.font);
 
-    // std::cerr<<"name\n";
     if (copy.name != 0)
     {
         this->name = new sf::Text(*copy.name);
         this->originalName = copy.originalName;
-        std::cerr<<copy.originalName<<"\n";
     }
 
-    // std::cerr<<"desc\n";
     if (copy.description != 0)
     {
         this->description = new sf::Text(*copy.description);
         this->originalDesc = copy.originalDesc;
         this->desc = copy.desc;
     }
-    // std::cerr<<"end copy\n";
 }
 
 void Card::setFont()

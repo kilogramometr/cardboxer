@@ -255,7 +255,6 @@ void Game::resolveCard(Card *card, Boxer *source, bool offensive)
     target->setMaxHealth(action->getMaxHealthMod() + target->getMaxHealth());
     target->setGuard(action->getGuardMod() + target->getGuard());
 
-    std::cerr<<action->getAnimation()<<"\n";
     switch(action->getAnimation())
     {
     case Animation::attack1:

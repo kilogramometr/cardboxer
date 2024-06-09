@@ -1,6 +1,9 @@
 #pragma once
+#include <string>
 
 int randomUniform(int min, int max);
+
+void log(std::string log);
 
 enum Animation 
 {

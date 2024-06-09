@@ -5,7 +5,7 @@
 Player::Player() : Boxer()
 {
     this->setGuard(0);
-    this->setHealth(10);
+    this->setHealth(14);
     this->setMaxHealth(10);
 
     this->healthbar = new Healthbar(0);
