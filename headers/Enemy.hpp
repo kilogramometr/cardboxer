@@ -22,7 +22,7 @@ private:
     int maxFrame;
     int animationTimer;
     int animationType;
-    bool *animationEnd;
+    bool *animationEnd = nullptr;
 
     sf::Texture sam_idleTexture;
     sf::Texture sam_attack1Texture;
@@ -70,7 +70,7 @@ public:
     Enemy(int charakter=0);
     Enemy(Enemy *copy);
 
-    Card* playCard();
+    Card playCard();
     void nextFrame();
     void prevFrame();
     void setFrame();

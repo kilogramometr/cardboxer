@@ -21,13 +21,21 @@ Game::Game(std::list<Card *> *library, std::list<Enemy *> *enemies)
     this->returnButton = new Button({300, 0}, {100, 50}, {5, -4}, 38, sf::Color::Red, "Return", 3);
     this->restartButton = new Button({400, 0}, {100, 50}, {5, -4}, 38, sf::Color::Black, "Restart", 4);
     
-    this->playerDeck = new Button({657, 400}, {71.5, 100}, {25, -10}, 50, sf::Color::Green, "0", 0);
-    this->playerDiscard = new Button({728.5, 400}, {71.5, 100}, {25, -10}, 50, sf::Color::Blue, "0", 0);
-    this->drawButton = new Button({657, 500}, {143, 100}, {25, -10}, 50, sf::Color::Green, "Draw", 2);
+    this->playerDeck = new Button({657, 400}, {71.5, 100}, {25, 15}, 50, sf::Color((uint32_t)0xff6600c8), "0", 0);
+    this->playerDiscard = new Button({728.5, 400}, {71.5, 100}, {25, 15}, 50, sf::Color((uint32_t)0x0000ffc8), "0", 0);
+    this->drawButton = new Button({657, 500}, {143, 100}, {30, 12}, 50, sf::Color((uint32_t)0xff6600c8), "Draw", 2);
 
     this->offensiveButton = new Button({212.5, 262.5}, {125, 75}, {5, 6}, 38, sf::Color::Red, "Offensive", 5);
     this->defensiveButton = new Button({462.5, 262.5}, {125, 75}, {5, 6}, 38, sf::Color::Blue, "Defensive", 6);
     
+    this->youDied = new Button({250, 150}, {300, 150}, {50, 30}, 60, sf::Color::Black, "YOU DIED", 0);
+    this->bigRestart = new Button({250, 300}, {300, 150}, {50, 30}, 60, sf::Color::Black, "RESTART", 4);
+
+    this->reward = new Button({138, 100}, {520, 40}, {2,-25}, 60, sf::Color::Black, "CHOOSE YOUR REWARD", 0);
+    this->healButton = new Button({90, 150}, {200, 300}, {5, 69}, 55, sf::Color::Green, "   HEAL\nYOURSELF", 8);
+    this->maxHButton = new Button({300, 150}, {200, 300}, {30, 69}, 55, sf::Color((uint32_t)0x008000ff), "+2 MAX\nHEALTH", 9);
+    this->cardButton = new Button({510, 150}, {200, 300}, {20, 69}, 55, sf::Color((uint32_t)0xff6600ff), "RANDOM\n  CARD", 10);
+
     for (int i = 0; i < 3; i++) { this->player->draw(); }
     this->lastMoved = this->player->hand.end();
     this->updateCards();
@@ -51,6 +59,20 @@ void Game::onUpdate(sf::Vector2f mousePos)
     if (!this->playerDead && this->player->getHealth() <= 0)
         { this->killPlayer(); this->playerDead = true; }
 
+    if (this->playerDead && this->animationEnd)
+    { 
+        this->hideCards();
+        this->removeChild(this->player);
+        this->appendChild(this->youDied);
+        this->appendChild(this->bigRestart); 
+    }
+
+    if (this->enemyDead && this->animationEnd)
+    {
+        this->removeChild(this->enemy);
+        this->showRewards();
+    }
+
     if (this->chain)
     {
         sf::Time t = timer.getElapsedTime();
@@ -60,12 +82,12 @@ void Game::onUpdate(sf::Vector2f mousePos)
             this->updateLastPlayed(*this->nextPlay);
             this->hideCards();
             this->player->discard(this->nextPlay);
-            this->showCards();
             this->resolveCard(this->nextPlay, this->player, true);
             this->nextPlay = nullptr;
             this->choose = false;
             this->playerTurn = false;
             this->timer.restart();
+            this->showCards();
         }
     }
 
@@ -73,14 +95,14 @@ void Game::onUpdate(sf::Vector2f mousePos)
     this->playerDeck->setText(std::to_string(this->player->getDeckSize()));
     this->playerDiscard->setText(std::to_string(this->player->getDiscardSize()));
     //resolve enemy turn
-    if (!playerTurn)
+    if (!playerTurn && !this->enemyDead)
     {
         sf::Time t = timer.getElapsedTime();
         if (t.asMilliseconds() > 1500)
             this->turn();
     }
     //draw cards if hand empty
-    if (this->player->handEmpty() && this->playerTurn)
+    if (this->player->handEmpty() && this->playerTurn && !this->choose)
     {
         this->hideCards();
         for (int i = 0; i < 3; i++)
@@ -91,7 +113,6 @@ void Game::onUpdate(sf::Vector2f mousePos)
         this->updateCards();
         this->showCards();
     }
-
 
     //resolve hover and drag&drop
     bool hover = false;
@@ -104,7 +125,6 @@ void Game::onUpdate(sf::Vector2f mousePos)
             hover = true;
             break;
         }
-
     }
     if (hold && hover && !this->choose && this->playerTurn)
     {
@@ -125,11 +145,11 @@ void Game::onUpdate(sf::Vector2f mousePos)
     {
         if ( this->lastMoved != this->player->hand.end() && 455 - (*this->lastMoved)->getPosition().y > 100 && this->playerTurn)
         {
-            std::cerr<<"Card Playerd: "<<(*this->lastMoved)->getName()<<"\n";
             this->updateLastPlayed(**this->lastMoved);
             this->showButtons();
             this->hideCards();
             this->player->discard(*this->lastMoved);
+            this->updateCards();
             this->showCards();
             this->choose = true;
         }
@@ -154,11 +174,11 @@ void Game::onUpdate(sf::Vector2f mousePos)
     {
         if ( this->lastMoved != this->player->hand.end() && 455 - (*this->lastMoved)->getPosition().y > 100 && this->playerTurn)
         {
-            std::cerr<<"Card Playerd: "<<(*this->lastMoved)->getName()<<"\n";
             this->updateLastPlayed(**this->lastMoved);
             this->showButtons();
             this->hideCards();
             this->player->discard(*this->lastMoved);
+            this->updateCards();
             this->showCards();
             this->choose = true;
         }
@@ -213,11 +233,9 @@ void Game::randomisePlayerDeck(std::list<Card *> *library)
 
 void Game::resolveCard(Card *card, Boxer *source, bool offensive)
 {
-    std::cerr<<offensive<<"\n";
     CardAction *action = (offensive) ?
         card->getOffensiveAction() : card->getDefensiveAction();
     
-    std::cerr<<"Target"<<"\n";
     Boxer *target;
     if (source == this->player) 
     {
@@ -229,33 +247,28 @@ void Game::resolveCard(Card *card, Boxer *source, bool offensive)
         if (offensive) target = this->player;
         else target = this->enemy;
     }
-    std::cerr<<"resolve"<<"\n";
 
-    std::cerr<<target->getHealth()<<" "<<action->getHealthMod()<<" health\n";
-    std::cerr<<target->getMaxHealth()<<" "<<action->getMaxHealthMod()<<" maxhealth\n";
-    std::cerr<<target->getGuard()<<" "<<action->getGuardMod()<<" guard\n";
-
-    target->damage(action->getHealthMod(), action->isBypass());
+    if (action->isHeal())
+        target->heal(action->getHealthMod());
+    else
+        target->damage(action->getHealthMod(), action->isBypass());
     target->setMaxHealth(action->getMaxHealthMod() + target->getMaxHealth());
     target->setGuard(action->getGuardMod() + target->getGuard());
-
-    std::cerr<<target->getHealth()<<" health\n";
-    std::cerr<<target->getMaxHealth()<<" maxhealth\n";
-    std::cerr<<target->getGuard()<<" guard\n";
-    
-
 
     std::cerr<<action->getAnimation()<<"\n";
     switch(action->getAnimation())
     {
     case Animation::attack1:
         source->attack1();
+        target->hurt();
         break;
     case Animation::attack2:
         source->attack2();
+        target->hurt();
         break;
     case Animation::attack3:
         source->attack3();
+        target->hurt();
         break;
     case Animation::block:
         source->block();
@@ -282,18 +295,12 @@ void Game::resolveCard(Card *card, Boxer *source, bool offensive)
 
 void Game::turn()
 {
-    std::cerr<<this->playerTurn<<"\n";
-    //std::cout<<"Game screen update"<<std::endl;
     if (!playerTurn)
     {
-        std::cerr<<"Happy times\n";
-
-        Card *c = this->enemy->playCard();
-        std::cerr<<"Card: "<<c->getName();
-        bool offensive = (c->getOffensiveAction() != nullptr);
-        this->updateLastPlayed(*c);
-        std::cerr<<"updated\n";
-        this->resolveCard(c, this->enemy, offensive);
+        Card c = this->enemy->playCard();
+        bool offensive = (c.getOffensiveAction() != nullptr);
+        this->updateLastPlayed(c);
+        this->resolveCard(&c, this->enemy, offensive);
     }
     this->playerTurn = !this->playerTurn;
 }
@@ -328,6 +335,13 @@ int Game::onButtonClick(sf::Vector2f mousePosition)
                 return 3;
 
             case 4:
+                this->removeChild(this->youDied);
+                this->removeChild(this->bigRestart);
+                this->playerDead = false;
+                this->enemyDead = false;
+                this->nextPlay = nullptr;
+                this->chain = false;
+                this->animationEnd = false;
                 this->moved = false;
                 this->choose = false;
                 this->playerTurn = true;
@@ -363,6 +377,21 @@ int Game::onButtonClick(sf::Vector2f mousePosition)
                 this->timer.restart();
                 return 100;
 
+            case 8:
+                this->hideRewards();
+                this->player->setHealth(this->player->getMaxHealth());
+                this->newRound();
+                return 100;
+            case 9:
+                this->hideRewards();
+                this->player->setMaxHealth(this->player->getMaxHealth()+2);
+                this->newRound();
+                return 100;
+            case 10:
+                this->hideRewards();
+                this->addRandomCard();
+                this->newRound();
+                return 100;
             default:
                 break;
             }
@@ -431,4 +460,59 @@ void Game::randomEnemy()
     int random = randomUniform(0, size-1);
     std::advance(it, random);
     this->enemy = new Enemy(*it);
+}
+
+void Game::showRewards() 
+{
+    this->appendChild(this->healButton);
+    this->appendChild(this->maxHButton);
+    this->appendChild(this->cardButton);
+    this->appendChild(this->reward);
+}
+
+void Game::hideRewards() 
+{
+    this->removeChild(this->reward);
+    this->removeChild(this->healButton);
+    this->removeChild(this->maxHButton);
+    this->removeChild(this->cardButton);
+}
+
+void Game::addRandomCard()
+{
+    this->player->clearDeck();
+    bool added = false;
+    while(!added)
+    {
+        int size = library->size();
+        int pos = randomUniform(0, size-1);
+        auto it = library->begin();
+        std::advance(it, pos);
+        if ((*it)->isObtainable())
+        {
+            this->player->addToDeck(*it);
+            added = true;
+        }
+    }
+}
+
+void Game::newRound()
+{
+    this->player->setGuard(0);
+    this->removeChild(this->enemy);
+    this->randomEnemy();
+    this->appendChild(this->enemy);
+    this->animationEnd = false;
+    this->enemyDead = false;
+    this->playerDead = false;
+    this->nextPlay = nullptr;
+    this->chain = false;
+    this->moved = false;
+    this->choose = false;
+    this->playerTurn = true;
+    this->hideCards();
+    this->hideButtons();
+    this->lastMoved = this->player->hand.end();
+    this->updateCards();
+    this->showCards();
 }

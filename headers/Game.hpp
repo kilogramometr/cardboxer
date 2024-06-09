@@ -19,7 +19,14 @@ private:
     Button *offensiveButton;
     Button *defensiveButton;
     Button *drawButton;
-    
+    Button *youDied;
+    Button *bigRestart;
+
+    Button *reward;
+    Button *healButton;
+    Button *maxHButton;
+    Button *cardButton;
+
     Card hoverCard;
     Card lastPlayed;
     Card *nextPlay = nullptr;
@@ -49,6 +56,11 @@ private:
     void randomEnemy();
     void killEnemy();
     void killPlayer();
+    void showRewards();
+    void hideRewards();
+    void addRandomCard();
+    void newRound();
+
 public:
     Game(std::list<Card *> *library, std::list<Enemy *> *enemies);
 

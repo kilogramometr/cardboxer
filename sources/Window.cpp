@@ -252,7 +252,6 @@ bool Window::loadEnemies()
             try { this->enemies.emplace_back(new Enemy(enemy, library)); }
             catch (int e)
             {
-                // std::cerr<<"\nError\n";
                 failures++;
                 switch(e)
                 {
@@ -276,7 +275,6 @@ bool Window::loadEnemies()
                     std::cerr<<"EnemyLoader: unidentified error #"<<e<<"\n";
                     break;
                 }
-                // if (e > 10) this->library.pop_back();
             }
         }
         else { std::cerr<<"EnemyLoader: Can't open enemy file: \""<<f.asString()<<"\". Skipping...\n"; failures++; }

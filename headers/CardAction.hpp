@@ -14,10 +14,11 @@ class CardAction
     int maxHealthMod;
     int guardMod;
     Animation animation;
+    bool heal;
 
 
 public:
-    CardAction(bool offensive, bool burn, bool bypass, std::string chain, int health, int maxHealth, int guard, int animation);
+    CardAction(bool offensive, bool burn, bool bypass, bool heal, std::string chain, int health, int maxHealth, int guard, int animation);
     CardAction(CardAction &copy);
     int getHealthMod();
     void setHealthMod(int health);
@@ -32,6 +33,7 @@ public:
     bool isDefensive();
     bool isBypass();
     bool isBurn();
+    bool isHeal();
 
     std::string getChain();
     Animation getAnimation();

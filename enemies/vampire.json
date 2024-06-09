@@ -1,6 +1,6 @@
 {
     "hp": 10,
-    "name": "Heavy Hitter",
+    "name": "Vampire",
 
     "texture": {
         "file": "test_cards.png",
@@ -11,20 +11,20 @@
         "frameHeight": 0
     },
 
-    "character": 0,
+    "character": 2,
 
     "actions": [
         {
-            "cardName": "Uppercut",
-            "probability": 0.4
+            "cardName": "Vampiric Vigour",
+            "probability": 0.25
         },
         {
-            "cardName": "Doubletap",
-            "probability": 0.4
+            "cardName": "Stab",
+            "probability": 0.45
         },
         {
-            "cardName": "Slip",
-            "probability": 0.2
+            "cardName": "Feint",
+            "probability": 0.30
         }
     ]
 }

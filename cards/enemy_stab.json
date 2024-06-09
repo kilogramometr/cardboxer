@@ -1,7 +1,7 @@
 {
-    "name": "...three!",
+    "name": "Stab",
     "description":
-        "Offensive:\nA powerful kick for $oh damage to finish the combo!", 
+        "Offensive:\nA quick and accurate stab. Deal $oh damage.", 
      
     "texture": {
         "file": "test_cards.png",
@@ -10,9 +10,11 @@
         "w": 250,
         "h": 350
     },
+    
+    "obtainable": false,
 
     "offensive": {
-        "health": 3,
+        "health": 4,
         "maxHealth": 0,
         "guard": 0,
         "animation": 4

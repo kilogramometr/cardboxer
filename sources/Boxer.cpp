@@ -37,7 +37,12 @@ void Boxer::damage(int damage, bool bypass)
     else this->health -= damage;
 }
 
-void Boxer::heal(int heal) { this->health += heal; }
+void Boxer::heal(int heal) 
+{ 
+    this->health += heal; 
+    if (this->health > this->maxHealth)
+        this->health = this->maxHealth;
+}
 
 void Boxer::addToDeck(Card *card) { this->deck.emplace_back(new Card(*card)); }
 void Boxer::removeFromDeck(Card *card) { this->deck.remove(card); }
