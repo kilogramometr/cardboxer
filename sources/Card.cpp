@@ -17,7 +17,8 @@ Card::Card(Json::Value card)
             (card["defensive"]["chain"].isNull()) ? "" : card["defensive"]["chain"].asString(),
             (card["defensive"]["health"].isNull()) ? throw 11 : card["defensive"]["health"].asInt(),
             (card["defensive"]["maxHealth"].isNull()) ? throw 12 : card["defensive"]["maxHealth"].asInt(),
-            (card["defensive"]["guard"].isNull()) ? throw 13 : card["defensive"]["guard"].asInt()
+            (card["defensive"]["guard"].isNull()) ? throw 13 : card["defensive"]["guard"].asInt(),
+            (!card["defensive"]["animation"].isNull()) ? card["defensive"]["animation"].asInt() : 5
         );
     }
     else this->defensiveAction = nullptr;
@@ -32,7 +33,8 @@ Card::Card(Json::Value card)
             (card["offensive"]["chain"].isNull()) ? "" : card["offensive"]["chain"].asString(),
             (card["offensive"]["health"].isNull()) ? throw 21 : card["offensive"]["health"].asInt(),
             (card["offensive"]["maxHealth"].isNull()) ? throw 22 : card["offensive"]["maxHealth"].asInt(),
-            (card["offensive"]["guard"].isNull()) ? throw 23 : card["offensive"]["guard"].asInt()
+            (card["offensive"]["guard"].isNull()) ? throw 23 : card["offensive"]["guard"].asInt(),
+            (!card["offensive"]["animation"].isNull()) ? card["offensive"]["animation"].asInt() : 2
         };
     }
     else this->offensiveAction = nullptr;

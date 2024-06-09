@@ -2,9 +2,9 @@
 #include "../headers/utils.hpp"
 #include <iostream>
 
-Enemy::Enemy(): Boxer()
+Enemy::Enemy(int charakter) : Boxer()
 {
-    this->charakter = 1;
+    this->charakter = charakter;
     this->setHealth(10);
     this->setMaxHealth(10);
     this->setGuard(0);
@@ -32,6 +32,7 @@ Enemy::Enemy(Json::Value enemy, std::list<Card *>& library, int charakter)
     this->loadSprites();
     this->construct(charakter);
 
+    this->charakter = (enemy["character"].isInt()) ? enemy["character"].asInt() : 0;
 
     if (enemy["name"].isNull()) { throw 10; }
     else
@@ -743,6 +744,13 @@ void Enemy::dead()
 {
     this->setDead();
 }
+
+void Enemy::dead(bool *animationEnd)
+{
+    this->setDead();
+    this->animationEnd = animationEnd;
+}
+
 
 void Enemy::block()
 {

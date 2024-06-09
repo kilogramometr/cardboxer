@@ -1,6 +1,6 @@
 #include "../headers/CardAction.hpp"
 #include <iostream>
-CardAction::CardAction(bool offensive, bool burn, bool bypass, std::string chain, int health, int maxHealth, int guard)
+CardAction::CardAction(bool offensive, bool burn, bool bypass, std::string chain, int health, int maxHealth, int guard, int animation)
 {
     this->offensive = offensive;
     this->burn = burn;
@@ -9,7 +9,7 @@ CardAction::CardAction(bool offensive, bool burn, bool bypass, std::string chain
     this->healthMod = health;
     this->maxHealthMod = maxHealth;
     this->guardMod = guard;
-
+    this->animation = Animation(animation);
 }
 
 CardAction::CardAction(CardAction &copy)
@@ -21,6 +21,7 @@ CardAction::CardAction(CardAction &copy)
     this->healthMod = copy.healthMod;
     this->maxHealthMod = copy.maxHealthMod;
     this->guardMod = copy.guardMod;
+    this->animation = copy.animation;
 }
 
 // std::pair<bool, bool> getType();
@@ -39,4 +40,4 @@ int CardAction::getGuardMod() { return this->guardMod; }
 void CardAction::setHealthMod(int health) { this->healthMod = health; }
 void CardAction::setMaxHealthMod(int health) { this->maxHealthMod = health; }
 void CardAction::setGuardMod(int guard) { this->guardMod = guard; }
-
+Animation CardAction::getAnimation() { return this->animation; }

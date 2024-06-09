@@ -14,13 +14,15 @@
     "defensive": {
         "health": 0,
         "maxHealth": 0,
-        "guard": 3
+        "guard": 3,
+        "animation": 5
     },
     
     "offensive": {
         "health": 3,
         "maxHealth": 0,
-        "guard": 0
+        "guard": 0,
+        "animation": 2
     } 
 
 }

@@ -11,6 +11,8 @@
         "frameHeight": 0
     },
 
+    "character": 0,
+
     "actions": [
         {
             "cardName": "Uppercut",

@@ -20,6 +20,8 @@ private:
     int animationTimer;
     int animationType;
 
+    bool *animationEnd;
+
     std::list<Card *> discardPile;
 
     void initSprite();
@@ -48,9 +50,10 @@ public:
     void attack2();
     void attack3();
     void dead();
+    void dead(bool *animationEnd);
+    void block();
     void burnCard(Card *card);
     int getDiscardSize();
     bool handEmpty();
 
-    void block();
 };

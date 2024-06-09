@@ -340,3 +340,8 @@ void Player::block()
     this->setBlock();
 }
 
+void Player::dead(bool *animationEnd)
+{
+    this->setDead();
+    this->animationEnd = animationEnd;
+}
