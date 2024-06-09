@@ -96,12 +96,14 @@ void Enemy::loadSprites()
     this->sam_attack2Texture.loadFromFile("../res/textures/Samurai/Attack_2.png");
     this->sam_attack3Texture.loadFromFile("../res/textures/Samurai/Attack_3.png");
     this->sam_deadTexture.loadFromFile("../res/textures/Samurai/Dead.png");
+    this->sam_blockTexture.loadFromFile("../res/textures/Samurai/Shield.png");
 
     this->shi_idleTexture.loadFromFile("../res/textures/Shinobi/Idle.png");
     this->shi_attack1Texture.loadFromFile("../res/textures/Shinobi/Attack_1.png");
     this->shi_attack2Texture.loadFromFile("../res/textures/Shinobi/Attack_2.png");
     this->shi_attack3Texture.loadFromFile("../res/textures/Shinobi/Attack_3.png");
     this->shi_deadTexture.loadFromFile("../res/textures/Shinobi/Dead.png");
+    this->shi_blockTexture.loadFromFile("../res/textures/Shinobi/Shield.png");
 
     this->setScale(sf::Vector2f(-1.5, 1.5));
     this->setPosition(sf::Vector2f(600, 320));
@@ -125,6 +127,8 @@ void Enemy::onUpdate()
         this->attack3();
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num4))
         this->dead();
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num5))
+        this->block();
 
     this->animate();
 }
@@ -359,6 +363,39 @@ void Enemy::setAnimationFrame()
             }
         }
     }
+    else if(this->animationType == 5)
+    {
+        if(this->charakter == 0)
+        {
+            switch(this->frame)
+            {
+                case 1:
+                    this->setTextureRect(sf::IntRect(36, 47, 60, 81));
+                    break;
+                case 2:
+                    this->setTextureRect(sf::IntRect(164, 47, 60, 81));
+                    break;
+            }
+        }
+        else if(this->charakter == 1)
+        {
+            switch(this->frame)
+            {
+                case 1:
+                    this->setTextureRect(sf::IntRect(38, 47, 80, 81));
+                    break;
+                case 2:
+                    this->setTextureRect(sf::IntRect(166, 47, 80, 81));
+                    break;
+                case 3:
+                    this->setTextureRect(sf::IntRect(294, 47, 80, 81));
+                    break;
+                case 4:
+                    this->setTextureRect(sf::IntRect(422, 47, 80, 81));
+                    break;
+            }
+        }
+    }
 }
 
 void Enemy::setIdle()
@@ -446,6 +483,23 @@ void Enemy::setDead()
     this->animationType = 4;
 }
 
+void Enemy::setBlock()
+{
+    if(this->charakter == 0)
+    {
+        this->setTexture(this->sam_blockTexture);
+        this->maxFrame = 2;
+    }
+    else if(this->charakter == 1)
+    {
+        this->setTexture(this->shi_blockTexture);
+        this->maxFrame = 4;
+    }
+    this->frame = 1;
+    this->animationTimer = 0;
+    this->animationType = 5;
+}
+
 void Enemy::attack1()
 {
     this->setAttack1();
@@ -464,4 +518,9 @@ void Enemy::attack3()
 void Enemy::dead()
 {
     this->setDead();
+}
+
+void Enemy::block()
+{
+    this->setBlock();
 }

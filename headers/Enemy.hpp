@@ -28,12 +28,14 @@ private:
     sf::Texture sam_attack2Texture;
     sf::Texture sam_attack3Texture;
     sf::Texture sam_deadTexture;
+    sf::Texture sam_blockTexture;
 
     sf::Texture shi_idleTexture;
     sf::Texture shi_attack1Texture;
     sf::Texture shi_attack2Texture;
     sf::Texture shi_attack3Texture;
     sf::Texture shi_deadTexture;
+    sf::Texture shi_blockTexture;
 
     void construct(int charakter);
     void loadSprites();
@@ -48,6 +50,7 @@ private:
     void setAttack2();
     void setAttack3();
     void setDead();
+    void setBlock();
 
 public:
     Enemy(Json::Value enemy, std::list<Card *>& library, int charakter=0);
@@ -64,4 +67,5 @@ public:
     void attack2();
     void attack3();
     void dead();
+    void block();
 };
