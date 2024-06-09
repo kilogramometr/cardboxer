@@ -37,6 +37,13 @@ private:
     sf::Texture shi_deadTexture;
     sf::Texture shi_blockTexture;
 
+    sf::Texture vam_idleTexture;
+    sf::Texture vam_attack1Texture;
+    sf::Texture vam_attack2Texture;
+    sf::Texture vam_attack3Texture;
+    sf::Texture vam_deadTexture;
+    sf::Texture vam_blockTexture;
+
     void construct(int charakter);
     void loadSprites();
 
