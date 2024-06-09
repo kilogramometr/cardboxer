@@ -1,6 +1,11 @@
 #include "../headers/Boxer.hpp"
 #include <iostream>
-Boxer::Boxer() {}
+
+Boxer::Boxer()
+{
+    this->health = 100;
+    this->guard = 0;
+}
 
 void Boxer::setHealth(int health) { this->health = health; }
 int Boxer::getHealth() { return this->health; }
