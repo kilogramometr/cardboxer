@@ -117,13 +117,13 @@ void Enemy::onUpdate()
     this->shield->setPoints(this->guard);
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-        this->setAttack1();
+        this->attack1();
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
-        this->setAttack2();
+        this->attack2();
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
-        this->setAttack3();
+        this->attack3();
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num4))
-        this->setDead();
+        this->dead();
 
     this->animate();
 }
@@ -443,4 +443,24 @@ void Enemy::setDead()
     this->frame = 1;
     this->animationTimer = 0;
     this->animationType = 4;
+}
+
+void Enemy::attack1()
+{
+    this->setAttack1();
+}
+
+void Enemy::attack2()
+{
+    this->setAttack2();
+}
+
+void Enemy::attack3()
+{
+    this->setAttack3();
+}
+
+void Enemy::dead()
+{
+    this->setDead();
 }

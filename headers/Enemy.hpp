@@ -58,5 +58,10 @@ public:
     void nextFrame();
     void prevFrame();
     void setFrame();
-    
+
+    //Animations
+    void attack1();
+    void attack2();
+    void attack3();
+    void dead();
 };
