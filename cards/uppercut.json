@@ -1,7 +1,7 @@
 {
-    "name": "Uppercut",
+    "name": "High Kick",
     "description":
-        "Offensive:\nStrike your enemy for $oh damage.", 
+        "Offensive:\nKick your enemy for $oh damage.", 
      
     "texture": {
         "file": "test_cards.png",
@@ -15,7 +15,7 @@
         "health": 4,
         "maxHealth": 0,
         "guard": 0,
-        "animation": 2
+        "animation": 4
     },
 
     "defensive": null

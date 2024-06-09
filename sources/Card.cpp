@@ -14,6 +14,7 @@ Card::Card(Json::Value card)
             false,
             (card["defensive"]["burn"].isNull()) ? false : card["defensive"]["burn"].asBool(),
             (card["defensive"]["bypass"].isNull()) ? false : card["defensive"]["bypass"].asBool(),
+            (card["defensive"]["heal"].isNull()) ? false : card["defensive"]["heal"].asBool(),
             (card["defensive"]["chain"].isNull()) ? "" : card["defensive"]["chain"].asString(),
             (card["defensive"]["health"].isNull()) ? throw 11 : card["defensive"]["health"].asInt(),
             (card["defensive"]["maxHealth"].isNull()) ? throw 12 : card["defensive"]["maxHealth"].asInt(),
@@ -30,6 +31,7 @@ Card::Card(Json::Value card)
             true,
             (card["offensive"]["burn"].isNull()) ? false : card["offensive"]["burn"].asBool(),
             (card["offensive"]["bypass"].isNull()) ? false : card["offensive"]["bypass"].asBool(),
+            (card["offensive"]["heal"].isNull()) ? false : card["offensive"]["heal"].asBool(),
             (card["offensive"]["chain"].isNull()) ? "" : card["offensive"]["chain"].asString(),
             (card["offensive"]["health"].isNull()) ? throw 21 : card["offensive"]["health"].asInt(),
             (card["offensive"]["maxHealth"].isNull()) ? throw 22 : card["offensive"]["maxHealth"].asInt(),
@@ -62,7 +64,7 @@ Card::Card(Json::Value card)
     this->setPosition(0, 0);
 }
 
-Card::Card(Card &copy)
+Card::Card(const Card &copy)
 {
     if (copy.defensiveAction != nullptr)
     { this->defensiveAction = new CardAction(*copy.defensiveAction); }
@@ -72,7 +74,6 @@ Card::Card(Card &copy)
     { this->offensiveAction = new CardAction(*copy.offensiveAction); }
     else this->offensiveAction = nullptr;
     
-    // std::cerr<<"texture\n";
     if (copy.texture != 0)
     {
         this->texture = new sf::Texture(*copy.texture);
@@ -81,26 +82,21 @@ Card::Card(Card &copy)
     }
 
     
-    // std::cerr<<"font\n";
     if (copy.font != 0)
         this->font = new sf::Font(*copy.font);
 
-    // std::cerr<<"name\n";
     if (copy.name != 0)
     {
         this->name = new sf::Text(*copy.name);
         this->originalName = copy.originalName;
-        std::cerr<<copy.originalName<<"\n";
     }
 
-    // std::cerr<<"desc\n";
     if (copy.description != 0)
     {
         this->description = new sf::Text(*copy.description);
         this->originalDesc = copy.originalDesc;
         this->desc = copy.desc;
     }
-    // std::cerr<<"end copy\n";
 }
 
 void Card::setFont()

@@ -11,10 +11,6 @@ CardLibrary::CardLibrary(std::list<Card *> *library)
     this->cardNext = (this->it == --this->library->end()) ? **(this->library->begin()) : **(++this->it);
     this->cardPrev = **(--this->library->end());
 
-    // std::cerr<<this->card.getName()<<std::endl;
-    // std::cerr<<this->cardNext.getName()<<std::endl;
-    // std::cerr<<this->cardPrev.getName()<<std::endl;
-
     this->updateCards();
     this->showCards();
 

@@ -44,4 +44,5 @@ public:
     virtual void attack3() {};
     virtual void dead() {};
     virtual void block() {};
+    virtual void hurt() {};
 };

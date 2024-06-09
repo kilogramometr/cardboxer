@@ -1,7 +1,7 @@
 {
-    "name": "...three!",
+    "name": "Iaijutsu",
     "description":
-        "Offensive:\nA powerful kick for $oh damage to finish the combo!", 
+        "Offensive:\nDraw your blade and attack instantly. Deal $oh damage, bypassing enemy guard.", 
      
     "texture": {
         "file": "test_cards.png",
@@ -10,12 +10,15 @@
         "w": 250,
         "h": 350
     },
+    
+    "obtainable": false,
 
     "offensive": {
-        "health": 3,
+        "health": 2,
         "maxHealth": 0,
         "guard": 0,
-        "animation": 4
+        "bypass": true,
+        "animation": 2
     },
 
     "defensive": null

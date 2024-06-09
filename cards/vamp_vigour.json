@@ -1,7 +1,7 @@
 {
-    "name": "...two, ...",
+    "name": "Vampiric Vigour",
     "description":
-        "Offensive:\nA followup cross for $oh damage to tire the enemy...\nChain '...three!'", 
+        "Defensive:\nCall upon your vampiric vigour and heal $dh health.", 
      
     "texture": {
         "file": "test_cards.png",
@@ -10,15 +10,16 @@
         "w": 250,
         "h": 350
     },
-    
-    "offensive": {
+
+    "obtainable": false,
+
+    "defensive": {
         "health": 2,
         "maxHealth": 0,
         "guard": 0,
-        "chain": "...three!",
-        "animation": 3
+        "animation": 5,
+        "heal": true
     },
-
-    "defensive": null
-
+    
+    "offensive": null
 }

@@ -1,7 +1,7 @@
 {
-    "name": "...two, ...",
+    "name": "Feint",
     "description":
-        "Offensive:\nA followup cross for $oh damage to tire the enemy...\nChain '...three!'", 
+        "Offensive:\nA feint and slash to fool your enemy. Reduce enemy guard by $og and deal $oh damage bypassing remaining guard.", 
      
     "texture": {
         "file": "test_cards.png",
@@ -11,11 +11,13 @@
         "h": 350
     },
     
+    "obtainable": false,
+
     "offensive": {
         "health": 2,
         "maxHealth": 0,
-        "guard": 0,
-        "chain": "...three!",
+        "guard": -2,
+        "bypass": true,
         "animation": 3
     },
 

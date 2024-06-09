@@ -1,6 +1,6 @@
 {
     "hp": 10,
-    "name": "Shinobi",
+    "name": "Samurai",
 
     "texture": {
         "file": "test_cards.png",
@@ -11,20 +11,24 @@
         "frameHeight": 0
     },
 
-    "character": 1,
+    "character": 0,
 
     "actions": [
         {
-            "cardName": "Open Throat",
+            "cardName": "Deflect",
             "probability": 0.4
         },
         {
-            "cardName": "Across the Chest",
-            "probability": 0.4
+            "cardName": "Iaijutsu",
+            "probability": 0.14
         },
         {
-            "cardName": "Slip",
-            "probability": 0.2
+            "cardName": "Stab",
+            "probability": 0.23
+        },
+        {
+            "cardName": "Slash",
+            "probability": 0.23
         }
     ]
 }

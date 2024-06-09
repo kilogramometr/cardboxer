@@ -1,7 +1,7 @@
 {
-    "name": "...three!",
+    "name": "Open Throat",
     "description":
-        "Offensive:\nA powerful kick for $oh damage to finish the combo!", 
+        "Offensive:\nLightning fast strike. Deal $oh damage bypassing enemy's guard.", 
      
     "texture": {
         "file": "test_cards.png",
@@ -10,11 +10,14 @@
         "w": 250,
         "h": 350
     },
+    
+    "obtainable": false,
 
     "offensive": {
         "health": 3,
         "maxHealth": 0,
         "guard": 0,
+        "bypass": true,
         "animation": 4
     },
 

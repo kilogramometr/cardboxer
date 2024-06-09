@@ -1,17 +1,23 @@
 [
-    // "test.json",
-    // "test2.json",
-    // "test3.json",
     "jab_rest.json",
     "doubletap.json",
     "feint_slip.json",
     "one.json", 
     "two.json", 
     "three.json",
-    "idontexist.json",
+    "kick.json",
     "doping.json",
     "hook_block.json",
     "uppercut.json",
     "slip.json",
-    "roll.json"
+    "roll.json",
+    "vamp_feint.json",
+    "vamp_vigour.json",
+    "enemy_stab.json",
+    "sam_deflect.json",
+    "sam_iaijutsu.json",
+    "sam_slash.json",
+    "shi_chest.json",
+    "shi_slip.json",
+    "shi_throat.json"
 ]

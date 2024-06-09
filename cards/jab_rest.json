@@ -12,10 +12,11 @@
     },
 
     "defensive": {
-        "health": -3,
+        "health": 3,
         "maxHealth": 0,
         "guard": -3,
-        "animation": 5
+        "animation": 5,
+        "heal": true
     },
     
     "offensive": {

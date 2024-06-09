@@ -5,7 +5,7 @@
 Player::Player() : Boxer()
 {
     this->setGuard(0);
-    this->setHealth(10);
+    this->setHealth(14);
     this->setMaxHealth(10);
 
     this->healthbar = new Healthbar(0);
@@ -219,6 +219,8 @@ void Player::setFrame()
                 break;
             case 5:
                 this->sprite.setTextureRect(sf::IntRect(290, 47, 75, 81));
+                if (this->animationEnd != nullptr) 
+                { *this->animationEnd = true; }
                 //std::cout<<"Dead frame 3"<<std::endl;
                 break;
         }
@@ -245,7 +247,6 @@ void Player::setFrame()
                 break;
             case 5:
                 this->sprite.setTextureRect(sf::IntRect(169, 47, 70, 81));
-                //std::cout<<"Dead frame 2"<<std::endl;
                 break;
         }
     }

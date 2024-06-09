@@ -21,7 +21,7 @@ private:
     int animationTimer;
     int animationType;
 
-    bool *animationEnd;
+    bool *animationEnd = nullptr;
 
     std::list<Card *> discardPile;
 

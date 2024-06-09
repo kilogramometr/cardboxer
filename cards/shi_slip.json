@@ -1,7 +1,7 @@
 {
-    "name": "Doping",
+    "name": "Slip",
     "description":
-        "Defensive:\nBurn this card.\nIncrease your maximum health by $dm.", 
+        "Defensive:\nDodge quickly the next attack. Increase your guard by $dg", 
      
     "texture": {
         "file": "test_cards.png",
@@ -11,13 +11,14 @@
         "h": 350
     },
 
+    "obtainable": false,
+
     "offensive": null,
 
     "defensive": {
         "health": 0,
-        "maxHealth": 2,
-        "guard": 0,
-        "burn": true,
+        "maxHealth": 0,
+        "guard": 2,
         "animation": 5
     }
 

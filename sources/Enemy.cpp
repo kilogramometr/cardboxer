@@ -18,12 +18,14 @@ Enemy::Enemy(int charakter) : Boxer()
     this->appendChild(this->shield);
 
     this->loadSprites();
+    this->lastPlayed = this->deck.end();
 
 }
 
 Enemy::Enemy(Json::Value enemy, std::list<Card *>& library, int charakter)
     : Boxer()
 {
+    this->lastPlayed = this->deck.end();
     this->healthbar = new Healthbar(1);
     this->appendChild(this->healthbar);
 
@@ -67,16 +69,13 @@ Enemy::Enemy(Json::Value enemy, std::list<Card *>& library, int charakter)
     else
     {
         int size = enemy["actions"].size();
-        // std::cerr<<"Number of actions: "<<size<<"\n";
         for (int i = 0; i < size; i++)
         {
             std::string name = enemy["actions"][i]["cardName"].asString();
             auto card = std::find_if(library.begin(), library.end(), [name](Card* _card){ return (*_card == name); });
             if (card != library.end())
             {
-                // this->deck->emplace_back(new Card(**card));
                 this->deck.emplace_back(new Card(**card));
-                // this->addToDeck(*card);
             }
             else
                 throw 41;
@@ -88,11 +87,6 @@ Enemy::Enemy(Json::Value enemy, std::list<Card *>& library, int charakter)
     
     auto it_d = this->deck.begin();
     auto it_p = this->probabilities.begin();
-
-    // for (; it_d != this->deck.end() && it_p != this->probabilities.end(); ++it_d, ++it_p)
-    // {
-    //     std::cerr<<(*it_d)->getName()<<" "<<(*it_p)<<"\n";
-    // }
 }    
 
 Enemy::Enemy(Enemy *copy)
@@ -115,6 +109,8 @@ Enemy::Enemy(Enemy *copy)
     this->charakter = copy->charakter;
     this->loadSprites();
     this->setIdle();
+
+    this->lastPlayed = this->deck.end();
 }
   
 void Enemy::construct(int charakter)
@@ -169,26 +165,32 @@ void Enemy::onDraw(sf::RenderTarget &target, sf::Transform& transform)
 
 std::list<Card *>::iterator Enemy::chooseCard()
 {
-  int random = randomUniform(1, 100);
-  int chance = 0;
-  auto it_d = this->deck.begin();
-  auto it_p = this->probabilities.begin();
-  for (; it_d != this->deck.end() && it_p != this->probabilities.end(); ++it_d, ++it_p)
-  {
-      chance += (*it_p) * 100;
-      if (it_d == this->lastPlayed)
-          continue;
-      if (chance >= random)
-          break;
-  }
-  return (this->deck.end() == it_d) ? --it_d : it_d;
+    int random = randomUniform(1, 100);
+    int chance = 0;
+    auto it_d = this->deck.begin();
+    auto it_p = this->probabilities.begin();
+    for (; it_d != this->deck.end() && it_p != this->probabilities.end(); ++it_d, ++it_p)
+    {
+        chance += (*it_p) * 100;
+        if (it_d == this->lastPlayed)
+        {
+            it_d = this->deck.begin();
+            it_p = this->probabilities.begin();
+            random = randomUniform(1, 100);
+        }
+        if (chance >= random)
+            return it_d;
+    }
+    return it_d;
 }
   
-Card* Enemy::playCard()
+Card Enemy::playCard()
 {
     auto it = this->chooseCard();
+    if (it == this->deck.end() || it == this->lastPlayed)
+        it = this->chooseCard();
     this->lastPlayed = it;
-    return *it;
+    return **it;
 }
   
 std::string Enemy::getName() { return this->name.getString(); }
@@ -532,6 +534,8 @@ void Enemy::setAnimationFrame()
                     break;
                 case 5:
                     this->setTextureRect(sf::IntRect(285, 47, 101, 81));
+                    if (this->animationEnd != nullptr) 
+                    { *this->animationEnd = true; }
                     break;
             }
         }
@@ -553,6 +557,8 @@ void Enemy::setAnimationFrame()
                     break;
                 case 5:
                     this->setTextureRect(sf::IntRect(422, 47, 101, 81));
+                    if (this->animationEnd != nullptr) 
+                    { *this->animationEnd = true; }
                     break;
             }
         }
@@ -583,6 +589,8 @@ void Enemy::setAnimationFrame()
                     break;
                 case 8:
                     this->setTextureRect(sf::IntRect(917, 47, 80, 81));
+                    if (this->animationEnd != nullptr) 
+                    { *this->animationEnd = true; }
                     break;
             }
         }
